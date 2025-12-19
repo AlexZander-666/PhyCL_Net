@@ -1,0 +1,141 @@
+{
+  "project": "AMSNetV2 - Fall Detection on SisFall Dataset",
+  "created_at": "2025-12-15T23:45:47.355966",
+  "git": {
+    "commit": "6b550cd781df019e7c48d78a11a6ebfbd08af801",
+    "branch": "main",
+    "dirty": true
+  },
+  "environment": {
+    "python_version": "3.10.11 (tags/v3.10.11:7d4cc5a, Apr  5 2023, 00:38:17) [MSC v.1929 64 bit (AMD64)]",
+    "platform": "Windows-10-10.0.19045-SP0",
+    "torch_version": "2.5.1+cu121",
+    "cuda_available": "True",
+    "cuda_version": "12.1",
+    "gpu_name": "NVIDIA GeForce RTX 4090 Laptop GPU"
+  },
+  "dataset": {
+    "name": "SisFall",
+    "url": "http://sistemic.udea.edu.co/en/research/projects/english-falls/",
+    "subjects": 23,
+    "sampling_rate_hz": 50,
+    "window_size": 512,
+    "stride": 256,
+    "evaluation": "LOSO (Leave-One-Subject-Out, 12 folds)"
+  },
+  "training_command": "python DMC_Net_experiments.py --dataset sisfall --data-root ./data --model amsv2 --eval-mode loso --seeds 42 123 --epochs 100 --batch-size 32 --lr 0.001 --amp --weighted-loss --use-tfcl --out-dir ./outputs/stage1_amsv2_final",
+  "seeds": [
+    42,
+    123
+  ],
+  "key_results": {
+    "AMSV2": {
+      "Accuracy": 98.04,
+      "Macro F1": 97.98,
+      "Sensitivity": 97.67,
+      "Specificity": 98.3,
+      "Fall F1": 97.64,
+      "Detection Rate": 100.0,
+      "G-Mean": 97.98
+    },
+    "Lstm": {
+      "Accuracy": 95.02,
+      "Macro F1": 94.86,
+      "Sensitivity": 94.35,
+      "Specificity": 95.5,
+      "Fall F1": 93.98,
+      "Detection Rate": 100.0,
+      "G-Mean": 94.9
+    },
+    "Resnet": {
+      "Accuracy": 95.13,
+      "Macro F1": 94.98,
+      "Sensitivity": 94.41,
+      "Specificity": 95.64,
+      "Fall F1": 94.13,
+      "Detection Rate": 100.0,
+      "G-Mean": 95.01
+    },
+    "Tcn": {
+      "Accuracy": 97.13,
+      "Macro F1": 97.04,
+      "Sensitivity": 96.43,
+      "Specificity": 97.63,
+      "Fall F1": 96.52,
+      "Detection Rate": 100.0,
+      "G-Mean": 97.01
+    },
+    "Transformer": {
+      "Accuracy": 95.48,
+      "Macro F1": 95.34,
+      "Sensitivity": 94.71,
+      "Specificity": 96.02,
+      "Fall F1": 94.54,
+      "Detection Rate": 100.0,
+      "G-Mean": 95.35
+    },
+    "Inceptiontime": {
+      "Accuracy": 97.91,
+      "Macro F1": 97.85,
+      "Sensitivity": 97.82,
+      "Specificity": 97.97,
+      "Fall F1": 97.51,
+      "Detection Rate": 100.0,
+      "G-Mean": 97.89
+    },
+    "Ablation: No_Mspa": {
+      "Accuracy": 98.2,
+      "Macro F1": 98.15,
+      "Sensitivity": 98.07,
+      "Specificity": 98.29,
+      "Fall F1": 97.85,
+      "Detection Rate": 100.0,
+      "G-Mean": 98.17
+    },
+    "Ablation: No_Tfcl": {
+      "Accuracy": 97.92,
+      "Macro F1": 97.85,
+      "Sensitivity": 97.49,
+      "Specificity": 98.22,
+      "Fall F1": 97.49,
+      "Detection Rate": 100.0,
+      "G-Mean": 97.85
+    },
+    "Ablation: No_Dks": {
+      "Accuracy": 98.22,
+      "Macro F1": 98.18,
+      "Sensitivity": 98.01,
+      "Specificity": 98.38,
+      "Fall F1": 97.88,
+      "Detection Rate": 100.0,
+      "G-Mean": 98.19
+    },
+    "Ablation: No_Faa": {
+      "Accuracy": 98.24,
+      "Macro F1": 98.19,
+      "Sensitivity": 97.9,
+      "Specificity": 98.48,
+      "Fall F1": 97.89,
+      "Detection Rate": 100.0,
+      "G-Mean": 98.18
+    },
+    "Ablation: Time_Only": {
+      "Accuracy": 98.49,
+      "Macro F1": 98.45,
+      "Sensitivity": 98.37,
+      "Specificity": 98.57,
+      "Fall F1": 98.19,
+      "Detection Rate": 100.0,
+      "G-Mean": 98.47
+    },
+    "Ablation: Freq_Only": {
+      "Accuracy": 98.3,
+      "Macro F1": 98.26,
+      "Sensitivity": 98.08,
+      "Specificity": 98.47,
+      "Fall F1": 97.97,
+      "Detection Rate": 100.0,
+      "G-Mean": 98.27
+    }
+  }
+}
