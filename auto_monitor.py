@@ -3,7 +3,7 @@ import subprocess
 import sys
 import time
 
-SEEDS = [456, 789, 1024]
+SEEDS = [456, 789, 1024]  # 消融实验的 seeds
 PYTHON_EXEC = sys.executable  # 自动使用 SCI666 环境的 python
 GPU_ID = "0"
 OUTPUT_DIR = "outputs/ablation_no_mspa"  # 统一输出目录

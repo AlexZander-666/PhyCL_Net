@@ -16,7 +16,8 @@
         "search_semantic",
         "search_semantic",
         "search_semantic",
-        "search_semantic"
+        "search_semantic",
+        "search_arxiv"
       ]
     },
     "google-scholar": {
@@ -26,7 +27,9 @@
       ],
       "env": {},
       "disabled": false,
-      "autoApprove": []
+      "autoApprove": [
+        "search_google_scholar_key_words"
+      ]
     }
   }
 }

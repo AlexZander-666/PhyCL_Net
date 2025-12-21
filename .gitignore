@@ -34,11 +34,16 @@ MobiFall/
 downloads/
 
 # Output directories
-outputs/
-logs/
-figures/
+/outputs/
+/code/outputs/
+/logs/
+/figures/
 *.pth
 *.ckpt
+
+# Keep manuscript figure sources tracked
+!arXiv/figures/
+!arXiv/figures/**
 
 # IDE
 .idea/
