@@ -4,7 +4,9 @@
 - `code/`: AMSNetV2 training entry (`DMC_Net_experiments.py`), model blocks in `models/`, losses in `losses/`, utilities in `scripts/`.
 - `data/`: local SisFall/KFall/UniMiB_SHAR/MobiFall datasets; treat as read-only and exclude from commits.
 - `outputs/`, `figures/`: checkpoints, metrics, plots from runs; clean or redirect when starting new sweeps.
-- `docs/`: training summary, reproducibility manifest, submission checklist; `automation/` queue helpers; `paper-search-mcp-main/` standalone MCP server with its own README/tests.
+- `docs/`: training summary, reproducibility manifest, submission checklist, experiment log; `automation/` queue helpers.
+- `paper/`: LaTeX manuscript and figures (`paper/arXiv/`).
+- `tools/`: auxiliary MCP servers/tools (`tools/paper-search-mcp/`, `tools/google-scholar-mcp/`).
 
 ## Build, Test, and Development Commands
 - Setup: `python -m venv .venv && .\\.venv\\Scripts\\activate && pip install -r requirements.txt`.
@@ -13,7 +15,7 @@
 - Baselines: `python code/scripts/train_baselines.py --data-root ./data --epochs 50`.
 - Noise robustness: `python code/scripts/eval_noise_robustness.py --ckpt outputs/stage1_amsv2_final/ckpt_best_seed42_loso_SA01.pth --data-root ./data --figure-dir ./figures/demo`.
 - Submission bundle: `python code/scripts/pack_sci_submission.py --output-dir ./submission_package --include-checkpoints`.
-- MCP server: `(cd paper-search-mcp-main && uv run pytest && uv run -m paper_search_mcp.server)`.
+- MCP server: `(cd tools/paper-search-mcp && uv run pytest && uv run -m paper_search_mcp.server)`.
 
 ## Coding Style & Naming Conventions
 - PEP8, 4-space indent; add type hints when clear; keep functions small and deterministic.
@@ -24,7 +26,7 @@
 ## Testing Guidelines
 - No dedicated unit suite for `code/`; run the dryrun plus one LOSO fold before long sweeps, and spot-check JSON/CSV/plots in `outputs/`.
 - For loss/metric edits, rerun `eval_noise_robustness.py` on a single checkpoint to confirm curves.
-- MCP changes: extend `paper-search-mcp-main/tests` and run `uv run pytest`.
+- MCP changes: extend `tools/paper-search-mcp/tests` and run `uv run pytest`.
 
 ## Commit & Pull Request Guidelines
 - Commits: imperative subject, <=72 chars, optional scope (`fix: guard empty SisFall split`); never commit datasets or checkpoints.

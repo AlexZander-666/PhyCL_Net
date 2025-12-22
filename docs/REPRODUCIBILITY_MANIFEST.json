@@ -23,7 +23,7 @@
     "stride": 256,
     "evaluation": "LOSO (Leave-One-Subject-Out, 12 folds)"
   },
-  "training_command": "python DMC_Net_experiments.py --dataset sisfall --data-root ./data --model amsv2 --eval-mode loso --seeds 42 123 --epochs 100 --batch-size 32 --lr 0.001 --amp --weighted-loss --use-tfcl --out-dir ./outputs/stage1_amsv2_final",
+  "training_command": "python code/DMC_Net_experiments.py --dataset sisfall --data-root ./data --model amsv2 --eval-mode loso --seeds 42 123 --epochs 100 --batch-size 32 --lr 0.001 --amp --weighted-loss --use-tfcl --out-dir ./outputs/stage1_amsv2_final",
   "seeds": [
     42,
     123

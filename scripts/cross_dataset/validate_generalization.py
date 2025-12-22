@@ -1,6 +1,8 @@
-import os
 import copy
-from typing import List, Dict, Any
+import os
+import sys
+from pathlib import Path
+from typing import Any, Dict, List
 
 try:
     import torch
@@ -11,7 +13,12 @@ except ImportError:
     nn = None
     DataLoader = None
 
-from datasets_cross_validation import MobiFallDataset, UniMiBDataset, KFallDataset
+THIS_DIR = Path(__file__).resolve().parent
+ROOT_DIR = THIS_DIR.parents[1]
+if str(THIS_DIR) not in sys.path:
+    sys.path.insert(0, str(THIS_DIR))
+
+from datasets_cross_validation import KFallDataset, MobiFallDataset, UniMiBDataset
 from sci_utils import (
     inspect_model_requirements,
     evaluate,
@@ -19,8 +26,8 @@ from sci_utils import (
     print_sci_table,
 )
 
-MODEL_PATH = "logs/best_model.pth"
-DATA_ROOT = "./data"
+MODEL_PATH = ROOT_DIR / "logs" / "best_model.pth"
+DATA_ROOT = ROOT_DIR / "data"
 
 
 def _require_torch() -> None:
@@ -65,10 +72,10 @@ def run_validation() -> None:
     print(f"Running on {device}")
 
     model = _load_model().to(device)
-    if os.path.exists(MODEL_PATH):
+    if MODEL_PATH.exists():
         try:
-            model.load_state_dict(torch.load(MODEL_PATH, map_location=device))
-            print(f"Loaded weights from {MODEL_PATH}")
+            model.load_state_dict(torch.load(str(MODEL_PATH), map_location=device))
+            print(f"Loaded weights from {MODEL_PATH.as_posix()}")
         except Exception as exc:
             print(f"[Warn] Weight loading failed ({exc}). Using random weights for demo.")
     else:
@@ -77,9 +84,9 @@ def run_validation() -> None:
     target_length, target_channels = inspect_model_requirements(model)
 
     datasets: List[tuple[str, Any]] = [
-        ("MobiFall", MobiFallDataset(os.path.join(DATA_ROOT, "MobiFall_Dataset_v2.0"), target_length, target_channels)),
-        ("UniMiB", UniMiBDataset(os.path.join(DATA_ROOT, "UniMiB_SHAR"), target_length, target_channels)),
-        ("KFall", KFallDataset(os.path.join(DATA_ROOT, "KFall"), target_length, target_channels)),
+        ("MobiFall", MobiFallDataset(str(DATA_ROOT / "MobiFall_Dataset_v2.0"), target_length, target_channels)),
+        ("UniMiB", UniMiBDataset(str(DATA_ROOT / "UniMiB_SHAR"), target_length, target_channels)),
+        ("KFall", KFallDataset(str(DATA_ROOT / "KFall"), target_length, target_channels)),
     ]
 
     results: List[Dict[str, Any]] = []
@@ -107,9 +114,11 @@ def run_validation() -> None:
 
     if results:
         df = print_sci_table(results)
-        os.makedirs("logs", exist_ok=True)
-        df.to_csv("logs/cross_dataset_results.csv", index=False)
-        print("Results saved to logs/cross_dataset_results.csv")
+        logs_dir = ROOT_DIR / "logs"
+        logs_dir.mkdir(parents=True, exist_ok=True)
+        out_csv = logs_dir / "cross_dataset_results.csv"
+        df.to_csv(str(out_csv), index=False)
+        print(f"Results saved to {out_csv.as_posix()}")
     else:
         print("No datasets were processed. Check your data paths.")
 

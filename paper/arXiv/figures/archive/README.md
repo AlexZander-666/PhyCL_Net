@@ -1,6 +1,6 @@
 # Archived Figure Variants
 
-Legacy figure drafts kept for reference; `arXiv/main.tex` uses the finalized assets in `../`. Current contents:
+Legacy figure drafts kept for reference; `../../main.tex` uses the finalized assets in `../`. Current contents:
 - `fig1_pareto_impact.pdf`
 - `Fig5_Safety_Tradeoff.pdf`
 - `fig5_safety_tradeoff_original_fixed.pdf`

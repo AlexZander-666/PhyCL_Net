@@ -17,7 +17,7 @@ This is the **arXiv manuscript directory** for the PhyCL-Net fall detection rese
 - **[arxiv.sty](arxiv.sty)** - Custom LaTeX style file (NeurIPS-based aesthetic)
 - **[template.tex](template.tex)** - Original template example (reference only)
 - **figures/** - All paper figures (PDF format, named fig1_*.pdf through fig8_*.pdf)
-- **[1.md](1.md)** - Comprehensive experimental data summary (Chinese) with verified results
+- **[docs/experiments/1.md](../../docs/experiments/1.md)** - Comprehensive experimental data summary (Chinese) with verified results
 
 ## Building the Paper
 
@@ -68,7 +68,7 @@ PhyCL-Net achieves **98.20% accuracy** on fall detection with only **1.049M para
 
 This is a **pragmatic engineering trade-off** optimized for edge wearable deployment.
 
-### Key Experimental Results (Verified from 1.md)
+### Key Experimental Results (Verified from docs/experiments/1.md)
 
 All numerical values below are **verified from original experiment logs** - do not modify these without re-running experiments:
 
@@ -99,11 +99,11 @@ All figures follow the naming convention `figN_description.pdf`:
 
 ## Data Integrity Protocol
 
-**CRITICAL**: All experimental numbers in [main.tex](main.tex) are verified against original experiment logs documented in [1.md](1.md).
+**CRITICAL**: All experimental numbers in [main.tex](main.tex) are verified against original experiment logs documented in [docs/experiments/1.md](../../docs/experiments/1.md).
 
 **Before modifying any numerical results**:
-1. Check if the value exists in `1.md` with verification status (✅)
-2. If not verified, re-run the experiment and update `1.md` first
+1. Check if the value exists in `docs/experiments/1.md` with verification status (✅)
+2. If not verified, re-run the experiment and update `docs/experiments/1.md` first
 3. Never use LLM to generate or modify experimental numbers
 4. Always trace values back to original experiment output files
 
@@ -181,7 +181,7 @@ The paper transparently addresses these critical limitations:
 ## Related Documentation
 
 - **Parent directory [CLAUDE.md](../CLAUDE.md)**: Machine learning training codebase guidance
-- **[1.md](1.md)**: Complete experimental results summary (Chinese) with data integrity verification
+- **[docs/experiments/1.md](../../docs/experiments/1.md)**: Complete experimental results summary (Chinese) with data integrity verification
 - **[MANUSCRIPT_UPDATE_SUMMARY.md](../MANUSCRIPT_UPDATE_SUMMARY.md)**: Recent manuscript updates and revisions
 
 ## Style Guidelines

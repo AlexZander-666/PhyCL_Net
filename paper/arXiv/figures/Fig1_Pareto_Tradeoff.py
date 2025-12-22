@@ -3,6 +3,7 @@ import seaborn as sns
 import numpy as np
 import pandas as pd
 from matplotlib.patches import Polygon, Rectangle
+from pathlib import Path
 
 # 设置学术出版级绘图风格
 plt.rcParams.update({
@@ -72,7 +73,8 @@ def plot_fig1_pareto():
     ax.legend(handles=[l1, l2], title="Bubble Size $\propto$ Latency", loc='lower right')
     
     plt.tight_layout()
-    plt.savefig('arXiv/figures/fig1_pareto_impact.pdf')
+    out_path = Path(__file__).resolve().parent / "fig1_pareto_impact.pdf"
+    plt.savefig(out_path)
     plt.show()
 
 if __name__ == '__main__':

@@ -1,6 +1,10 @@
 import re
+from pathlib import Path
 
-with open('arXiv/references.bib', 'r', encoding='utf-8') as f:
+ROOT = Path(__file__).resolve().parents[2]
+BIB_PATH = ROOT / "paper" / "arXiv" / "references.bib"
+
+with BIB_PATH.open("r", encoding="utf-8") as f:
     content = f.read()
 
 # 分析每个条目

@@ -42,8 +42,8 @@ downloads/
 *.ckpt
 
 # Keep manuscript figure sources tracked
-!arXiv/figures/
-!arXiv/figures/**
+!paper/arXiv/figures/
+!paper/arXiv/figures/**
 
 # IDE
 .idea/
@@ -72,6 +72,17 @@ nul
 .ipynb_checkpoints/
 
 # PDF outputs (keep source .tex)
-arXiv/*.pdf
-!arXiv/template.pdf
-!arXiv/orcid.pdf
+paper/arXiv/*.pdf
+!paper/arXiv/template.pdf
+!paper/arXiv/orcid.pdf
+
+# LaTeX build artifacts
+paper/arXiv/*.aux
+paper/arXiv/*.log
+paper/arXiv/*.out
+paper/arXiv/*.bbl
+paper/arXiv/*.blg
+paper/arXiv/*.toc
+paper/arXiv/*.synctex.gz
+paper/arXiv/*.fls
+paper/arXiv/*.fdb_latexmk
