@@ -1,0 +1,31 @@
+﻿from pathlib import Path
+import sys
+
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
+CODE_DIR = REPO_ROOT / "code"
+
+if str(CODE_DIR) not in sys.path:
+    sys.path.insert(0, str(CODE_DIR))
+
+
+def test_manuscript_facing_entrypoint_and_modules_exist():
+    assert (CODE_DIR / "phycl_net_experiments.py").exists()
+    assert (CODE_DIR / "models" / "phycl_net.py").exists()
+    assert (CODE_DIR / "scripts" / "run_baseline_comparison.py").exists()
+    assert (CODE_DIR / "scripts" / "evaluate_noise_robustness.py").exists()
+    assert (REPO_ROOT / "scripts" / "profile_phycl_complexity.py").exists()
+    assert not (CODE_DIR / "DMC_Net_experiments.py").exists()
+    assert not (CODE_DIR / "models" / "ams_net_v2.py").exists()
+
+
+def test_manuscript_facing_model_and_loss_aliases_are_primary():
+    from models import PhyCLNet
+    from models.phycl_net import PhyCLBlock, CrossGatedFusion
+    from losses import PhyCLNetLoss
+
+    assert PhyCLNet is not None
+    assert PhyCLBlock is not None
+    assert CrossGatedFusion is not None
+    assert PhyCLNetLoss is not None
+

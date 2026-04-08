@@ -1,7 +1,7 @@
-# Repository Guidelines
+﻿# Repository Guidelines
 
 ## Project Structure & Module Organization
-- `code/`: AMSNetV2 training entry (`DMC_Net_experiments.py`), model blocks in `models/`, losses in `losses/`, retained reviewer-facing helper scripts in `code/scripts/`.
+- `code/`: PhyCL-Net training entry (`phycl_net_experiments.py`), model blocks in `models/`, losses in `losses/`, retained reviewer-facing helper scripts in `code/scripts/`.
 - `data/`: local SisFall/KFall/UniMiB_SHAR/MobiFall datasets; treat as read-only and exclude from commits.
 - `outputs/`, `figures/`: checkpoints, metrics, plots from runs; clean or redirect when starting new sweeps.
 - `docs/`: reviewer-facing reproducibility notes, manifest, and manuscript-response mapping.
@@ -9,11 +9,11 @@
 
 ## Build, Test, and Development Commands
 - Setup: `python -m venv .venv && .\\.venv\\Scripts\\activate && pip install -r requirements.txt`.
-- Smoke check: `python code/DMC_Net_experiments.py --dataset dryrun --model phycl --epochs 2 --batch-size 4 --profile` (fast env validation).
-- Full SisFall: `python code/DMC_Net_experiments.py --dataset sisfall --data-root ./data --model phycl --eval-mode loso --seeds 42 123 456 789 1024 --epochs 50 --batch-size 256 --lr 0.004 --warmup-epochs 10 --weighted-loss --amp --use-tfcl`.
-- Baselines: `python code/scripts/train_baselines.py --data-root ./data --epochs 50`.
-- CPU complexity: `python scripts/calc_complexity.py --device cpu`.
-- Noise robustness: `python code/scripts/eval_noise_robustness.py --ckpt outputs/phycl_sisfall_loso/ckpt_best_seed42_loso_SA01.pth --data-root ./data --figure-dir ./figures/demo`.
+- Smoke check: `python code/phycl_net_experiments.py --dataset dryrun --model phycl --epochs 2 --batch-size 4 --profile` (fast env validation).
+- Full SisFall: `python code/phycl_net_experiments.py --dataset sisfall --data-root ./data --model phycl --eval-mode loso --seeds 42 123 456 789 1024 --epochs 50 --batch-size 256 --lr 0.004 --warmup-epochs 10 --weighted-loss --amp --use-tfcl`.
+- Baselines: `python code/scripts/run_baseline_comparison.py --data-root ./data --epochs 50`.
+- CPU complexity: `python scripts/profile_phycl_complexity.py --device cpu`.
+- Noise robustness: `python code/scripts/evaluate_noise_robustness.py --ckpt outputs/phycl_sisfall_loso/ckpt_best_seed42_loso_SA01.pth --data-root ./data --figure-dir ./figures/demo`.
 
 ## Coding Style & Naming Conventions
 - PEP8, 4-space indent; add type hints when clear; keep functions small and deterministic.
@@ -24,7 +24,7 @@
 
 ## Testing Guidelines
 - No dedicated unit suite for `code/`; run the dryrun plus one LOSO fold before long sweeps, and spot-check JSON/CSV/plots in `outputs/`.
-- For loss/metric edits, rerun `eval_noise_robustness.py` on a single checkpoint to confirm curves.
+- For loss/metric edits, rerun `evaluate_noise_robustness.py` on a single checkpoint to confirm curves.
 - The reviewer-facing repo intentionally omits manuscript build trees, queue automation, and internal submission-packaging utilities.
 
 ## Commit & Pull Request Guidelines
@@ -35,3 +35,4 @@
 - Historical local work used a private `SCI666` conda environment. Do not assume it exists on another machine.
 - The portable requirement is simpler: use any Python environment that can install `requirements.txt`.
 - Prefer GPU execution for training when available, but do not hard-code a private environment name into reviewer-facing instructions.
+

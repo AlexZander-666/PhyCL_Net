@@ -1,4 +1,4 @@
-import argparse
+﻿import argparse
 import os
 import sys
 from typing import Tuple
@@ -74,11 +74,11 @@ def main() -> int:
         raise RuntimeError("This script is intended to be run on CPU. Use --device cpu.")
 
     _add_repo_code_to_path()
-    from models.ams_net_v2 import AMSNetV2
+    from models.phycl_net import PhyCLNet
 
     ablation_mspa = bool(args.ablation_mspa)
     ablation = {"mspa": ablation_mspa, "dks": True, "faa": True}
-    model = AMSNetV2(in_channels=args.in_channels, num_classes=args.num_classes, ablation=ablation)
+    model = PhyCLNet(in_channels=args.in_channels, num_classes=args.num_classes, ablation=ablation)
 
     # Wrap to ensure traceable tensor output for fvcore.
     model_for_flops = _LogitsOnly(model)
@@ -90,7 +90,7 @@ def main() -> int:
     gflops = 2.0 * gmacs
     mparams = params / 1e6
 
-    print(f"Model: AMSNetV2 / PhyCL-Net (ablation_mspa={ablation_mspa})")
+    print(f"Model: PhyCL-Net (ablation_mspa={ablation_mspa})")
     print(f"Device: {device}")
     print(f"Input: {input_shape} (B, C, L)")
     print(f"GMACs: {gmacs:.6f}")
@@ -101,3 +101,4 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+

@@ -1,6 +1,6 @@
-# Reproducibility Guide
+﻿# Reproducibility Guide
 
-This repository is organized around a single canonical entrypoint, `code/DMC_Net_experiments.py`. Reviewer-facing commands below use the manuscript model names `phycl` and `phycl_full`; legacy names remain in the codebase only for backward compatibility. The manuscript source tree itself is not duplicated here because it is part of the separate journal submission package.
+This repository is organized around a single canonical entrypoint, `code/phycl_net_experiments.py`. Reviewer-facing commands below use the manuscript model names `phycl` and `phycl_full`; legacy names remain in the codebase only for backward compatibility. The manuscript source tree itself is not duplicated here because it is part of the separate journal submission package.
 
 ## Environment
 Create any Python environment that satisfies `requirements.txt`. The repository does not require a private environment name such as `SCI666`.
@@ -21,38 +21,38 @@ python -c "import torch; print(torch.__version__, torch.cuda.is_available())"
 Smoke test:
 
 ```bash
-python code/DMC_Net_experiments.py --dataset dryrun --model phycl --epochs 2 --batch-size 4 --profile
+python code/phycl_net_experiments.py --dataset dryrun --model phycl --epochs 2 --batch-size 4 --profile
 ```
 
 PhyCL-Net on SisFall LOSO:
 
 ```bash
-python code/DMC_Net_experiments.py --dataset sisfall --data-root ./data --model phycl --eval-mode loso --seeds 42 123 456 789 1024 --epochs 50 --batch-size 256 --lr 0.004 --warmup-epochs 10 --weighted-loss --amp --use-tfcl --out-dir ./outputs/phycl_sisfall_loso
+python code/phycl_net_experiments.py --dataset sisfall --data-root ./data --model phycl --eval-mode loso --seeds 42 123 456 789 1024 --epochs 50 --batch-size 256 --lr 0.004 --warmup-epochs 10 --weighted-loss --amp --use-tfcl --out-dir ./outputs/phycl_sisfall_loso
 ```
 
 Matched spectral baseline:
 
 ```bash
-python code/DMC_Net_experiments.py --dataset sisfall --data-root ./data --model phycl_full --eval-mode loso --seeds 42 123 --epochs 50 --batch-size 256 --lr 0.004 --warmup-epochs 10 --weighted-loss --amp --use-tfcl --out-dir ./outputs/phycl_full_sisfall_loso
+python code/phycl_net_experiments.py --dataset sisfall --data-root ./data --model phycl_full --eval-mode loso --seeds 42 123 --epochs 50 --batch-size 256 --lr 0.004 --warmup-epochs 10 --weighted-loss --amp --use-tfcl --out-dir ./outputs/phycl_full_sisfall_loso
 ```
 
 Baselines:
 
 ```bash
-python code/scripts/train_baselines.py --data-root ./data --epochs 50
+python code/scripts/run_baseline_comparison.py --data-root ./data --epochs 50
 ```
 
 CPU complexity check:
 
 ```bash
-python scripts/calc_complexity.py --device cpu
-python scripts/calc_complexity.py --device cpu --ablation-mspa
+python scripts/profile_phycl_complexity.py --device cpu
+python scripts/profile_phycl_complexity.py --device cpu --ablation-mspa
 ```
 
 Optional noise robustness check for the discussion section:
 
 ```bash
-python code/scripts/eval_noise_robustness.py --ckpt outputs/phycl_sisfall_loso/ckpt_best_seed42_loso_SA01.pth --data-root ./data --output-dir ./outputs/noise --figure-dir ./figures/noise
+python code/scripts/evaluate_noise_robustness.py --ckpt outputs/phycl_sisfall_loso/ckpt_best_seed42_loso_SA01.pth --data-root ./data --output-dir ./outputs/noise --figure-dir ./figures/noise
 ```
 
 ## Expected Artifacts
@@ -67,3 +67,4 @@ python code/scripts/eval_noise_robustness.py --ckpt outputs/phycl_sisfall_loso/c
 - It does not claim direct validation on commercial wearables or medical alarm systems.
 - Data availability and repository release statements should be read together with the current manuscript revision.
 - Auxiliary internal logs, manuscript build trees, and submission packing utilities are intentionally excluded from this reviewer-facing repository.
+

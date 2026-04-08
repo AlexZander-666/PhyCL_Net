@@ -1,4 +1,4 @@
-from typing import Dict, Optional, Tuple
+﻿from typing import Dict, Optional, Tuple
 
 import torch
 import torch.nn as nn
@@ -11,6 +11,7 @@ __all__ = [
     "InfoNCELoss",
     "SupervisedContrastiveLoss",
     "CenterLoss",
+    "PhyCLNetLoss",
     "AMSNetLoss",
     "UncertaintyWeightedLoss",
 ]
@@ -74,9 +75,9 @@ class UncertaintyWeightedLoss(nn.Module):
         return torch.exp(-self.log_vars)
 
 
-class AMSNetLoss(nn.Module):
+class PhyCLNetLoss(nn.Module):
     """
-    Combined loss for AMS-Net v2.
+    Combined loss for the reviewer-facing PhyCL-Net training setup.
     
     Supports two weighting modes:
     1. Fixed weights (default): L = L_ce + alpha * L_tfcl + beta * L_center
@@ -172,3 +173,8 @@ class AMSNetLoss(nn.Module):
         
         stats["total"] = float(total.detach().cpu())
         return total, stats
+
+
+# Thin compatibility alias for legacy imports.
+AMSNetLoss = PhyCLNetLoss
+

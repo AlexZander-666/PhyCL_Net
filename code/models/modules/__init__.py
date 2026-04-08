@@ -1,4 +1,4 @@
-"""Submodules for AMS-Net v2."""
+"""Submodules for PhyCL-Net."""
 
 from .dks import DynamicKernelBlock
 from .mspa import MultiScaleSpectralPyramid, MultiScaleSpectralPyramidAttention

@@ -1,11 +1,11 @@
-"""
+﻿"""
 Baseline training script for the reviewer-facing PhyCL-Net repository.
 
 Implements the comparison models retained for reviewer-side baseline checks.
 
 Usage:
-    python code/scripts/train_baselines.py --data-root ./data
-    python code/scripts/train_baselines.py --data-root ./data --epochs 50
+    python code/scripts/run_baseline_comparison.py --data-root ./data
+    python code/scripts/run_baseline_comparison.py --data-root ./data --epochs 50
 """
 
 import os
@@ -625,3 +625,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+

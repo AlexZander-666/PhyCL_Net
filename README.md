@@ -1,9 +1,9 @@
-# PhyCL-Net
+﻿# PhyCL-Net
 
 PhyCL-Net is a reviewer-facing reproducibility repository for the manuscript's physics-guided time-domain fall-detection model. It keeps only the code, supporting scripts, and documentation needed to inspect the main experimental pipeline and the paper-aligned auxiliary checks. Datasets, checkpoints, generated outputs, and the submitted manuscript package are intentionally not versioned here.
 
 ## What This Repository Contains
-- A single training/evaluation entrypoint: `code/DMC_Net_experiments.py`
+- A single training/evaluation entrypoint: `code/phycl_net_experiments.py`
 - The manuscript-facing model and its matched spectral baseline
 - Minimal supporting scripts for baseline comparison, CPU complexity measurement, and noise robustness evaluation
 - Reproducibility notes and reviewer-facing documentation
@@ -11,9 +11,9 @@ PhyCL-Net is a reviewer-facing reproducibility repository for the manuscript's p
 ## Canonical Model Names
 - `phycl`: manuscript model, i.e. the time-domain PhyCL-Net configuration without the spectral MSPA branch
 - `phycl_full`: matched spectral baseline used for the accuracy-efficiency comparison
-- `amsv2`: legacy internal name kept for backward compatibility
+- `amsv2`: deprecated legacy CLI alias kept only for backward compatibility
 
-The repository still contains some legacy file names from earlier iterations. The canonical reviewer-facing terminology is now `PhyCL-Net` for the manuscript model and `PhyCL-Net + MSPA` for the matched spectral baseline.
+The canonical reviewer-facing terminology is `PhyCL-Net` for the manuscript model and `PhyCL-Net + MSPA` for the matched spectral baseline.
 
 ## Environment
 The original local workflow referenced a private `SCI666` environment. That environment is not required by the repository itself. Use any Python environment that satisfies `requirements.txt`.
@@ -29,37 +29,37 @@ python -c "import torch; print(torch.__version__, torch.cuda.is_available())"
 Smoke test:
 
 ```bash
-python code/DMC_Net_experiments.py --dataset dryrun --model phycl --epochs 2 --batch-size 4 --profile
+python code/phycl_net_experiments.py --dataset dryrun --model phycl --epochs 2 --batch-size 4 --profile
 ```
 
 SisFall LOSO, manuscript model:
 
 ```bash
-python code/DMC_Net_experiments.py --dataset sisfall --data-root ./data --model phycl --eval-mode loso --seeds 42 123 456 789 1024 --epochs 50 --batch-size 256 --lr 0.004 --warmup-epochs 10 --weighted-loss --amp --use-tfcl --out-dir ./outputs/phycl_sisfall_loso
+python code/phycl_net_experiments.py --dataset sisfall --data-root ./data --model phycl --eval-mode loso --seeds 42 123 456 789 1024 --epochs 50 --batch-size 256 --lr 0.004 --warmup-epochs 10 --weighted-loss --amp --use-tfcl --out-dir ./outputs/phycl_sisfall_loso
 ```
 
 SisFall LOSO, matched spectral baseline:
 
 ```bash
-python code/DMC_Net_experiments.py --dataset sisfall --data-root ./data --model phycl_full --eval-mode loso --seeds 42 123 --epochs 50 --batch-size 256 --lr 0.004 --warmup-epochs 10 --weighted-loss --amp --use-tfcl --out-dir ./outputs/phycl_full_sisfall_loso
+python code/phycl_net_experiments.py --dataset sisfall --data-root ./data --model phycl_full --eval-mode loso --seeds 42 123 --epochs 50 --batch-size 256 --lr 0.004 --warmup-epochs 10 --weighted-loss --amp --use-tfcl --out-dir ./outputs/phycl_full_sisfall_loso
 ```
 
 Baselines:
 
 ```bash
-python code/scripts/train_baselines.py --data-root ./data --epochs 50
+python code/scripts/run_baseline_comparison.py --data-root ./data --epochs 50
 ```
 
 CPU complexity check:
 
 ```bash
-python scripts/calc_complexity.py --device cpu
+python scripts/profile_phycl_complexity.py --device cpu
 ```
 
 Noise robustness check:
 
 ```bash
-python code/scripts/eval_noise_robustness.py --ckpt outputs/phycl_sisfall_loso/ckpt_best_seed42_loso_SA01.pth --data-root ./data --figure-dir ./figures/noise
+python code/scripts/evaluate_noise_robustness.py --ckpt outputs/phycl_sisfall_loso/ckpt_best_seed42_loso_SA01.pth --data-root ./data --figure-dir ./figures/noise
 ```
 
 ## Project Layout
@@ -76,3 +76,4 @@ python code/scripts/eval_noise_robustness.py --ckpt outputs/phycl_sisfall_loso/c
 - If a manuscript statement and a legacy script comment disagree, follow the manuscript-facing names and commands in this README and `docs/REPRODUCIBILITY.md`.
 
 Repository-specific working rules are in `AGENTS.md`.
+

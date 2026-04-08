@@ -1,4 +1,4 @@
-import math
+﻿import math
 from typing import Any, Dict, List, Optional, Sequence, Tuple
 
 import torch
@@ -151,9 +151,9 @@ def _make_attention(attn_cfg: Any, channels: int) -> Optional[nn.Module]:
     return build_attention(attn_cfg, channels)
 
 
-class AMSBlockV2(nn.Module):
+class PhyCLBlock(nn.Module):
     """
-    Improved AMS block combining dynamic kernels, multi-scale spectral modeling,
+    Core PhyCL-Block combining dynamic kernels, optional spectral modeling,
     fall-aware attention, and cross-gated fusion.
     """
 
@@ -227,10 +227,10 @@ class DownsampleBlock(nn.Module):
         return out
 
 
-class AMSNetV2(nn.Module):
+class PhyCLNet(nn.Module):
     """
-    AMS-Net v2: multi-scale time-frequency network with lightweight stem, AMS blocks,
-    projection head for contrastive learning, and classifier head.
+    Reviewer-facing PhyCL-Net backbone with PhyCL-Blocks, hierarchical
+    contrastive projections, and a lightweight classifier head.
     """
 
     def __init__(
@@ -258,7 +258,7 @@ class AMSNetV2(nn.Module):
 
         self.stage1 = nn.ModuleList(
             [
-                AMSBlockV2(
+                PhyCLBlock(
                     stem_channels,
                     ablation.get("mspa", True),
                     ablation.get("dks", True),
@@ -283,7 +283,7 @@ class AMSNetV2(nn.Module):
         mid_channels = stem_channels * 2
         self.stage2 = nn.ModuleList(
             [
-                AMSBlockV2(
+                PhyCLBlock(
                     mid_channels,
                     ablation.get("mspa", True),
                     ablation.get("dks", True),
@@ -308,7 +308,7 @@ class AMSNetV2(nn.Module):
         high_channels = mid_channels * 2
         self.stage3 = nn.ModuleList(
             [
-                AMSBlockV2(
+                PhyCLBlock(
                     high_channels,
                     ablation.get("mspa", True),
                     ablation.get("dks", True),
@@ -386,3 +386,9 @@ class AMSNetV2(nn.Module):
             z_time_list.append(self.tf_proj_time[idx](t))
             z_freq_list.append(self.tf_proj_freq[idx](f))
         return logits, z_time_list, z_freq_list
+
+
+# Thin compatibility aliases for legacy checkpoints or imports.
+AMSBlockV2 = PhyCLBlock
+AMSNetV2 = PhyCLNet
+

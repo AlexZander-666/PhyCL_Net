@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+﻿#!/usr/bin/env python
 """
 Noise robustness evaluation for the reviewer-facing PhyCL-Net repository.
 
@@ -6,7 +6,7 @@ This script evaluates a trained checkpoint under additive Gaussian noise and is
 retained to support the robustness discussion in the revised manuscript.
 
 Usage:
-    python code/scripts/eval_noise_robustness.py \
+    python code/scripts/evaluate_noise_robustness.py \
         --ckpt outputs/phycl_sisfall_loso/ckpt_best_seed42_loso_SA01.pth \
         --data-root ./data \
         --output-dir ./outputs/noise \
@@ -30,7 +30,7 @@ from torch.utils.data import DataLoader, Dataset
 # Add parent directory to path for imports
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from models.ams_net_v2 import AMSNetV2
+from models.phycl_net import PhyCLNet
 
 logging.basicConfig(
     level=logging.INFO,
@@ -210,23 +210,26 @@ def get_test_loader(
 def load_model(
     checkpoint_path: Path,
     device: torch.device,
-) -> AMSNetV2:
+    model_variant: str = "phycl",
+) -> PhyCLNet:
     """
-    Load AMSNetV2 model from checkpoint.
+    Load a PhyCL-Net model from checkpoint.
 
     Args:
         checkpoint_path: Path to .pth checkpoint
         device: Torch device
+        model_variant: `phycl` for the manuscript model or `phycl_full` for the matched spectral baseline
 
     Returns:
         Loaded model in eval mode
     """
     logger.info(f"Loading model from: {checkpoint_path}")
 
-    model = AMSNetV2(
+    use_mspa = str(model_variant).lower() == "phycl_full"
+    model = PhyCLNet(
         in_channels=3,
         num_classes=2,
-        ablation={'mspa': True, 'dks': True, 'faa': True},
+        ablation={'mspa': use_mspa, 'dks': True, 'faa': True},
     ).to(device)
 
     # Load checkpoint
@@ -589,15 +592,22 @@ def generate_demo_results(noise_levels: List[float], seed: int = 42) -> List[Dic
 
 def main():
     parser = argparse.ArgumentParser(
-        description='Evaluate AMSNetV2 noise robustness',
+        description='Evaluate PhyCL-Net noise robustness',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
 
     parser.add_argument(
         '--ckpt',
         type=Path,
-        default=Path('outputs/amsv2_best.pth'),
+        default=Path('outputs/phycl_best.pth'),
         help='Path to model checkpoint'
+    )
+    parser.add_argument(
+        '--model-variant',
+        type=str,
+        default='phycl',
+        choices=['phycl', 'phycl_full'],
+        help='Checkpoint variant to load'
     )
     parser.add_argument(
         '--data-root',
@@ -677,7 +687,7 @@ def main():
         plot_noise_robustness_curve(
             results,
             plot_path,
-            title='AMSNetV2 Noise Robustness',
+            title='PhyCL-Net Noise Robustness',
         )
 
         logger.info("Demo noise robustness evaluation complete!")
@@ -693,7 +703,7 @@ def main():
         return
 
     # Load model
-    model = load_model(args.ckpt, device)
+    model = load_model(args.ckpt, device, args.model_variant)
 
     # Load test data
     logger.info(f"Loading data from: {args.data_root}")
@@ -728,7 +738,7 @@ def main():
     plot_noise_robustness_curve(
         results,
         plot_path,
-        title='AMSNetV2 Noise Robustness',
+        title='PhyCL-Net Noise Robustness',
     )
 
     logger.info("Noise robustness evaluation complete!")
@@ -736,3 +746,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+

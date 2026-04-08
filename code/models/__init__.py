@@ -1,7 +1,5 @@
-"""Model package exposing the manuscript-facing PhyCL-Net aliases."""
+"""Model package exposing the manuscript-facing PhyCL-Net API."""
 
-from .ams_net_v2 import AMSNetV2
+from .phycl_net import AMSNetV2, CrossGatedFusion, PhyCLBlock, PhyCLNet
 
-PhyCLNet = AMSNetV2
-
-__all__ = ["AMSNetV2", "PhyCLNet"]
+__all__ = ["PhyCLNet", "PhyCLBlock", "CrossGatedFusion", "AMSNetV2"]

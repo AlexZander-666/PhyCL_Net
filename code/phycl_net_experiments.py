@@ -1,11 +1,10 @@
-"""
+﻿"""
 Training and evaluation entrypoint for the PhyCL-Net project.
 
-Historical file names in this repository still mention DMCNet or AMSNetV2. The
-canonical manuscript-facing names are:
+The canonical manuscript-facing names are:
     - phycl:      PhyCL-Net without the spectral MSPA branch
     - phycl_full: matched spectral baseline used for the trade-off study
-    - amsv2:      legacy internal name kept for backward compatibility
+    - amsv2:      deprecated legacy alias kept only for backward compatibility
 """
 
 import os
@@ -41,14 +40,14 @@ from torch.utils.data import Dataset, DataLoader
 from torch import amp as torch_amp
 import re
 
-from models import AMSNetV2
-from models.ams_net_v2 import CrossGatedFusion
+from models import PhyCLNet
+from models.phycl_net import CrossGatedFusion
 from models.modules.mspa import MultiScaleSpectralPyramidAttention, MultiScaleSpectralPyramid
 from models.modules.dks import DynamicKernelBlock
 from models.modules.spectral import MultiScaleSTFTBlock, WaveletSpectralBlock
 from models.modules.efficient import GhostConv1d, SeparableConv1d
 from models.modules.attention import build_attention
-from losses import AMSNetLoss
+from losses import PhyCLNetLoss
 
 # --- Safe Imports ---
 try:
@@ -278,8 +277,9 @@ ABLATION_PRESETS = {
 }
 
 MODEL_ALIASES = {
-    'phycl': ('amsv2', 'no_mspa'),
-    'phycl_full': ('amsv2', 'full'),
+    'phycl': ('phycl_core', 'no_mspa'),
+    'phycl_full': ('phycl_core', 'full'),
+    'amsv2': ('phycl_core', None),
 }
 
 HYPERPARAMETER_SENSITIVITY = {
@@ -334,14 +334,19 @@ def parse_ablation_config(spec: Optional[str]) -> Dict[str, bool]:
 
 def resolve_requested_model(model_name: str, ablation_spec: Optional[str]) -> Tuple[str, Optional[str], str]:
     """
-    Map manuscript-facing model aliases to the legacy internal implementation.
+    Map manuscript-facing model aliases to the internal implementation.
     Returns (internal_model, effective_ablation_spec, display_name).
     """
     key = str(model_name).lower()
     if key in MODEL_ALIASES:
         internal_model, default_ablation = MODEL_ALIASES[key]
         effective_ablation = ablation_spec if ablation_spec else default_ablation
-        display_name = "PhyCL-Net" if key == "phycl" else "PhyCL-Net + MSPA"
+        if key == "phycl":
+            display_name = "PhyCL-Net"
+        elif key == "phycl_full":
+            display_name = "PhyCL-Net + MSPA"
+        else:
+            display_name = "PhyCL-Net (legacy alias)"
         return internal_model, effective_ablation, display_name
     return model_name, ablation_spec, model_name
 
@@ -473,7 +478,7 @@ def profile_model_efficiency(model, input_size=(1, 3, 512), device=torch.device(
     logging.info("-" * 30)
     return {'params_M': params/1e6, 'flops_G': flops/1e9 if flops else None, 'latency_ms': avg_latency_ms}
 
-# -------------------------- AMS-Net Modules --------------------------
+# -------------------------- PhyCL-Net Variants --------------------------
 class AdaptiveSpectralBlock(nn.Module):
     """
     [改进点 A] 自适应频域块 (Frequency Domain Branch)
@@ -620,7 +625,7 @@ class ImprovedDMCBlock(nn.Module):
         return x + self.res_scale * out
 
 
-class DMCNet(nn.Module):
+class DualBranchBaseline(nn.Module):
     def __init__(
         self,
         in_channels: int,
@@ -672,7 +677,7 @@ class DMCNet(nn.Module):
 
 
 class SimplifiedSpectralBlock(nn.Module):
-    """Lightweight frequency encoder for LiteAMSNet."""
+    """Lightweight frequency encoder for the compact spectral baseline."""
 
     def __init__(self, channels: int):
         super().__init__()
@@ -691,8 +696,8 @@ class SimplifiedSpectralBlock(nn.Module):
         return self.conv(mag.to(dtype=x.dtype))
 
 
-class LiteAMSBlock(nn.Module):
-    """Lightweight AMS block for edge deployment."""
+class LightPhyCLBlock(nn.Module):
+    """Compact block used by the lightweight PhyCL-inspired baseline."""
 
     def __init__(self, channels: int, attn: Any = None):
         super().__init__()
@@ -711,15 +716,15 @@ class LiteAMSBlock(nn.Module):
         return x + out
 
 
-class LiteAMSNet(nn.Module):
+class LightPhyCLBaseline(nn.Module):
     """
-    Lightweight AMS-Net variant (<100K params target) for edge deployment.
+    Lightweight PhyCL-inspired baseline (<100K params target) for edge studies.
     """
 
     def __init__(self, in_channels: int = 3, num_classes: int = 2, channels: int = 32, n_blocks: int = 2, attn: Any = None):
         super().__init__()
         self.stem = GhostConv1d(in_channels, channels, kernel_size=5)
-        self.blocks = nn.ModuleList([LiteAMSBlock(channels, attn=attn) for _ in range(n_blocks)])
+        self.blocks = nn.ModuleList([LightPhyCLBlock(channels, attn=attn) for _ in range(n_blocks)])
         self.head = nn.Sequential(
             nn.AdaptiveAvgPool1d(1),
             nn.Flatten(),
@@ -733,6 +738,12 @@ class LiteAMSNet(nn.Module):
             x = block(x)
         logits = self.head(x)
         return logits, x, x
+
+
+# Thin compatibility aliases for legacy internal baselines.
+DMCNet = DualBranchBaseline
+LiteAMSBlock = LightPhyCLBlock
+LiteAMSNet = LightPhyCLBaseline
 
 
 def distillation_loss(student_logits: torch.Tensor, teacher_logits: torch.Tensor, labels: torch.Tensor, T: float = 4.0, alpha: float = 0.7) -> torch.Tensor:
@@ -1218,9 +1229,9 @@ def unpack_model_output(output):
 
 def compute_loss_with_aux(criterion, logits, targets, z_time=None, z_freq=None):
     """
-    Compute loss and auxiliary components, supporting AMSNetLoss as well as standard criterions.
+    Compute loss and auxiliary components, supporting PhyCLNetLoss as well as standard criterions.
     """
-    if isinstance(criterion, AMSNetLoss):
+    if isinstance(criterion, PhyCLNetLoss):
         loss_raw, parts = criterion(logits, targets, z_time, z_freq)
     else:
         loss_raw = criterion(logits, targets)
@@ -2153,7 +2164,7 @@ def visualize_tsne(model: nn.Module, dataloader: DataLoader, save_path: str, sta
 
 
 def _select_gradcam_layer(model: nn.Module) -> Optional[nn.Module]:
-    # Prefer last AMS block if available
+    # Prefer the last PhyCL-style block if available
     if hasattr(model, "stage3") and isinstance(model.stage3, nn.ModuleList) and len(model.stage3) > 0:
         return model.stage3[-1]
     if hasattr(model, "blocks") and isinstance(model.blocks, nn.ModuleList) and len(model.blocks) > 0:
@@ -2309,7 +2320,7 @@ def run_one_experiment(config, seed, resume_path=None):
         internal_model = config.get('model_internal', config['model'])
         model_display_name = config.get('model_display_name', internal_model)
         if internal_model == 'dmc':
-            model = DMCNet(
+            model = DualBranchBaseline(
                 in_channels=C,
                 channels=config['channels'],
                 n_blocks=config['n_blocks'],
@@ -2329,8 +2340,8 @@ def run_one_experiment(config, seed, resume_path=None):
             model = LSTMClassifier(in_channels=C, num_classes=config['num_classes'])
         elif internal_model == 'resnet':
             model = ResNet1D(in_channels=C, num_classes=config['num_classes'])
-        elif internal_model == 'amsv2':
-            model = AMSNetV2(
+        elif internal_model == 'phycl_core':
+            model = PhyCLNet(
                 in_channels=C,
                 num_classes=config['num_classes'],
                 proj_dim=config.get('proj_dim', 128),
@@ -2348,7 +2359,7 @@ def run_one_experiment(config, seed, resume_path=None):
                 faa_axis_attn=faa_axis_attn,
             )
         elif internal_model == 'liteams':
-            model = LiteAMSNet(
+            model = LightPhyCLBaseline(
                 in_channels=C,
                 num_classes=config['num_classes'],
                 channels=max(16, config.get('channels', 32)),
@@ -2373,7 +2384,7 @@ def run_one_experiment(config, seed, resume_path=None):
         model = model.to(device)
         total_params = sum(p.numel() for p in model.parameters())
         trainable_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
-        logging.info(f"[{split_tag}] Model: {model_display_name} (internal={internal_model})")
+        logging.info(f"[{split_tag}] Model: {model_display_name} (implementation={internal_model})")
         logging.info(f"[{split_tag}]   Total params: {total_params/1e6:.2f}M")
         logging.info(f"[{split_tag}]   Trainable params: {trainable_params/1e6:.2f}M")
 
@@ -2399,13 +2410,13 @@ def run_one_experiment(config, seed, resume_path=None):
             logging.info(f"[{split_tag}] Using weighted CrossEntropyLoss based on training data balance.")
             class_weights = compute_class_weights(train_ds, num_classes=config['num_classes']).to(device)
 
-        if internal_model == 'amsv2':
+        if internal_model == 'phycl_core':
             use_tfcl_flag = config.get('use_tfcl', False) and ablation_cfg.get('tfcl', True)
             beta_val = config.get('loss_beta', 0.01) if ablation_cfg.get('center', True) else 0.0
             use_uw = config.get('uncertainty_weighting', False)
             if use_uw:
                 logging.info(f"[{split_tag}] Using uncertainty weighting (Kendall et al.) for automatic loss balancing")
-            criterion = AMSNetLoss(
+            criterion = PhyCLNetLoss(
                 num_classes=config['num_classes'],
                 feat_dim=config.get('proj_dim', 128),
                 alpha=config.get('loss_alpha', 0.1),
@@ -2749,7 +2760,12 @@ def main():
     p.add_argument('--dataset', default='dryrun', choices=['dryrun', 'sisfall', 'mobiact', 'unimib', 'kfall'])
     p.add_argument('--data-root', default='./data', help="Root path for dataset")
     p.add_argument('--out-dir', default='./outputs')
-    p.add_argument('--model', default='phycl', choices=['phycl', 'phycl_full', 'dmc', 'lstm', 'resnet', 'amsv2', 'liteams', 'tcn', 'transformer', 'inceptiontime', 'rocket', 'tinyhar', 'deeplstm'])
+    p.add_argument(
+        '--model',
+        default='phycl',
+        choices=['phycl', 'phycl_full', 'dmc', 'lstm', 'resnet', 'amsv2', 'liteams', 'tcn', 'transformer', 'inceptiontime', 'rocket', 'tinyhar', 'deeplstm'],
+        help="Model key. Prefer phycl or phycl_full; the legacy key amsv2 is deprecated.",
+    )
     p.add_argument('--epochs', type=int, default=10)
     p.add_argument('--batch-size', type=int, default=32)
     p.add_argument('--lr', type=float, default=1e-3)
@@ -2766,10 +2782,10 @@ def main():
     p.add_argument('--adaptive-bands', action='store_true', help="Enable learnable MSPA band edges")
     p.add_argument('--no-adaptive-bands', action='store_false', dest='adaptive_bands', help="Disable learnable MSPA band edges")
     attn_choices = ['none', 'eca', 'cbam', 'ema', 'ca', 'simam', 'aspp', 'mca']
-    p.add_argument('--attn-time', type=str, default='none', choices=attn_choices, help="Attention for AMSNetV2 time branch")
-    p.add_argument('--attn-freq', type=str, default='none', choices=attn_choices, help="Attention for AMSNetV2 frequency branch")
-    p.add_argument('--attn-fuse', type=str, default='none', choices=attn_choices, help="Attention after CrossGatedFusion in AMSNetV2")
-    p.add_argument('--attn-lite', type=str, default='none', choices=attn_choices, help="Attention inside LiteAMSNet blocks")
+    p.add_argument('--attn-time', type=str, default='none', choices=attn_choices, help="Attention for the PhyCL-Net temporal branch")
+    p.add_argument('--attn-freq', type=str, default='none', choices=attn_choices, help="Attention for the PhyCL-Net spectral branch")
+    p.add_argument('--attn-fuse', type=str, default='none', choices=attn_choices, help="Attention after cross-gated fusion in PhyCL-Net")
+    p.add_argument('--attn-lite', type=str, default='none', choices=attn_choices, help="Attention inside the lightweight PhyCL baseline")
     p.add_argument('--disable-faa-axis-attn', action='store_false', dest='faa_axis_attn', help="Disable cross-axis attention inside FallAwareAttention")
     p.add_argument('--num-workers', type=int, default=0)
     p.add_argument('--num-classes', type=int, default=2)
@@ -2885,3 +2901,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+
