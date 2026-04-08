@@ -1,6 +1,8 @@
 ﻿# Reproducibility Guide
 
-This repository is organized around a single canonical entrypoint, `code/phycl_net_experiments.py`. Reviewer-facing commands below use the manuscript model names `phycl` and `phycl_full`; legacy names remain in the codebase only for backward compatibility. The manuscript source tree itself is not duplicated here because it is part of the separate journal submission package.
+This repository is organized around a single canonical entrypoint, `code/phycl_net_experiments.py`. Reviewer-facing commands below use the manuscript model names `phycl` and `phycl_full`; hidden compatibility aliases remain in the codebase only to avoid breaking older local commands. The manuscript source tree itself is not duplicated here because it is part of the separate journal submission package.
+
+Additional reviewer-facing baseline keys exposed by the CLI are `dual_branch_baseline` and `compact_comparison_baseline`.
 
 ## Environment
 Create any Python environment that satisfies `requirements.txt`. The repository does not require a private environment name such as `SCI666`.

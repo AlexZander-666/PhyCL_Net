@@ -38,7 +38,14 @@ def test_legacy_public_aliases_are_no_longer_exposed():
 
     assert not hasattr(models, "AMSNetV2")
     assert not hasattr(losses, "AMSNetLoss")
-    assert set(experiments.MODEL_ALIASES.keys()) == {"phycl", "phycl_full"}
+    assert "dmc" not in experiments.PUBLIC_MODEL_KEYS
+    assert "liteams" not in experiments.PUBLIC_MODEL_KEYS
+    assert "dual_branch_baseline" in experiments.PUBLIC_MODEL_KEYS
+    assert "compact_comparison_baseline" in experiments.PUBLIC_MODEL_KEYS
+    assert experiments.MODEL_ALIASES["dmc"][0] == "dual_branch_baseline"
+    assert experiments.MODEL_ALIASES["liteams"][0] == "compact_comparison_baseline"
+    assert experiments.resolve_requested_model("dmc", None)[0] == "dual_branch_baseline"
+    assert experiments.resolve_requested_model("liteams", None)[0] == "compact_comparison_baseline"
 
 
 def test_internal_baseline_language_is_cleaned_up():

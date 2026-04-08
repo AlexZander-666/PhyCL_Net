@@ -275,10 +275,31 @@ ABLATION_PRESETS = {
     'freq_only': {'mspa': True, 'dks': False, 'faa': False, 'tfcl': False, 'center': False},
 }
 
+PUBLIC_MODEL_KEYS = (
+    'phycl',
+    'phycl_full',
+    'dual_branch_baseline',
+    'compact_comparison_baseline',
+    'lstm',
+    'resnet',
+    'tcn',
+    'transformer',
+    'inceptiontime',
+    'rocket',
+    'tinyhar',
+    'deeplstm',
+)
+
 MODEL_ALIASES = {
-    'phycl': ('phycl_core', 'no_mspa'),
-    'phycl_full': ('phycl_core', 'full'),
+    'phycl': ('phycl_core', 'no_mspa', 'PhyCL-Net'),
+    'phycl_full': ('phycl_core', 'full', 'PhyCL-Net + MSPA'),
+    'dual_branch_baseline': ('dual_branch_baseline', None, 'Dual-Branch Baseline'),
+    'compact_comparison_baseline': ('compact_comparison_baseline', None, 'Compact Comparison Baseline'),
+    'dmc': ('dual_branch_baseline', None, 'Dual-Branch Baseline'),
+    'liteams': ('compact_comparison_baseline', None, 'Compact Comparison Baseline'),
 }
+
+ALL_MODEL_KEYS = set(PUBLIC_MODEL_KEYS) | set(MODEL_ALIASES.keys())
 
 HYPERPARAMETER_SENSITIVITY = {
     'num_bands': [2, 4, 6, 8],
@@ -332,17 +353,13 @@ def parse_ablation_config(spec: Optional[str]) -> Dict[str, bool]:
 
 def resolve_requested_model(model_name: str, ablation_spec: Optional[str]) -> Tuple[str, Optional[str], str]:
     """
-    Map manuscript-facing model aliases to the internal implementation.
+    Map reviewer-facing model keys and hidden compatibility aliases to the internal implementation.
     Returns (internal_model, effective_ablation_spec, display_name).
     """
     key = str(model_name).lower()
     if key in MODEL_ALIASES:
-        internal_model, default_ablation = MODEL_ALIASES[key]
+        internal_model, default_ablation, display_name = MODEL_ALIASES[key]
         effective_ablation = ablation_spec if ablation_spec else default_ablation
-        if key == "phycl":
-            display_name = "PhyCL-Net"
-        elif key == "phycl_full":
-            display_name = "PhyCL-Net + MSPA"
         return internal_model, effective_ablation, display_name
     return model_name, ablation_spec, model_name
 
@@ -2301,7 +2318,7 @@ def run_one_experiment(config, seed, resume_path=None):
         ablation_cfg = config.get('ablation', {}) or {}
         internal_model = config.get('model_internal', config['model'])
         model_display_name = config.get('model_display_name', internal_model)
-        if internal_model == 'dmc':
+        if internal_model == 'dual_branch_baseline':
             model = DualBranchBaseline(
                 in_channels=C,
                 channels=config['channels'],
@@ -2340,7 +2357,7 @@ def run_one_experiment(config, seed, resume_path=None):
                 num_bands=num_bands_cfg,
                 faa_axis_attn=faa_axis_attn,
             )
-        elif internal_model == 'liteams':
+        elif internal_model == 'compact_comparison_baseline':
             model = CompactComparisonBaseline(
                 in_channels=C,
                 num_classes=config['num_classes'],
@@ -2745,8 +2762,7 @@ def main():
     p.add_argument(
         '--model',
         default='phycl',
-        choices=['phycl', 'phycl_full', 'dmc', 'lstm', 'resnet', 'liteams', 'tcn', 'transformer', 'inceptiontime', 'rocket', 'tinyhar', 'deeplstm'],
-        help="Model key. Prefer phycl or phycl_full for the manuscript-facing configurations.",
+        help="Model key. Public reviewer-facing keys include phycl, phycl_full, dual_branch_baseline, compact_comparison_baseline, lstm, resnet, tcn, transformer, inceptiontime, rocket, tinyhar, and deeplstm.",
     )
     p.add_argument('--epochs', type=int, default=10)
     p.add_argument('--batch-size', type=int, default=32)
@@ -2832,6 +2848,12 @@ def main():
     p.set_defaults(tf_hierarchical=True, adaptive_bands=True, faa_axis_attn=True)
     
     args = p.parse_args()
+    args.model = str(args.model).lower()
+    if args.model not in ALL_MODEL_KEYS:
+        p.error(
+            "Unknown --model value. Public keys are: "
+            + ", ".join(PUBLIC_MODEL_KEYS)
+        )
     ensure_dir(args.out_dir)
     setup_logging(args.out_dir)
 

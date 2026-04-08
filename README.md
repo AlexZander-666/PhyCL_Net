@@ -11,6 +11,8 @@ PhyCL-Net is a reviewer-facing reproducibility repository for the manuscript's p
 ## Canonical Model Names
 - `phycl`: manuscript model, i.e. the time-domain PhyCL-Net configuration without the spectral MSPA branch
 - `phycl_full`: matched spectral baseline used for the accuracy-efficiency comparison
+- `dual_branch_baseline`: reviewer-facing key for the matched two-branch comparison baseline
+- `compact_comparison_baseline`: reviewer-facing key for the compact comparison baseline
 
 The canonical reviewer-facing terminology is `PhyCL-Net` for the manuscript model and `PhyCL-Net + MSPA` for the matched spectral baseline.
 
