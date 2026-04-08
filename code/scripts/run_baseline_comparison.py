@@ -458,6 +458,7 @@ def train_and_evaluate(
         best_accuracy: Best test accuracy achieved
     """
     os.makedirs(save_dir, exist_ok=True)
+    model_key = model_name.strip().lower()
 
     model = model.to(device)
     optimizer = torch.optim.AdamW(model.parameters(), lr=lr, weight_decay=1e-4)
@@ -523,7 +524,7 @@ def train_and_evaluate(
         # Save best model
         if test_acc > best_accuracy:
             best_accuracy = test_acc
-            save_path = os.path.join(save_dir, f'{model_name}_baseline.pth')
+            save_path = os.path.join(save_dir, f'{model_key}_checkpoint.pth')
             torch.save({
                 'epoch': epoch,
                 'model_state_dict': model.state_dict(),
@@ -540,7 +541,7 @@ def train_and_evaluate(
 
 
 def main():
-    parser = argparse.ArgumentParser(description='Train baseline models for SCI comparison')
+    parser = argparse.ArgumentParser(description='Train comparison models for reviewer-side checks')
     parser.add_argument('--data-root', type=str, default='./data',
                         help='Root directory for SisFall data')
     parser.add_argument('--epochs', type=int, default=20,
@@ -613,14 +614,14 @@ def main():
     # ==================== Print Summary ====================
     print("\n")
     print("=" * 50)
-    print("BASELINE RESULTS SUMMARY")
+    print("COMPARISON RESULTS SUMMARY")
     print("=" * 50)
     print(f"LSTM Best Accuracy:   {results['LSTM']:.2f}%")
     print(f"ResNet Best Accuracy: {results['ResNet']:.2f}%")
     print("=" * 50)
     print(f"\nCheckpoints saved to: {args.save_dir}/")
-    print("  - LSTM_baseline.pth")
-    print("  - ResNet_baseline.pth")
+    print("  - lstm_checkpoint.pth")
+    print("  - resnet_checkpoint.pth")
 
 
 if __name__ == '__main__':

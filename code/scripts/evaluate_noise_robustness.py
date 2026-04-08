@@ -369,11 +369,11 @@ def print_markdown_table(results: List[Dict]):
 
     print()
 
-    # Calculate performance drop
+    # Calculate performance drop against the clean reference run
     if len(results) >= 2:
-        baseline_f1 = results[0]['f1_macro']
+        clean_reference_f1 = results[0]['f1_macro']
         worst_f1 = min(r['f1_macro'] for r in results)
-        drop = (baseline_f1 - worst_f1) / baseline_f1 * 100
+        drop = (clean_reference_f1 - worst_f1) / clean_reference_f1 * 100
         print(f"**Performance Drop:** {drop:.1f}% (from σ=0 to worst case)\n")
 
 
@@ -387,8 +387,8 @@ def save_results_json(results: List[Dict], output_path: Path):
         'noise_levels': [r['noise_level'] for r in results],
         'results': results,
         'summary': {
-            'baseline_accuracy': results[0]['accuracy'] if results else None,
-            'baseline_f1': results[0]['f1_macro'] if results else None,
+            'clean_accuracy': results[0]['accuracy'] if results else None,
+            'clean_f1': results[0]['f1_macro'] if results else None,
             'min_accuracy': min(r['accuracy'] for r in results) if results else None,
             'min_f1': min(r['f1_macro'] for r in results) if results else None,
         }
@@ -503,13 +503,13 @@ def plot_noise_robustness_curve(
     y_margin = (y_max - y_min) * 0.1
     ax.set_ylim(max(0, y_min - y_margin), min(1.0, y_max + y_margin))
 
-    # Add horizontal reference line at baseline
+    # Add horizontal reference line at sigma=0
     ax.axhline(
         y=f1_scores[0],
         color='gray',
         linestyle=':',
         alpha=0.5,
-        label=f'Baseline F1 ({f1_scores[0]:.3f})'
+        label=f'Reference F1 ({f1_scores[0]:.3f})'
     )
 
     # Legend
@@ -557,9 +557,9 @@ def generate_demo_results(noise_levels: List[float], seed: int = 42) -> List[Dic
     """
     np.random.seed(seed)
 
-    # Baseline performance (typical for well-trained fall detection model)
-    baseline_acc = 0.943
-    baseline_f1 = 0.927
+    # Clean-reference performance (typical for a well-trained fall detection model)
+    clean_acc = 0.943
+    clean_f1 = 0.927
 
     # Degradation model: performance drops gradually with noise
     # Using a sigmoid-like degradation curve
@@ -574,8 +574,8 @@ def generate_demo_results(noise_levels: List[float], seed: int = 42) -> List[Dic
         f1_noise = np.random.normal(0, 0.004)
 
         # Calculate metrics with degradation
-        acc = baseline_acc * (0.7 + 0.3 * degradation) + acc_noise
-        f1 = baseline_f1 * (0.65 + 0.35 * degradation) + f1_noise
+        acc = clean_acc * (0.7 + 0.3 * degradation) + acc_noise
+        f1 = clean_f1 * (0.65 + 0.35 * degradation) + f1_noise
 
         # Clamp to valid range
         acc = max(0.5, min(1.0, acc))

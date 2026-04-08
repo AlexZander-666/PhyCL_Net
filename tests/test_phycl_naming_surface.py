@@ -70,3 +70,17 @@ def test_run_metadata_uses_reviewer_facing_model_keys():
     assert "(implementation=" not in source
     assert "config['model_key']" in source
     assert "config['model_name']" in source
+
+
+def test_output_artifact_names_use_reviewer_facing_terms():
+    noise_source = (CODE_DIR / "scripts" / "evaluate_noise_robustness.py").read_text(encoding="utf-8")
+    baseline_source = (CODE_DIR / "scripts" / "run_baseline_comparison.py").read_text(encoding="utf-8")
+
+    assert "baseline_accuracy" not in noise_source
+    assert "baseline_f1" not in noise_source
+    assert "Baseline F1 (" not in noise_source
+    assert "clean_accuracy" in noise_source
+    assert "clean_f1" in noise_source
+    assert "Reference F1 (" in noise_source
+    assert "_baseline.pth" not in baseline_source
+    assert "_checkpoint.pth" in baseline_source
