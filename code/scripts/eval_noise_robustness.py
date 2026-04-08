@@ -1,18 +1,16 @@
 #!/usr/bin/env python
 """
-Noise Robustness Evaluation for AMSNetV2 Fall Detection.
+Noise robustness evaluation for the reviewer-facing PhyCL-Net repository.
 
-This script evaluates model performance under various Gaussian noise levels
-to assess robustness for the paper's Discussion section.
+This script evaluates a trained checkpoint under additive Gaussian noise and is
+retained to support the robustness discussion in the revised manuscript.
 
 Usage:
-    python scripts/eval_noise_robustness.py \
-        --ckpt outputs/amsv2_best.pth \
+    python code/scripts/eval_noise_robustness.py \
+        --ckpt outputs/phycl_sisfall_loso/ckpt_best_seed42_loso_SA01.pth \
         --data-root ./data \
-        --output-dir ./outputs \
-        --figure-dir ./figures
-
-Author: AMSNetV2 Research Team
+        --output-dir ./outputs/noise \
+        --figure-dir ./figures/noise
 """
 
 import argparse

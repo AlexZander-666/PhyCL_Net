@@ -1,12 +1,12 @@
 # PhyCL-Net
 
-PhyCL-Net is an edge-oriented fall-detection repository centered on a physics-guided time-domain model for wearable inertial signals. The public repository is intended to support manuscript review by exposing the training entrypoint, model definitions, analysis scripts, and reproducibility notes. Datasets, checkpoints, and generated outputs remain local and are therefore not versioned.
+PhyCL-Net is a reviewer-facing reproducibility repository for the manuscript's physics-guided time-domain fall-detection model. It keeps only the code, supporting scripts, and documentation needed to inspect the main experimental pipeline and the paper-aligned auxiliary checks. Datasets, checkpoints, generated outputs, and the submitted manuscript package are intentionally not versioned here.
 
 ## What This Repository Contains
 - A single training/evaluation entrypoint: `code/DMC_Net_experiments.py`
 - The manuscript-facing model and its matched spectral baseline
-- Baseline training and analysis scripts used for tables and figures
-- Reproducibility notes, manifests, and submission-facing documentation
+- Minimal supporting scripts for baseline comparison, CPU complexity measurement, and noise robustness evaluation
+- Reproducibility notes and reviewer-facing documentation
 
 ## Canonical Model Names
 - `phycl`: manuscript model, i.e. the time-domain PhyCL-Net configuration without the spectral MSPA branch
@@ -50,6 +50,12 @@ Baselines:
 python code/scripts/train_baselines.py --data-root ./data --epochs 50
 ```
 
+CPU complexity check:
+
+```bash
+python scripts/calc_complexity.py --device cpu
+```
+
 Noise robustness check:
 
 ```bash
@@ -57,16 +63,16 @@ python code/scripts/eval_noise_robustness.py --ckpt outputs/phycl_sisfall_loso/c
 ```
 
 ## Project Layout
-- `code/`: training entrypoint, model modules, losses, and analysis scripts
-- `automation/`: queue helpers for controlled training sweeps
-- `scripts/`: utility scripts for profiling and cross-dataset checks
-- `docs/`: reproducibility notes, manifests, experiment logs, and manuscript support files
-- `paper/`: manuscript-related assets retained for archival context
+- `code/`: training entrypoint, model modules, losses, and retained reviewer-facing helper scripts
+- `scripts/`: standalone utility scripts kept for paper-aligned checks
+- `docs/`: reproducibility notes, manifest, and reviewer-facing explanatory materials
 
 ## Reproducibility Notes
 - The authoritative run protocol is documented in `docs/REPRODUCIBILITY.md`.
 - `docs/REPRODUCIBILITY_MANIFEST.json` records the canonical reviewer-facing commands and expected artifacts.
+- `docs/paper/REVIEWER_RESPONSE_MAPPING.md` explains how this repository relates to the submitted revision without duplicating the manuscript source tree.
 - `data/`, `outputs/`, and generated figures are intentionally excluded from git. You must provide them locally to reproduce the reported numbers.
+- The LaTeX manuscript and journal submission materials were submitted separately and are therefore not mirrored in this repository.
 - If a manuscript statement and a legacy script comment disagree, follow the manuscript-facing names and commands in this README and `docs/REPRODUCIBILITY.md`.
 
 Repository-specific working rules are in `AGENTS.md`.

@@ -56,7 +56,7 @@ class _LogitsOnly(torch.nn.Module):
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Compute FLOPs (MACs) + params for Lite-AMSNet on CPU.")
+    parser = argparse.ArgumentParser(description="Compute FLOPs (MACs) and params for the reviewer-facing PhyCL-Net CPU protocol.")
     parser.add_argument("--device", type=str, default="cpu", help="Device to run on (default: cpu).")
     parser.add_argument("--window-size", type=int, default=512, help="Input length L for (B, C, L).")
     parser.add_argument("--in-channels", type=int, default=3, help="Input channels (default: 3).")
@@ -64,7 +64,7 @@ def main() -> int:
     parser.add_argument(
         "--ablation-mspa",
         action="store_true",
-        help="Enable MSPA (default: disabled for Lite-AMSNet).",
+        help="Enable MSPA (default: disabled for the time-domain PhyCL-Net configuration).",
     )
     args = parser.parse_args()
 
@@ -90,7 +90,7 @@ def main() -> int:
     gflops = 2.0 * gmacs
     mparams = params / 1e6
 
-    print(f"Model: AMSNetV2 (ablation_mspa={ablation_mspa})")
+    print(f"Model: AMSNetV2 / PhyCL-Net (ablation_mspa={ablation_mspa})")
     print(f"Device: {device}")
     print(f"Input: {input_shape} (B, C, L)")
     print(f"GMACs: {gmacs:.6f}")

@@ -1,6 +1,6 @@
 # Reproducibility Guide
 
-This repository is organized around a single canonical entrypoint, `code/DMC_Net_experiments.py`. Reviewer-facing commands below use the manuscript model names `phycl` and `phycl_full`; legacy names remain in the codebase only for backward compatibility.
+This repository is organized around a single canonical entrypoint, `code/DMC_Net_experiments.py`. Reviewer-facing commands below use the manuscript model names `phycl` and `phycl_full`; legacy names remain in the codebase only for backward compatibility. The manuscript source tree itself is not duplicated here because it is part of the separate journal submission package.
 
 ## Environment
 Create any Python environment that satisfies `requirements.txt`. The repository does not require a private environment name such as `SCI666`.
@@ -42,13 +42,28 @@ Baselines:
 python code/scripts/train_baselines.py --data-root ./data --epochs 50
 ```
 
+CPU complexity check:
+
+```bash
+python scripts/calc_complexity.py --device cpu
+python scripts/calc_complexity.py --device cpu --ablation-mspa
+```
+
+Optional noise robustness check for the discussion section:
+
+```bash
+python code/scripts/eval_noise_robustness.py --ckpt outputs/phycl_sisfall_loso/ckpt_best_seed42_loso_SA01.pth --data-root ./data --output-dir ./outputs/noise --figure-dir ./figures/noise
+```
+
 ## Expected Artifacts
 - `summary_results.json`: aggregate metrics for the run
 - `loso_records_seed*.json`: fold-level LOSO metrics
 - `efficiency_report_seed*.json`: parameter, FLOP, and latency profiling
 - `experiment.log`: training and evaluation log
+- `noise_robustness_results.json`: optional robustness sweep output when the noise script is used
 
 ## Notes on Scope
 - The repository documents algorithmic reproducibility under the reported desktop CPU/GPU protocol.
 - It does not claim direct validation on commercial wearables or medical alarm systems.
 - Data availability and repository release statements should be read together with the current manuscript revision.
+- Auxiliary internal logs, manuscript build trees, and submission packing utilities are intentionally excluded from this reviewer-facing repository.

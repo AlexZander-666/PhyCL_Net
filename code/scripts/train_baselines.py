@@ -1,13 +1,11 @@
 """
-train_baselines.py - Baseline Models Training Script for SCI Paper Comparison
+Baseline training script for the reviewer-facing PhyCL-Net repository.
 
-Implements two lightweight baseline models for comparison with AMSNetV2:
-1. Standard LSTM (2-layer, bidirectional)
-2. ResNet-1D (simplified ResNet-18 structure)
+Implements the comparison models retained for reviewer-side baseline checks.
 
 Usage:
-    python scripts/train_baselines.py --data-root ./data
-    python scripts/train_baselines.py --data-root ./data --epochs 50
+    python code/scripts/train_baselines.py --data-root ./data
+    python code/scripts/train_baselines.py --data-root ./data --epochs 50
 """
 
 import os

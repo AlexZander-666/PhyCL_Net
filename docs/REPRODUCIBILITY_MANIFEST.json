@@ -24,7 +24,10 @@
     "smoke_test": "python code/DMC_Net_experiments.py --dataset dryrun --model phycl --epochs 2 --batch-size 4 --profile",
     "phycl_loso": "python code/DMC_Net_experiments.py --dataset sisfall --data-root ./data --model phycl --eval-mode loso --seeds 42 123 456 789 1024 --epochs 50 --batch-size 256 --lr 0.004 --warmup-epochs 10 --weighted-loss --amp --use-tfcl --out-dir ./outputs/phycl_sisfall_loso",
     "phycl_full_loso": "python code/DMC_Net_experiments.py --dataset sisfall --data-root ./data --model phycl_full --eval-mode loso --seeds 42 123 --epochs 50 --batch-size 256 --lr 0.004 --warmup-epochs 10 --weighted-loss --amp --use-tfcl --out-dir ./outputs/phycl_full_sisfall_loso",
-    "baselines": "python code/scripts/train_baselines.py --data-root ./data --epochs 50"
+    "baselines": "python code/scripts/train_baselines.py --data-root ./data --epochs 50",
+    "complexity_cpu": "python scripts/calc_complexity.py --device cpu",
+    "complexity_cpu_with_mspa": "python scripts/calc_complexity.py --device cpu --ablation-mspa",
+    "noise_robustness": "python code/scripts/eval_noise_robustness.py --ckpt outputs/phycl_sisfall_loso/ckpt_best_seed42_loso_SA01.pth --data-root ./data --output-dir ./outputs/noise --figure-dir ./figures/noise"
   },
   "reported_manuscript_metrics": {
     "phycl": {
@@ -49,6 +52,7 @@
   "scope_notes": [
     "This repository does not include datasets, checkpoints, or generated outputs.",
     "Desktop CPU/GPU benchmarking is documented here; direct commercial wearable validation is outside the current repository scope.",
-    "Legacy names such as AMSNetV2 are retained internally for compatibility only."
+    "Legacy names such as AMSNetV2 are retained internally for compatibility only.",
+    "The submitted manuscript source package is intentionally not mirrored in this reviewer-facing repository."
   ]
 }
