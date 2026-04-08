@@ -343,8 +343,6 @@ def resolve_requested_model(model_name: str, ablation_spec: Optional[str]) -> Tu
             display_name = "PhyCL-Net"
         elif key == "phycl_full":
             display_name = "PhyCL-Net + MSPA"
-        else:
-            display_name = "PhyCL-Net (legacy alias)"
         return internal_model, effective_ablation, display_name
     return model_name, ablation_spec, model_name
 
@@ -568,10 +566,8 @@ class ModernTCNBlock(nn.Module):
         y = self.pw(y)
         return y
 
-class ImprovedDMCBlock(nn.Module):
-    """
-    [最终整合] 时频双流块
-    """
+class DualBranchFusionBlock(nn.Module):
+    """Two-branch fusion block used by the matched comparison backbone."""
     def __init__(
         self,
         channels: int,
@@ -588,12 +584,12 @@ class ImprovedDMCBlock(nn.Module):
         fusion_kernel_sizes: Tuple[int, ...] = (3, 5, 7),
     ):
         super().__init__()
-        # 分支 1: 时域 (Local/Trend) - 保持 ModernTCN (擅长捕捉局部趋势)
+        # Branch 1: temporal modeling
         self.time_branch = (
             DynamicKernelBlock(channels, kernel_sizes=kernel_sizes, sample_rate=sample_rate) if use_dks else ModernTCNBlock(channels, kernel_size=tcn_kernel)
         )
         
-        # 分支 2: 频域 (Global/Periodicity) - 替换 LSK 为 SpectralBlock
+        # Branch 2: spectral modeling
         self.freq_branch = (
             build_spectral_branch(
                 freq_method,
@@ -606,24 +602,22 @@ class ImprovedDMCBlock(nn.Module):
             else nn.Identity()
         )
         
-        # 融合: 交叉门控
+        # Cross-gated fusion
         self.fusion = CrossGatedFusion(channels, variant=fusion_variant, kernel_sizes=fusion_kernel_sizes)
         self.res_scale = nn.Parameter(torch.tensor(0.0))
 
     def forward(self, x):
-        assert x.dim() == 3, "ImprovedDMCBlock expects (B, C, L)"
-        # 双流并行处理
+        assert x.dim() == 3, "DualBranchFusionBlock expects (B, C, L)"
         x_t = self.time_branch(x)
         x_f = self.freq_branch(x)
         
-        # 融合
         out = self.fusion(x_t, x_f)
         
-        # 残差连接
         return x + self.res_scale * out
 
 
 class DualBranchBaseline(nn.Module):
+    """Matched two-branch baseline with temporal and spectral streams."""
     def __init__(
         self,
         in_channels: int,
@@ -645,7 +639,7 @@ class DualBranchBaseline(nn.Module):
         self.stem = nn.Conv1d(in_channels, channels, kernel_size=3, padding=1)
         self.blocks = nn.ModuleList(
             [
-                ImprovedDMCBlock(
+                DualBranchFusionBlock(
                     channels,
                     freq_method=freq_method,
                     use_dks=use_dks,
@@ -675,7 +669,7 @@ class DualBranchBaseline(nn.Module):
 
 
 class SimplifiedSpectralBlock(nn.Module):
-    """Lightweight frequency encoder for the compact spectral baseline."""
+    """Compact spectral encoder used by the lightweight baseline."""
 
     def __init__(self, channels: int):
         super().__init__()
@@ -694,8 +688,8 @@ class SimplifiedSpectralBlock(nn.Module):
         return self.conv(mag.to(dtype=x.dtype))
 
 
-class LightPhyCLBlock(nn.Module):
-    """Compact block used by the lightweight PhyCL-inspired baseline."""
+class CompactFusionBlock(nn.Module):
+    """Compact temporal-spectral fusion block used by the lightweight baseline."""
 
     def __init__(self, channels: int, attn: Any = None):
         super().__init__()
@@ -714,15 +708,13 @@ class LightPhyCLBlock(nn.Module):
         return x + out
 
 
-class LightPhyCLBaseline(nn.Module):
-    """
-    Lightweight PhyCL-inspired baseline (<100K params target) for edge studies.
-    """
+class CompactComparisonBaseline(nn.Module):
+    """Compact comparison baseline (<100K params target) for lightweight studies."""
 
     def __init__(self, in_channels: int = 3, num_classes: int = 2, channels: int = 32, n_blocks: int = 2, attn: Any = None):
         super().__init__()
         self.stem = GhostConv1d(in_channels, channels, kernel_size=5)
-        self.blocks = nn.ModuleList([LightPhyCLBlock(channels, attn=attn) for _ in range(n_blocks)])
+        self.blocks = nn.ModuleList([CompactFusionBlock(channels, attn=attn) for _ in range(n_blocks)])
         self.head = nn.Sequential(
             nn.AdaptiveAvgPool1d(1),
             nn.Flatten(),
@@ -2349,7 +2341,7 @@ def run_one_experiment(config, seed, resume_path=None):
                 faa_axis_attn=faa_axis_attn,
             )
         elif internal_model == 'liteams':
-            model = LightPhyCLBaseline(
+            model = CompactComparisonBaseline(
                 in_channels=C,
                 num_classes=config['num_classes'],
                 channels=max(16, config.get('channels', 32)),
@@ -2775,7 +2767,7 @@ def main():
     p.add_argument('--attn-time', type=str, default='none', choices=attn_choices, help="Attention for the PhyCL-Net temporal branch")
     p.add_argument('--attn-freq', type=str, default='none', choices=attn_choices, help="Attention for the PhyCL-Net spectral branch")
     p.add_argument('--attn-fuse', type=str, default='none', choices=attn_choices, help="Attention after cross-gated fusion in PhyCL-Net")
-    p.add_argument('--attn-lite', type=str, default='none', choices=attn_choices, help="Attention inside the lightweight PhyCL baseline")
+    p.add_argument('--attn-lite', type=str, default='none', choices=attn_choices, help="Attention inside the compact comparison baseline")
     p.add_argument('--disable-faa-axis-attn', action='store_false', dest='faa_axis_attn', help="Disable cross-axis attention inside FallAwareAttention")
     p.add_argument('--num-workers', type=int, default=0)
     p.add_argument('--num-classes', type=int, default=2)

@@ -39,3 +39,16 @@ def test_legacy_public_aliases_are_no_longer_exposed():
     assert not hasattr(models, "AMSNetV2")
     assert not hasattr(losses, "AMSNetLoss")
     assert set(experiments.MODEL_ALIASES.keys()) == {"phycl", "phycl_full"}
+
+
+def test_internal_baseline_language_is_cleaned_up():
+    source = (CODE_DIR / "phycl_net_experiments.py").read_text(encoding="utf-8")
+    forbidden_terms = [
+        "ImprovedDMCBlock",
+        "legacy alias",
+        "PhyCL-inspired baseline",
+        "lightweight PhyCL baseline",
+    ]
+
+    for term in forbidden_terms:
+        assert term not in source
