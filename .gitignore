@@ -86,6 +86,7 @@ paper/journal_submission/*.fls
 paper/journal_submission/*.fdb_latexmk
 paper/journal_submission/*.abs
 paper/journal_submission/texput.log
+paper/journal_submission/main.pdf
 
 # LaTeX build artifacts
 paper/arXiv/*.aux

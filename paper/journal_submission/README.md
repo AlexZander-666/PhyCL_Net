@@ -12,6 +12,7 @@ Included here are only the files required to inspect or rebuild the submission v
 - `pdfa.xmpi`
 - `jec-logo.jpg`
 - `figures/`
-- `main.pdf`
 
 This snapshot is kept separate from `paper/arXiv/` so that the reviewer-facing repository preserves both the arXiv materials and the current submission manuscript without mixing their build systems.
+
+To regenerate the journal PDF locally, run `make` inside this directory.
