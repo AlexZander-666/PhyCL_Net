@@ -387,8 +387,3 @@ class PhyCLNet(nn.Module):
             z_freq_list.append(self.tf_proj_freq[idx](f))
         return logits, z_time_list, z_freq_list
 
-
-# Thin compatibility aliases for legacy checkpoints or imports.
-AMSBlockV2 = PhyCLBlock
-AMSNetV2 = PhyCLNet
-

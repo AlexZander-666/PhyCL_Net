@@ -52,7 +52,6 @@
   "scope_notes": [
     "This repository does not include datasets, checkpoints, or generated outputs.",
     "Desktop CPU/GPU benchmarking is documented here; direct commercial wearable validation is outside the current repository scope.",
-    "Legacy aliases such as amsv2 are retained only for backward compatibility.",
     "The submitted manuscript source package is intentionally not mirrored in this reviewer-facing repository."
   ]
 }

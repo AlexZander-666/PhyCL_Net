@@ -20,7 +20,7 @@
 - PascalCase for classes; snake_case for modules/functions/CLI flags (`--data-root`, `--batch-size`); reuse existing arg names.
 - Prefer `logging` over prints; keep messages short and actionable.
 - Align file naming with current artifacts (`ckpt_best_seed123_loso_SA01.pth`, `summary_results.json`, `experiment_config.yaml`); set seeds via `--seed`/`set_seed`.
-- Use `phycl` and `phycl_full` in user-facing docs and commands; retain `amsv2` only for backward compatibility inside code.
+- Use `phycl` and `phycl_full` in user-facing docs and commands.
 
 ## Testing Guidelines
 - No dedicated unit suite for `code/`; run the dryrun plus one LOSO fold before long sweeps, and spot-check JSON/CSV/plots in `outputs/`.

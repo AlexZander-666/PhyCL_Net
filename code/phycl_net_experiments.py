@@ -4,7 +4,6 @@ Training and evaluation entrypoint for the PhyCL-Net project.
 The canonical manuscript-facing names are:
     - phycl:      PhyCL-Net without the spectral MSPA branch
     - phycl_full: matched spectral baseline used for the trade-off study
-    - amsv2:      deprecated legacy alias kept only for backward compatibility
 """
 
 import os
@@ -279,7 +278,6 @@ ABLATION_PRESETS = {
 MODEL_ALIASES = {
     'phycl': ('phycl_core', 'no_mspa'),
     'phycl_full': ('phycl_core', 'full'),
-    'amsv2': ('phycl_core', None),
 }
 
 HYPERPARAMETER_SENSITIVITY = {
@@ -738,14 +736,6 @@ class LightPhyCLBaseline(nn.Module):
             x = block(x)
         logits = self.head(x)
         return logits, x, x
-
-
-# Thin compatibility aliases for legacy internal baselines.
-DMCNet = DualBranchBaseline
-LiteAMSBlock = LightPhyCLBlock
-LiteAMSNet = LightPhyCLBaseline
-
-
 def distillation_loss(student_logits: torch.Tensor, teacher_logits: torch.Tensor, labels: torch.Tensor, T: float = 4.0, alpha: float = 0.7) -> torch.Tensor:
     """
     Knowledge distillation loss combining soft teacher targets and hard labels.
@@ -2763,8 +2753,8 @@ def main():
     p.add_argument(
         '--model',
         default='phycl',
-        choices=['phycl', 'phycl_full', 'dmc', 'lstm', 'resnet', 'amsv2', 'liteams', 'tcn', 'transformer', 'inceptiontime', 'rocket', 'tinyhar', 'deeplstm'],
-        help="Model key. Prefer phycl or phycl_full; the legacy key amsv2 is deprecated.",
+        choices=['phycl', 'phycl_full', 'dmc', 'lstm', 'resnet', 'liteams', 'tcn', 'transformer', 'inceptiontime', 'rocket', 'tinyhar', 'deeplstm'],
+        help="Model key. Prefer phycl or phycl_full for the manuscript-facing configurations.",
     )
     p.add_argument('--epochs', type=int, default=10)
     p.add_argument('--batch-size', type=int, default=32)

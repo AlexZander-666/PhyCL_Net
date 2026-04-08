@@ -1,4 +1,5 @@
-﻿from pathlib import Path
+from pathlib import Path
+import importlib
 import sys
 
 
@@ -19,7 +20,7 @@ def test_manuscript_facing_entrypoint_and_modules_exist():
     assert not (CODE_DIR / "models" / "ams_net_v2.py").exists()
 
 
-def test_manuscript_facing_model_and_loss_aliases_are_primary():
+def test_manuscript_facing_model_and_loss_names_are_primary():
     from models import PhyCLNet
     from models.phycl_net import PhyCLBlock, CrossGatedFusion
     from losses import PhyCLNetLoss
@@ -29,3 +30,12 @@ def test_manuscript_facing_model_and_loss_aliases_are_primary():
     assert CrossGatedFusion is not None
     assert PhyCLNetLoss is not None
 
+
+def test_legacy_public_aliases_are_no_longer_exposed():
+    models = importlib.import_module("models")
+    losses = importlib.import_module("losses")
+    experiments = importlib.import_module("phycl_net_experiments")
+
+    assert not hasattr(models, "AMSNetV2")
+    assert not hasattr(losses, "AMSNetLoss")
+    assert set(experiments.MODEL_ALIASES.keys()) == {"phycl", "phycl_full"}

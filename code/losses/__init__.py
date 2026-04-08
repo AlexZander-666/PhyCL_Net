@@ -12,7 +12,6 @@ __all__ = [
     "SupervisedContrastiveLoss",
     "CenterLoss",
     "PhyCLNetLoss",
-    "AMSNetLoss",
     "UncertaintyWeightedLoss",
 ]
 
@@ -173,8 +172,4 @@ class PhyCLNetLoss(nn.Module):
         
         stats["total"] = float(total.detach().cpu())
         return total, stats
-
-
-# Thin compatibility alias for legacy imports.
-AMSNetLoss = PhyCLNetLoss
 
