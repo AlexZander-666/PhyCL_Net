@@ -75,6 +75,17 @@ nul
 paper/arXiv/*.pdf
 !paper/arXiv/template.pdf
 !paper/arXiv/orcid.pdf
+paper/journal_submission/*.aux
+paper/journal_submission/*.log
+paper/journal_submission/*.out
+paper/journal_submission/*.bbl
+paper/journal_submission/*.blg
+paper/journal_submission/*.toc
+paper/journal_submission/*.synctex.gz
+paper/journal_submission/*.fls
+paper/journal_submission/*.fdb_latexmk
+paper/journal_submission/*.abs
+paper/journal_submission/texput.log
 
 # LaTeX build artifacts
 paper/arXiv/*.aux
