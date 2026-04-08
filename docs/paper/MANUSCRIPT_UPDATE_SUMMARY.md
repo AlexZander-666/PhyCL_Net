@@ -1,7 +1,7 @@
 # PhyCL-Net Manuscript Notes
 
 - Manuscript source: `paper/arXiv/main.tex`
-- Figures: `paper/arXiv/figures/` (legacy drafts in `paper/arXiv/figures/archive/`)
+- Figures: `paper/arXiv/figures/`
 - Experimental log (source of truth): `docs/experiments/1.md`
 
 ## Build (LaTeX)

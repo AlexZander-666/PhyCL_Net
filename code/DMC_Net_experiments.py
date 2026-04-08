@@ -1,26 +1,11 @@
 """
-DMC_Net_optimized.py (PubMate Final Polish)
+Training and evaluation entrypoint for the PhyCL-Net project.
 
-此脚本实现了 AMS-Net (Adaptive Multi-Scale Sensing Network) 的训练与评估流程。
-针对 SCI 投稿要求进行了严格的工程化修复和增强。
-
-主要修复 (Fixes & Optimizations):
-1. [Critical] 修复了 AMP 梯度累积在最后一个 batch 未正确 unscale/clip 的问题。
-2. [Feature] 添加了 --resume 功能，支持从中断处完全恢复训练状态 (Optimizer/Scheduler/RNG)。
-3. [Safety] 增加了针对 SisFall 数据集的非空检查，防止空数据导致实验无效。
-4. [Logic] 修正了 --weighted-loss 参数未实际生效的问题。
-5. [Stats] 修正了 CI (置信区间) 计算逻辑，正确处理样本不足的情况。
-6. [Reproducibility] 增强了 DataLoader worker 的随机种子初始化策略。
-
-Usage:
-    # 快速验证 (Dry Run)
-    python DMC_Net_optimized.py --dataset dryrun --profile --epochs 2 --batch-size 4
-
-    # 真实实验 (SisFall) - 训练
-    python DMC_Net_optimized.py --dataset sisfall --data-root ./data --model dmc --batch-size 16 --epochs 100 --weighted-loss --amp
-
-    # 真实实验 - 断点续训
-    python DMC_Net_optimized.py --dataset sisfall --data-root ./data --model dmc --resume ./outputs/ckpt_last_seed42.pth
+Historical file names in this repository still mention DMCNet or AMSNetV2. The
+canonical manuscript-facing names are:
+    - phycl:      PhyCL-Net without the spectral MSPA branch
+    - phycl_full: matched spectral baseline used for the trade-off study
+    - amsv2:      legacy internal name kept for backward compatibility
 """
 
 import os
@@ -292,6 +277,11 @@ ABLATION_PRESETS = {
     'freq_only': {'mspa': True, 'dks': False, 'faa': False, 'tfcl': False, 'center': False},
 }
 
+MODEL_ALIASES = {
+    'phycl': ('amsv2', 'no_mspa'),
+    'phycl_full': ('amsv2', 'full'),
+}
+
 HYPERPARAMETER_SENSITIVITY = {
     'num_bands': [2, 4, 6, 8],
     'kernel_sizes': [(7, 15, 31), (7, 15, 31, 63), (3, 7, 15, 31, 63)],
@@ -340,6 +330,20 @@ def parse_ablation_config(spec: Optional[str]) -> Dict[str, bool]:
     if spec and all(config.values()):
         logging.warning("ablation spec unrecognized, got defaults")
     return config
+
+
+def resolve_requested_model(model_name: str, ablation_spec: Optional[str]) -> Tuple[str, Optional[str], str]:
+    """
+    Map manuscript-facing model aliases to the legacy internal implementation.
+    Returns (internal_model, effective_ablation_spec, display_name).
+    """
+    key = str(model_name).lower()
+    if key in MODEL_ALIASES:
+        internal_model, default_ablation = MODEL_ALIASES[key]
+        effective_ablation = ablation_spec if ablation_spec else default_ablation
+        display_name = "PhyCL-Net" if key == "phycl" else "PhyCL-Net + MSPA"
+        return internal_model, effective_ablation, display_name
+    return model_name, ablation_spec, model_name
 
 
 def sensor_collate(batch):
@@ -2302,7 +2306,9 @@ def run_one_experiment(config, seed, resume_path=None):
 
         # --- Model Setup ---
         ablation_cfg = config.get('ablation', {}) or {}
-        if config['model'] == 'dmc':
+        internal_model = config.get('model_internal', config['model'])
+        model_display_name = config.get('model_display_name', internal_model)
+        if internal_model == 'dmc':
             model = DMCNet(
                 in_channels=C,
                 channels=config['channels'],
@@ -2319,11 +2325,11 @@ def run_one_experiment(config, seed, resume_path=None):
                 fusion_variant=fusion_variant,
                 fusion_kernel_sizes=fusion_kernel_sizes,
             )
-        elif config['model'] == 'lstm':
+        elif internal_model == 'lstm':
             model = LSTMClassifier(in_channels=C, num_classes=config['num_classes'])
-        elif config['model'] == 'resnet':
+        elif internal_model == 'resnet':
             model = ResNet1D(in_channels=C, num_classes=config['num_classes'])
-        elif config['model'] == 'amsv2':
+        elif internal_model == 'amsv2':
             model = AMSNetV2(
                 in_channels=C,
                 num_classes=config['num_classes'],
@@ -2341,7 +2347,7 @@ def run_one_experiment(config, seed, resume_path=None):
                 num_bands=num_bands_cfg,
                 faa_axis_attn=faa_axis_attn,
             )
-        elif config['model'] == 'liteams':
+        elif internal_model == 'liteams':
             model = LiteAMSNet(
                 in_channels=C,
                 num_classes=config['num_classes'],
@@ -2349,25 +2355,25 @@ def run_one_experiment(config, seed, resume_path=None):
                 n_blocks=max(1, config.get('n_blocks', 2)),
                 attn=config.get('attn_lite'),
             )
-        elif config['model'] == 'tcn':
+        elif internal_model == 'tcn':
             model = TemporalConvNet(in_channels=C, num_classes=config['num_classes'], channels=config['channels'], depth=config.get('n_blocks', 4))
-        elif config['model'] == 'transformer':
+        elif internal_model == 'transformer':
             model = TransformerClassifier(in_channels=C, num_classes=config['num_classes'], d_model=max(64, config['channels']), nhead=max(1, config['channels']//32), num_layers=config.get('n_blocks', 2))
-        elif config['model'] == 'inceptiontime':
+        elif internal_model == 'inceptiontime':
             model = InceptionTime(in_channels=C, num_classes=config['num_classes'], channels=max(32, config['channels']//2), depth=config.get('n_blocks', 3))
-        elif config['model'] == 'rocket':
+        elif internal_model == 'rocket':
             model = RocketClassifier(in_channels=C, num_classes=config['num_classes'], num_kernels=config.get('rocket_kernels', 256), kernel_size=config.get('rocket_kernel_size', 9))
-        elif config['model'] == 'tinyhar':
+        elif internal_model == 'tinyhar':
             model = TinyHAR(in_channels=C, num_classes=config['num_classes'], channels=max(32, config['channels']//2))
-        elif config['model'] == 'deeplstm':
+        elif internal_model == 'deeplstm':
             model = DeepConvLSTM(in_channels=C, num_classes=config['num_classes'], conv_channels=config.get('channels', 64), lstm_hidden=config.get('lstm_hidden', 128))
         else:
-            raise ValueError(f"Unknown model: {config['model']}")
+            raise ValueError(f"Unknown model: {internal_model}")
             
         model = model.to(device)
         total_params = sum(p.numel() for p in model.parameters())
         trainable_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
-        logging.info(f"[{split_tag}] Model: {config['model']}")
+        logging.info(f"[{split_tag}] Model: {model_display_name} (internal={internal_model})")
         logging.info(f"[{split_tag}]   Total params: {total_params/1e6:.2f}M")
         logging.info(f"[{split_tag}]   Trainable params: {trainable_params/1e6:.2f}M")
 
@@ -2393,7 +2399,7 @@ def run_one_experiment(config, seed, resume_path=None):
             logging.info(f"[{split_tag}] Using weighted CrossEntropyLoss based on training data balance.")
             class_weights = compute_class_weights(train_ds, num_classes=config['num_classes']).to(device)
 
-        if config['model'] == 'amsv2':
+        if internal_model == 'amsv2':
             use_tfcl_flag = config.get('use_tfcl', False) and ablation_cfg.get('tfcl', True)
             beta_val = config.get('loss_beta', 0.01) if ablation_cfg.get('center', True) else 0.0
             use_uw = config.get('uncertainty_weighting', False)
@@ -2743,7 +2749,7 @@ def main():
     p.add_argument('--dataset', default='dryrun', choices=['dryrun', 'sisfall', 'mobiact', 'unimib', 'kfall'])
     p.add_argument('--data-root', default='./data', help="Root path for dataset")
     p.add_argument('--out-dir', default='./outputs')
-    p.add_argument('--model', default='dmc', choices=['dmc', 'lstm', 'resnet', 'amsv2', 'liteams', 'tcn', 'transformer', 'inceptiontime', 'rocket', 'tinyhar', 'deeplstm'])
+    p.add_argument('--model', default='phycl', choices=['phycl', 'phycl_full', 'dmc', 'lstm', 'resnet', 'amsv2', 'liteams', 'tcn', 'transformer', 'inceptiontime', 'rocket', 'tinyhar', 'deeplstm'])
     p.add_argument('--epochs', type=int, default=10)
     p.add_argument('--batch-size', type=int, default=32)
     p.add_argument('--lr', type=float, default=1e-3)
@@ -2837,13 +2843,17 @@ def main():
 
     save_complete_experiment_config(args, args.out_dir)
     
+    internal_model, effective_ablation_spec, model_display_name = resolve_requested_model(args.model, args.ablation)
     config = vars(args)
+    config['model_internal'] = internal_model
+    config['model_display_name'] = model_display_name
+    config['requested_model'] = args.model
     if config.get('band_edges'):
         config['band_edges'] = tuple(config['band_edges'])
     else:
         config['band_edges'] = None
     config['fusion_kernel_sizes'] = tuple(config.get('fusion_kernel_sizes', (3, 5, 7)))
-    config['ablation'] = parse_ablation_config(args.ablation)
+    config['ablation'] = parse_ablation_config(effective_ablation_spec)
     logging.info(f"Optimized Config: {config}")
     
     results = []

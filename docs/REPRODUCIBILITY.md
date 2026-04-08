@@ -1,27 +1,54 @@
 # Reproducibility Guide
 
-## Environment (Required)
+This repository is organized around a single canonical entrypoint, `code/DMC_Net_experiments.py`. Reviewer-facing commands below use the manuscript model names `phycl` and `phycl_full`; legacy names remain in the codebase only for backward compatibility.
+
+## Environment
+Create any Python environment that satisfies `requirements.txt`. The repository does not require a private environment name such as `SCI666`.
+
 ```bash
-conda activate SCI666
-pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
-pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
-python -c "import torch; print(torch.cuda.is_available(), torch.cuda.device_count())"
+python -m venv .venv
+.venv\\Scripts\\activate
+pip install -r requirements.txt
+python -c "import torch; print(torch.__version__, torch.cuda.is_available())"
 ```
 
-## Data (Local / Not Versioned)
-- Put datasets under `data/` and pass `--data-root ./data`.
-- This repo does not commit datasets or checkpoints; keep your local `data/` and `outputs/` intact.
+## Data
+- Place datasets under `data/` and pass `--data-root ./data`.
+- This public repository does not commit datasets, checkpoints, or generated outputs.
+- The current manuscript results are reported on SisFall under LOSO evaluation. Additional datasets may be explored with separate scripts, but they are not part of the main reviewer-facing claim.
 
-## Smoke Check
+## Canonical Commands
+Smoke test:
+
 ```bash
-python code/DMC_Net_experiments.py --dataset dryrun --epochs 2 --batch-size 4 --profile
+python code/DMC_Net_experiments.py --dataset dryrun --model phycl --epochs 2 --batch-size 4 --profile
 ```
 
-## SisFall LOSO (Example)
+PhyCL-Net on SisFall LOSO:
+
 ```bash
-python code/DMC_Net_experiments.py --dataset sisfall --data-root ./data --model dmc --epochs 100 --weighted-loss --amp --seed 42
+python code/DMC_Net_experiments.py --dataset sisfall --data-root ./data --model phycl --eval-mode loso --seeds 42 123 456 789 1024 --epochs 50 --batch-size 256 --lr 0.004 --warmup-epochs 10 --weighted-loss --amp --use-tfcl --out-dir ./outputs/phycl_sisfall_loso
 ```
 
-## Where Numbers Come From
-- Experiment log (source of truth): `docs/experiments/1.md`
-- Repro manifest (commands/config snapshot): `docs/REPRODUCIBILITY_MANIFEST.json`
+Matched spectral baseline:
+
+```bash
+python code/DMC_Net_experiments.py --dataset sisfall --data-root ./data --model phycl_full --eval-mode loso --seeds 42 123 --epochs 50 --batch-size 256 --lr 0.004 --warmup-epochs 10 --weighted-loss --amp --use-tfcl --out-dir ./outputs/phycl_full_sisfall_loso
+```
+
+Baselines:
+
+```bash
+python code/scripts/train_baselines.py --data-root ./data --epochs 50
+```
+
+## Expected Artifacts
+- `summary_results.json`: aggregate metrics for the run
+- `loso_records_seed*.json`: fold-level LOSO metrics
+- `efficiency_report_seed*.json`: parameter, FLOP, and latency profiling
+- `experiment.log`: training and evaluation log
+
+## Notes on Scope
+- The repository documents algorithmic reproducibility under the reported desktop CPU/GPU protocol.
+- It does not claim direct validation on commercial wearables or medical alarm systems.
+- Data availability and repository release statements should be read together with the current manuscript revision.
