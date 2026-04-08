@@ -59,3 +59,14 @@ def test_internal_baseline_language_is_cleaned_up():
 
     for term in forbidden_terms:
         assert term not in source
+
+
+def test_run_metadata_uses_reviewer_facing_model_keys():
+    source = (CODE_DIR / "phycl_net_experiments.py").read_text(encoding="utf-8")
+
+    assert "config['requested_model']" not in source
+    assert "config['model_internal']" not in source
+    assert "config['model_display_name']" not in source
+    assert "(implementation=" not in source
+    assert "config['model_key']" in source
+    assert "config['model_name']" in source

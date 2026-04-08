@@ -202,10 +202,10 @@ def ensure_dir(path: str):
     if not os.path.exists(path):
         os.makedirs(path, exist_ok=True)
 
-def save_run_info(out_dir, args):
-    """保存实验配置"""
+def save_run_info(out_dir: str, config: Dict[str, Any]):
+    """保存公开版运行配置摘要。"""
     info = {
-        'args': vars(args),
+        'config': build_public_config_snapshot(config),
         'torch_version': torch.__version__,
         'cuda_available': torch.cuda.is_available(),
         'device_name': torch.cuda.get_device_name(0) if torch.cuda.is_available() else 'cpu',
@@ -228,9 +228,9 @@ def get_pip_freeze() -> Optional[List[str]]:
     except Exception:
         return None
 
-def save_complete_experiment_config(args, out_dir: str):
-    config = {
-        'args': vars(args),
+def save_complete_experiment_config(config: Dict[str, Any], out_dir: str):
+    payload = {
+        'config': build_public_config_snapshot(config),
         'environment': {
             'python_version': sys.version,
             'torch_version': torch.__version__,
@@ -243,7 +243,7 @@ def save_complete_experiment_config(args, out_dir: str):
         'timestamp': datetime.now().isoformat(),
     }
     with open(os.path.join(out_dir, 'experiment_config.yaml'), 'w') as f:
-        yaml.dump(config, f)
+        yaml.safe_dump(payload, f, sort_keys=False)
 
 AMP_DEVICE_TYPE = 'cuda'
 
@@ -300,6 +300,10 @@ MODEL_ALIASES = {
 }
 
 ALL_MODEL_KEYS = set(PUBLIC_MODEL_KEYS) | set(MODEL_ALIASES.keys())
+HIDDEN_MODEL_KEY_ALIASES = {
+    'dmc': 'dual_branch_baseline',
+    'liteams': 'compact_comparison_baseline',
+}
 
 HYPERPARAMETER_SENSITIVITY = {
     'num_bands': [2, 4, 6, 8],
@@ -362,6 +366,26 @@ def resolve_requested_model(model_name: str, ablation_spec: Optional[str]) -> Tu
         effective_ablation = ablation_spec if ablation_spec else default_ablation
         return internal_model, effective_ablation, display_name
     return model_name, ablation_spec, model_name
+
+
+def canonicalize_public_model_key(model_name: str) -> str:
+    """Map hidden compatibility aliases to reviewer-facing model keys."""
+    key = str(model_name).lower()
+    return HIDDEN_MODEL_KEY_ALIASES.get(key, key)
+
+
+def build_public_config_snapshot(config: Dict[str, Any]) -> Dict[str, Any]:
+    """Strip internal-only keys before logging or exporting run configuration."""
+    public = dict(config)
+    for key in list(public.keys()):
+        if key.startswith('_'):
+            public.pop(key, None)
+    if 'model_key' in public:
+        public['model_key'] = canonicalize_public_model_key(public['model_key'])
+        public['model'] = public['model_key']
+    elif 'model' in public:
+        public['model'] = canonicalize_public_model_key(public['model'])
+    return public
 
 
 def sensor_collate(batch):
@@ -2316,8 +2340,9 @@ def run_one_experiment(config, seed, resume_path=None):
 
         # --- Model Setup ---
         ablation_cfg = config.get('ablation', {}) or {}
-        internal_model = config.get('model_internal', config['model'])
-        model_display_name = config.get('model_display_name', internal_model)
+        internal_model = config.get('_model_impl', config['model'])
+        model_key = config.get('model_key', config['model'])
+        model_name = config.get('model_name', model_key)
         if internal_model == 'dual_branch_baseline':
             model = DualBranchBaseline(
                 in_channels=C,
@@ -2383,7 +2408,7 @@ def run_one_experiment(config, seed, resume_path=None):
         model = model.to(device)
         total_params = sum(p.numel() for p in model.parameters())
         trainable_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
-        logging.info(f"[{split_tag}] Model: {model_display_name} (implementation={internal_model})")
+        logging.info(f"[{split_tag}] Model: {model_name} [key={model_key}]")
         logging.info(f"[{split_tag}]   Total params: {total_params/1e6:.2f}M")
         logging.info(f"[{split_tag}]   Trainable params: {trainable_params/1e6:.2f}M")
 
@@ -2861,20 +2886,20 @@ def main():
     ALLOW_METRICS_FALLBACK = bool(args.allow_metrics_fallback)
     ensure_metric_dependencies(ALLOW_METRICS_FALLBACK)
 
-    save_complete_experiment_config(args, args.out_dir)
-    
-    internal_model, effective_ablation_spec, model_display_name = resolve_requested_model(args.model, args.ablation)
-    config = vars(args)
-    config['model_internal'] = internal_model
-    config['model_display_name'] = model_display_name
-    config['requested_model'] = args.model
+    internal_model, effective_ablation_spec, model_name = resolve_requested_model(args.model, args.ablation)
+    config = vars(args).copy()
+    config['model_key'] = canonicalize_public_model_key(args.model)
+    config['model_name'] = model_name
+    config['model'] = config['model_key']
+    config['_model_impl'] = internal_model
     if config.get('band_edges'):
         config['band_edges'] = tuple(config['band_edges'])
     else:
         config['band_edges'] = None
     config['fusion_kernel_sizes'] = tuple(config.get('fusion_kernel_sizes', (3, 5, 7)))
     config['ablation'] = parse_ablation_config(effective_ablation_spec)
-    logging.info(f"Optimized Config: {config}")
+    save_complete_experiment_config(config, args.out_dir)
+    logging.info(f"Optimized Config: {build_public_config_snapshot(config)}")
     
     results = []
     baseline_vals = None
