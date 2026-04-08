@@ -51,6 +51,10 @@ Baselines:
 python code/scripts/run_baseline_comparison.py --data-root ./data --epochs 50
 ```
 
+Expected reviewer-facing checkpoints from the baseline comparison script:
+- `outputs/lstm_checkpoint.pth`
+- `outputs/resnet_checkpoint.pth`
+
 CPU complexity check:
 
 ```bash
@@ -62,6 +66,11 @@ Noise robustness check:
 ```bash
 python code/scripts/evaluate_noise_robustness.py --ckpt outputs/phycl_sisfall_loso/ckpt_best_seed42_loso_SA01.pth --data-root ./data --figure-dir ./figures/noise
 ```
+
+Expected reviewer-facing noise artifacts:
+- `outputs/noise/noise_robustness_results.json` with summary keys `clean_accuracy` and `clean_f1`
+- `figures/noise/noise_robustness_curve.png`
+- `figures/noise/noise_robustness_curve.pdf`
 
 ## Project Layout
 - `code/`: training entrypoint, model modules, losses, and retained reviewer-facing helper scripts

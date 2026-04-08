@@ -49,6 +49,21 @@
     "efficiency_report_seed*.json",
     "split_stats_seed*.json"
   ],
+  "artifact_examples": {
+    "baseline_comparison_checkpoints": [
+      "outputs/lstm_checkpoint.pth",
+      "outputs/resnet_checkpoint.pth"
+    ],
+    "noise_robustness_outputs": [
+      "outputs/noise/noise_robustness_results.json",
+      "figures/noise/noise_robustness_curve.png",
+      "figures/noise/noise_robustness_curve.pdf"
+    ],
+    "noise_summary_keys": [
+      "clean_accuracy",
+      "clean_f1"
+    ]
+  },
   "scope_notes": [
     "This repository does not include datasets, checkpoints, or generated outputs.",
     "Desktop CPU/GPU benchmarking is documented here; direct commercial wearable validation is outside the current repository scope.",

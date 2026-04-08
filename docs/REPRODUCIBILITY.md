@@ -44,6 +44,10 @@ Baselines:
 python code/scripts/run_baseline_comparison.py --data-root ./data --epochs 50
 ```
 
+Expected checkpoints from this helper script:
+- `outputs/lstm_checkpoint.pth`
+- `outputs/resnet_checkpoint.pth`
+
 CPU complexity check:
 
 ```bash
@@ -62,7 +66,9 @@ python code/scripts/evaluate_noise_robustness.py --ckpt outputs/phycl_sisfall_lo
 - `loso_records_seed*.json`: fold-level LOSO metrics
 - `efficiency_report_seed*.json`: parameter, FLOP, and latency profiling
 - `experiment.log`: training and evaluation log
-- `noise_robustness_results.json`: optional robustness sweep output when the noise script is used
+- `outputs/lstm_checkpoint.pth` and `outputs/resnet_checkpoint.pth`: optional checkpoints emitted by `run_baseline_comparison.py`
+- `noise_robustness_results.json`: optional robustness sweep output when the noise script is used; its summary block reports `clean_accuracy` and `clean_f1` for the sigma=0 reference run
+- `noise_robustness_curve.png` and `noise_robustness_curve.pdf`: optional reviewer-facing plots emitted by the noise robustness script
 
 ## Notes on Scope
 - The repository documents algorithmic reproducibility under the reported desktop CPU/GPU protocol.

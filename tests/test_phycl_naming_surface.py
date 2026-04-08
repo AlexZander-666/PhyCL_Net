@@ -84,3 +84,20 @@ def test_output_artifact_names_use_reviewer_facing_terms():
     assert "Reference F1 (" in noise_source
     assert "_baseline.pth" not in baseline_source
     assert "_checkpoint.pth" in baseline_source
+
+
+def test_reviewer_facing_docs_match_current_artifact_names():
+    readme = (REPO_ROOT / "README.md").read_text(encoding="utf-8")
+    repro = (REPO_ROOT / "docs" / "REPRODUCIBILITY.md").read_text(encoding="utf-8")
+    manifest = (REPO_ROOT / "docs" / "REPRODUCIBILITY_MANIFEST.json").read_text(encoding="utf-8")
+    combined = "\n".join([readme, repro, manifest])
+
+    assert "LSTM_baseline.pth" not in combined
+    assert "ResNet_baseline.pth" not in combined
+    assert "baseline_accuracy" not in combined
+    assert "baseline_f1" not in combined
+    assert "lstm_checkpoint.pth" in combined
+    assert "resnet_checkpoint.pth" in combined
+    assert "noise_robustness_curve.png" in combined
+    assert "clean_accuracy" in combined
+    assert "clean_f1" in combined
