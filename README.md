@@ -7,11 +7,11 @@ This repository keeps only the code, commands, and minimal documentation needed 
 ## What This Repository Contains
 - A single training/evaluation entrypoint: `code/phycl_net_experiments.py`
 - The manuscript-facing model and its matched spectral baseline
-- The retained reviewer-facing support scripts:
+- The reviewer-facing executable scripts:
   - `code/scripts/run_baseline_comparison.py`
   - `code/scripts/evaluate_noise_robustness.py`
   - `scripts/profile_phycl_complexity.py`
-- The minimal reviewer-facing documentation:
+- The canonical reviewer-facing documents:
   - `docs/REPRODUCIBILITY.md`
   - `docs/REPRODUCIBILITY_MANIFEST.json`
   - `docs/paper/REVIEWER_RESPONSE_MAPPING.md`
@@ -81,9 +81,9 @@ Expected reviewer-facing noise artifacts:
 - `figures/noise/noise_robustness_curve.pdf`
 
 ## Project Layout
-- `code/`: training entrypoint, model modules, losses, and retained reviewer-facing helper scripts
-- `scripts/`: standalone utility scripts kept for paper-aligned checks
-- `docs/`: reproducibility notes, manifest, and reviewer-facing explanatory materials
+- `code/`: canonical training entrypoint, model modules, losses, and reviewer-facing comparison and evaluation scripts
+- `scripts/`: standalone reviewer-facing profiling utility
+- `docs/`: canonical run protocol, artifact manifest, and repository boundary note
 
 ## Reproducibility Notes
 - The canonical run protocol is defined in `docs/REPRODUCIBILITY.md`.

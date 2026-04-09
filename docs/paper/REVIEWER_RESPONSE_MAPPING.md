@@ -6,11 +6,11 @@ This repository is the reviewer-facing code and protocol package for the revised
 
 - The canonical training and evaluation entrypoint: `code/phycl_net_experiments.py`
 - The manuscript model (`phycl`) and the matched spectral baseline (`phycl_full`)
-- The retained reviewer-facing support scripts:
+- The reviewer-facing executable scripts:
   - `code/scripts/run_baseline_comparison.py`
   - `code/scripts/evaluate_noise_robustness.py`
   - `scripts/profile_phycl_complexity.py`
-- The minimal reviewer-facing documentation:
+- The canonical reviewer-facing documents:
   - `README.md`
   - `docs/REPRODUCIBILITY.md`
   - `docs/REPRODUCIBILITY_MANIFEST.json`

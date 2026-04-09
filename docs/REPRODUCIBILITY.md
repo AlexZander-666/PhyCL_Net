@@ -1,6 +1,6 @@
 ﻿# Reproducibility Guide
 
-This repository is organized around a single canonical entrypoint, `code/phycl_net_experiments.py`. Reviewer-facing commands below use the manuscript model names `phycl` and `phycl_full`; hidden compatibility aliases remain in the codebase only to avoid breaking older local commands. The manuscript source tree itself is not duplicated here because it is part of the separate journal submission package.
+This repository is organized around a single canonical entrypoint, `code/phycl_net_experiments.py`. Reviewer-facing commands below use the manuscript model names `phycl` and `phycl_full`. Legacy local aliases, if any, are outside the reviewer-facing interface. The manuscript source tree itself is not duplicated here because it is part of the separate journal submission package.
 
 Additional reviewer-facing baseline keys exposed by the CLI are `dual_branch_baseline` and `compact_comparison_baseline`.
 
@@ -73,6 +73,6 @@ python code/scripts/evaluate_noise_robustness.py --ckpt outputs/phycl_sisfall_lo
 ## Notes on Scope
 - The repository documents algorithmic reproducibility under the reported desktop CPU/GPU protocol.
 - It does not claim direct validation on commercial wearables or medical alarm systems.
-- Data availability and repository release statements should be read together with the current manuscript revision.
+- Data availability should be read from the manuscript and any linked release statement, not inferred from this repository alone.
 - Auxiliary internal logs, manuscript build trees, and submission packing utilities are intentionally excluded from this reviewer-facing repository.
 
