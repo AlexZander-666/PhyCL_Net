@@ -7,8 +7,14 @@ This repository keeps only the code, commands, and minimal documentation needed 
 ## What This Repository Contains
 - A single training/evaluation entrypoint: `code/phycl_net_experiments.py`
 - The manuscript-facing model and its matched spectral baseline
-- Minimal supporting scripts for baseline comparison, CPU complexity measurement, and noise robustness evaluation
-- Reproducibility notes and reviewer-facing documentation
+- The retained reviewer-facing support scripts:
+  - `code/scripts/run_baseline_comparison.py`
+  - `code/scripts/evaluate_noise_robustness.py`
+  - `scripts/profile_phycl_complexity.py`
+- The minimal reviewer-facing documentation:
+  - `docs/REPRODUCIBILITY.md`
+  - `docs/REPRODUCIBILITY_MANIFEST.json`
+  - `docs/paper/REVIEWER_RESPONSE_MAPPING.md`
 
 ## Canonical Model Names
 - `phycl`: manuscript model, i.e. the time-domain PhyCL-Net configuration without the spectral MSPA branch
@@ -80,12 +86,12 @@ Expected reviewer-facing noise artifacts:
 - `docs/`: reproducibility notes, manifest, and reviewer-facing explanatory materials
 
 ## Reproducibility Notes
-- The authoritative run protocol is documented in `docs/REPRODUCIBILITY.md`.
-- `docs/REPRODUCIBILITY_MANIFEST.json` records the canonical reviewer-facing commands and expected artifacts.
-- `docs/paper/REVIEWER_RESPONSE_MAPPING.md` explains how this repository relates to the submitted revision without duplicating the manuscript source tree.
-- `data/`, `outputs/`, and generated figures are intentionally excluded from git. You must provide them locally to reproduce the reported numbers.
-- The LaTeX manuscript and journal submission materials were submitted separately and are therefore not mirrored in this repository.
-- If a manuscript statement and a legacy script comment disagree, follow the manuscript-facing names and commands in this README and `docs/REPRODUCIBILITY.md`.
+- The canonical run protocol is defined in `docs/REPRODUCIBILITY.md`.
+- `docs/REPRODUCIBILITY_MANIFEST.json` records the canonical reviewer-facing commands and artifact examples.
+- `docs/paper/REVIEWER_RESPONSE_MAPPING.md` defines the repository boundary relative to the submitted revision.
+- `data/`, `outputs/`, checkpoints, and generated figures are intentionally excluded from git and must be provided locally.
+- The LaTeX manuscript and journal submission materials were submitted separately and are not mirrored in this repository.
+- If any README text, script comment, or local note conflicts with the manuscript-facing commands, follow `docs/REPRODUCIBILITY.md`.
 
 Repository-specific working rules are in `AGENTS.md`.
 

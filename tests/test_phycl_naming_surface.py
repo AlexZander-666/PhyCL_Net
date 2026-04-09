@@ -110,3 +110,16 @@ def test_readme_opening_matches_reviewer_scope_tone():
     assert "reviewer-facing code and protocol package" in readme
     assert "not a mirror of the full local workspace" in readme
     assert "not a second copy of the journal submission package" in readme
+
+
+def test_readme_sections_use_hard_boundary_wording():
+    readme = (REPO_ROOT / "README.md").read_text(encoding="utf-8")
+
+    assert "Minimal supporting scripts for baseline comparison, CPU complexity measurement, and noise robustness evaluation" not in readme
+    assert "Reproducibility notes and reviewer-facing documentation" not in readme
+    assert "The retained reviewer-facing support scripts:" in readme
+    assert "The minimal reviewer-facing documentation:" in readme
+    assert "The authoritative run protocol is documented in `docs/REPRODUCIBILITY.md`." not in readme
+    assert "If a manuscript statement and a legacy script comment disagree" not in readme
+    assert "The canonical run protocol is defined in `docs/REPRODUCIBILITY.md`." in readme
+    assert "If any README text, script comment, or local note conflicts with the manuscript-facing commands" in readme
