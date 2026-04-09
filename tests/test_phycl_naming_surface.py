@@ -101,3 +101,12 @@ def test_reviewer_facing_docs_match_current_artifact_names():
     assert "noise_robustness_curve.png" in combined
     assert "clean_accuracy" in combined
     assert "clean_f1" in combined
+
+
+def test_readme_opening_matches_reviewer_scope_tone():
+    readme = (REPO_ROOT / "README.md").read_text(encoding="utf-8")
+
+    assert "reviewer-facing reproducibility repository" not in readme
+    assert "reviewer-facing code and protocol package" in readme
+    assert "not a mirror of the full local workspace" in readme
+    assert "not a second copy of the journal submission package" in readme

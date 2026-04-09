@@ -1,6 +1,8 @@
 ﻿# PhyCL-Net
 
-PhyCL-Net is a reviewer-facing reproducibility repository for the manuscript's physics-guided time-domain fall-detection model. It keeps only the code, supporting scripts, and documentation needed to inspect the main experimental pipeline and the paper-aligned auxiliary checks. Datasets, checkpoints, generated outputs, and the submitted manuscript package are intentionally not versioned here.
+PhyCL-Net is the reviewer-facing code and protocol package for the revised manuscript. It is not a mirror of the full local workspace and it is not a second copy of the journal submission package.
+
+This repository keeps only the code, commands, and minimal documentation needed to inspect the reported protocol. Datasets, checkpoints, generated outputs, and manuscript submission materials are intentionally not versioned here.
 
 ## What This Repository Contains
 - A single training/evaluation entrypoint: `code/phycl_net_experiments.py`
