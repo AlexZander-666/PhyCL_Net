@@ -9,6 +9,10 @@ This repository is the reviewer-facing code and protocol package for the revised
 - The reviewer-facing executable scripts:
   - `code/scripts/run_baseline_comparison.py`
   - `code/scripts/evaluate_noise_robustness.py`
+  - `code/scripts/export_model_for_edge.py`
+  - `code/scripts/benchmark_on_orangepi.py`
+  - `code/scripts/prepare_cross_dataset_npz.py`
+  - `code/scripts/run_cross_dataset_evaluation.py`
   - `scripts/profile_phycl_complexity.py`
 - The canonical reviewer-facing documents:
   - `README.md`
@@ -33,7 +37,9 @@ The manuscript materials were already submitted through the journal system. Dupl
 - General-purpose comparison models: inspect or rerun `code/scripts/run_baseline_comparison.py`
 - CPU complexity checks: inspect or rerun `scripts/profile_phycl_complexity.py`
 - Noise robustness discussion: inspect or rerun `code/scripts/evaluate_noise_robustness.py`
+- Edge export bundle and Orange Pi AI Pro 20T 24G CPU benchmark: inspect or rerun `code/scripts/export_model_for_edge.py` and `code/scripts/benchmark_on_orangepi.py`
+- Auxiliary transfer support on MobiFall, UniMiB, and KFall: inspect or rerun `code/scripts/prepare_cross_dataset_npz.py` and `code/scripts/run_cross_dataset_evaluation.py`
 
 ## Scope Boundary
 
-This repository supports inspection of the code path behind the revised manuscript. It should not be read as a claim of separate manuscript hosting, commercial wearable validation, or external-dataset validation beyond the paper's stated scope.
+This repository supports inspection of the code path behind the revised manuscript. It includes reviewer-facing support surfaces for the Orange Pi AI Pro 20T 24G CPU benchmark and the auxiliary MobiFall, UniMiB, and KFall transfer workflow, but it should not be read as a claim of separate manuscript hosting, commercial wearable validation, or external-dataset validation beyond the paper's stated scope.

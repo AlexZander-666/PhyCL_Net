@@ -27,7 +27,13 @@
     "baselines": "python code/scripts/run_baseline_comparison.py --data-root ./data --epochs 50",
     "complexity_cpu": "python scripts/profile_phycl_complexity.py --device cpu",
     "complexity_cpu_with_mspa": "python scripts/profile_phycl_complexity.py --device cpu --ablation-mspa",
-    "noise_robustness": "python code/scripts/evaluate_noise_robustness.py --ckpt outputs/phycl_sisfall_loso/ckpt_best_seed42_loso_SA01.pth --data-root ./data --output-dir ./outputs/noise --figure-dir ./figures/noise"
+    "noise_robustness": "python code/scripts/evaluate_noise_robustness.py --ckpt outputs/phycl_sisfall_loso/ckpt_best_seed42_loso_SA01.pth --data-root ./data --output-dir ./outputs/noise --figure-dir ./figures/noise",
+    "edge_export": "python code/scripts/export_model_for_edge.py --checkpoint outputs/phycl_full_sisfall_loso/ckpt_best_seed42_loso_SA01.pth --out-dir ./outputs/edge_bundle --model phycl_full --prepared-npz ./prepared/edge_windows.npz",
+    "orangepi_cpu_benchmark": "python code/scripts/benchmark_on_orangepi.py --model-path ./outputs/edge_bundle/phycl_full_edge.ts --out-json ./outputs/orangepi/orangepi_cpu.json --input-shape 1 3 512 --warmup 50 --repeats 200 --runtime-backend torchscript --execution-mode CPU --board-model \"Orange Pi AI Pro 20T 24G\" --npz-path ./outputs/edge_bundle/phycl_full_edge_samples.npz",
+    "prepare_mobiact_npz": "python code/scripts/prepare_cross_dataset_npz.py --dataset mobiact --source ./raw/MobiFall --out-root ./prepared --target-len 200",
+    "prepare_unimib_npz": "python code/scripts/prepare_cross_dataset_npz.py --dataset unimib --source ./raw/unimib.zip --out-root ./prepared --target-len 200",
+    "prepare_kfall_npz": "python code/scripts/prepare_cross_dataset_npz.py --dataset kfall --source ./raw/kfall.zip --out-root ./prepared --target-len 200",
+    "cross_dataset_eval": "python code/scripts/run_cross_dataset_evaluation.py --checkpoint outputs/phycl_sisfall_loso/ckpt_best_seed42_loso_SA01.pth --data-root ./prepared --out-dir ./outputs/cross_dataset --base-dataset sisfall --targets mobiact unimib kfall --model phycl"
   },
   "reported_manuscript_metrics": {
     "phycl": {
@@ -59,6 +65,28 @@
       "figures/noise/noise_robustness_curve.png",
       "figures/noise/noise_robustness_curve.pdf"
     ],
+    "edge_export_outputs": [
+      "outputs/edge_bundle/phycl_full_edge.ts",
+      "outputs/edge_bundle/phycl_full_edge_manifest.json",
+      "outputs/edge_bundle/phycl_full_edge_samples.npz"
+    ],
+    "orangepi_outputs": [
+      "outputs/orangepi/orangepi_cpu.json"
+    ],
+    "cross_dataset_prepared_npz": [
+      "prepared/mobiact/train.npz",
+      "prepared/mobiact/val.npz",
+      "prepared/mobiact/test.npz",
+      "prepared/unimib/train.npz",
+      "prepared/unimib/val.npz",
+      "prepared/unimib/test.npz",
+      "prepared/kfall/train.npz",
+      "prepared/kfall/val.npz",
+      "prepared/kfall/test.npz"
+    ],
+    "cross_dataset_outputs": [
+      "outputs/cross_dataset/cross_dataset_summary.json"
+    ],
     "noise_summary_keys": [
       "clean_accuracy",
       "clean_f1"
@@ -67,6 +95,7 @@
   "scope_notes": [
     "This repository does not include datasets, checkpoints, or generated outputs.",
     "Desktop CPU/GPU benchmarking is documented here; direct commercial wearable validation is outside the current repository scope.",
+    "Reviewer-facing support scripts are included for edge export, Orange Pi AI Pro 20T 24G CPU benchmarking, and auxiliary transfer checks on MobiFall, UniMiB, and KFall.",
     "The submitted manuscript source package is intentionally not mirrored in this reviewer-facing repository."
   ]
 }

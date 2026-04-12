@@ -10,6 +10,10 @@ This repository keeps only the code, commands, and minimal documentation needed 
 - The reviewer-facing executable scripts:
   - `code/scripts/run_baseline_comparison.py`
   - `code/scripts/evaluate_noise_robustness.py`
+  - `code/scripts/export_model_for_edge.py`
+  - `code/scripts/benchmark_on_orangepi.py`
+  - `code/scripts/prepare_cross_dataset_npz.py`
+  - `code/scripts/run_cross_dataset_evaluation.py`
   - `scripts/profile_phycl_complexity.py`
 - The canonical reviewer-facing documents:
   - `docs/REPRODUCIBILITY.md`
@@ -80,8 +84,48 @@ Expected reviewer-facing noise artifacts:
 - `figures/noise/noise_robustness_curve.png`
 - `figures/noise/noise_robustness_curve.pdf`
 
+Edge export bundle for embedded benchmarking:
+
+```bash
+python code/scripts/export_model_for_edge.py --checkpoint outputs/phycl_full_sisfall_loso/ckpt_best_seed42_loso_SA01.pth --out-dir ./outputs/edge_bundle --model phycl_full --prepared-npz ./prepared/edge_windows.npz
+```
+
+Expected reviewer-facing edge export artifacts:
+- `outputs/edge_bundle/phycl_full_edge.ts`
+- `outputs/edge_bundle/phycl_full_edge_manifest.json`
+- `outputs/edge_bundle/phycl_full_edge_samples.npz`
+
+Orange Pi CPU benchmark:
+
+```bash
+python code/scripts/benchmark_on_orangepi.py --model-path ./outputs/edge_bundle/phycl_full_edge.ts --out-json ./outputs/orangepi/orangepi_cpu.json --input-shape 1 3 512 --warmup 50 --repeats 200 --runtime-backend torchscript --execution-mode CPU --board-model "Orange Pi AI Pro 20T 24G" --npz-path ./outputs/edge_bundle/phycl_full_edge_samples.npz
+```
+
+Expected reviewer-facing Orange Pi artifacts:
+- `outputs/orangepi/orangepi_cpu.json`
+
+Cross-dataset NPZ preparation:
+
+```bash
+python code/scripts/prepare_cross_dataset_npz.py --dataset mobiact --source ./raw/MobiFall --out-root ./prepared --target-len 200
+python code/scripts/prepare_cross_dataset_npz.py --dataset unimib --source ./raw/unimib.zip --out-root ./prepared --target-len 200
+python code/scripts/prepare_cross_dataset_npz.py --dataset kfall --source ./raw/kfall.zip --out-root ./prepared --target-len 200
+```
+
+Cross-dataset evaluation:
+
+```bash
+python code/scripts/run_cross_dataset_evaluation.py --checkpoint outputs/phycl_sisfall_loso/ckpt_best_seed42_loso_SA01.pth --data-root ./prepared --out-dir ./outputs/cross_dataset --base-dataset sisfall --targets mobiact unimib kfall --model phycl
+```
+
+Expected reviewer-facing cross-dataset artifacts:
+- `prepared/mobiact/train.npz`, `prepared/mobiact/val.npz`, `prepared/mobiact/test.npz`
+- `prepared/unimib/train.npz`, `prepared/unimib/val.npz`, `prepared/unimib/test.npz`
+- `prepared/kfall/train.npz`, `prepared/kfall/val.npz`, `prepared/kfall/test.npz`
+- `outputs/cross_dataset/cross_dataset_summary.json`
+
 ## Project Layout
-- `code/`: canonical training entrypoint, model modules, losses, and reviewer-facing comparison and evaluation scripts
+- `code/`: canonical training entrypoint, model modules, losses, and reviewer-facing comparison and evaluation scripts, including export, embedded benchmarking, and cross-dataset support surfaces
 - `scripts/`: standalone reviewer-facing profiling utility
 - `docs/`: canonical run protocol, artifact manifest, and repository boundary note
 
@@ -90,6 +134,7 @@ Expected reviewer-facing noise artifacts:
 - `docs/REPRODUCIBILITY_MANIFEST.json` records the canonical reviewer-facing commands and artifact examples.
 - `docs/paper/REVIEWER_RESPONSE_MAPPING.md` defines the repository boundary relative to the submitted revision.
 - `data/`, `outputs/`, checkpoints, and generated figures are intentionally excluded from git and must be provided locally.
+- The Orange Pi AI Pro 20T 24G CPU benchmark and the MobiFall, UniMiB, and KFall auxiliary transfer workflow are documented as reviewer-facing support surfaces rather than as replacements for the main SisFall LOSO claim.
 - The LaTeX manuscript and journal submission materials were submitted separately and are not mirrored in this repository.
 - If any README text, script comment, or local note conflicts with the manuscript-facing commands, follow `docs/REPRODUCIBILITY.md`.
 

@@ -153,3 +153,19 @@ def test_reviewer_docs_use_consistent_script_and_document_labels():
     assert "reviewer-facing executable scripts" in combined
     assert "canonical reviewer-facing documents" in combined
     assert "Legacy local aliases, if any, are outside the reviewer-facing interface." in repro
+
+
+def test_reviewer_docs_cover_edge_and_cross_dataset_support_surfaces():
+    readme = (REPO_ROOT / "README.md").read_text(encoding="utf-8")
+    repro = (REPO_ROOT / "docs" / "REPRODUCIBILITY.md").read_text(encoding="utf-8")
+    scope = (REPO_ROOT / "docs" / "paper" / "REVIEWER_RESPONSE_MAPPING.md").read_text(encoding="utf-8")
+    combined = "\n".join([readme, repro, scope])
+
+    assert "export_model_for_edge.py" in combined
+    assert "benchmark_on_orangepi.py" in combined
+    assert "prepare_cross_dataset_npz.py" in combined
+    assert "run_cross_dataset_evaluation.py" in combined
+    assert "Orange Pi AI Pro 20T 24G" in combined
+    assert "MobiFall" in combined
+    assert "UniMiB" in combined
+    assert "KFall" in combined

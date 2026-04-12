@@ -186,6 +186,30 @@ def get_rng_states():
         states['torch_cuda'] = torch.cuda.get_rng_state_all()
     return states
 
+
+def build_checkpoint_state(
+    config: Dict[str, Any],
+    seed: int,
+    epoch: int,
+    model: nn.Module,
+    optimizer: torch.optim.Optimizer,
+    scheduler: Any,
+    scaler: Optional[Any],
+    best_f1: float,
+) -> Dict[str, Any]:
+    """Build a checkpoint payload with the reviewer-facing config snapshot."""
+    return {
+        'seed': seed,
+        'epoch': epoch,
+        'config': build_public_config_snapshot(config),
+        'model_state': model.state_dict(),
+        'optimizer_state': optimizer.state_dict(),
+        'scheduler_state': scheduler.state_dict(),
+        'scaler_state': scaler.state_dict() if scaler else None,
+        'best_f1': float(best_f1),
+        'rng_states': get_rng_states(),
+    }
+
 def set_rng_states(states):
     """恢复随机数生成器状态"""
     try:
@@ -2207,6 +2231,90 @@ def build_augmentation(config) -> Optional[SensorAugmentation]:
         time_shift_ratio=float(config.get("time_shift_ratio", 0.1)),
         drop_prob=float(config.get("drop_prob", 0.1)),
     )
+
+
+def build_model_from_config(config: Dict[str, Any], in_channels: int) -> nn.Module:
+    """Build a model instance from the shared reviewer-facing config surface."""
+    ablation_cfg = config.get('ablation', {}) or {}
+    internal_model = config.get('_model_impl', config.get('model'))
+    fusion_kernel_sizes = tuple(config.get('fusion_kernel_sizes', (3, 5, 7)))
+    band_edges_cfg = tuple(config['band_edges']) if config.get('band_edges') else None
+    num_bands_cfg = int(config.get('num_bands', 4))
+    fusion_variant = config.get('fusion_variant', 'enhanced')
+    adaptive_bands = config.get('adaptive_bands', True)
+    faa_axis_attn = config.get('faa_axis_attn', True)
+
+    if internal_model == 'dual_branch_baseline':
+        return DualBranchBaseline(
+            in_channels=in_channels,
+            channels=config['channels'],
+            n_blocks=config['n_blocks'],
+            num_classes=config['num_classes'],
+            freq_method=config.get('freq_method', 'fft'),
+            use_dks=ablation_cfg.get('dks', True),
+            use_freq_branch=ablation_cfg.get('mspa', True),
+            kernel_sizes=tuple(config.get('kernel_sizes', (7, 15, 31, 63))),
+            sample_rate=float(config.get('sample_rate', 50.0)),
+            adaptive_bands=adaptive_bands,
+            band_edges=band_edges_cfg,
+            num_bands=num_bands_cfg,
+            fusion_variant=fusion_variant,
+            fusion_kernel_sizes=fusion_kernel_sizes,
+        )
+    if internal_model == 'lstm':
+        return LSTMClassifier(in_channels=in_channels, num_classes=config['num_classes'])
+    if internal_model == 'resnet':
+        return ResNet1D(in_channels=in_channels, num_classes=config['num_classes'])
+    if internal_model == 'phycl_core':
+        return PhyCLNet(
+            in_channels=in_channels,
+            num_classes=config['num_classes'],
+            proj_dim=config.get('proj_dim', 128),
+            ablation=ablation_cfg,
+            freq_method=config.get('freq_method', 'fft'),
+            sample_rate=float(config.get('sample_rate', 50.0)),
+            time_attn=config.get('attn_time'),
+            freq_attn=config.get('attn_freq'),
+            fusion_attn=config.get('attn_fuse'),
+            fusion_variant=fusion_variant,
+            fusion_kernel_sizes=fusion_kernel_sizes,
+            adaptive_bands=adaptive_bands,
+            band_edges=band_edges_cfg,
+            num_bands=num_bands_cfg,
+            faa_axis_attn=faa_axis_attn,
+        )
+    if internal_model == 'compact_comparison_baseline':
+        return CompactComparisonBaseline(
+            in_channels=in_channels,
+            num_classes=config['num_classes'],
+            channels=max(16, config.get('channels', 32)),
+            n_blocks=max(1, config.get('n_blocks', 2)),
+            attn=config.get('attn_lite'),
+        )
+    if internal_model == 'tcn':
+        return TemporalConvNet(
+            in_channels=in_channels,
+            num_classes=config['num_classes'],
+            channels=config['channels'],
+            depth=config.get('n_blocks', 4),
+        )
+    if internal_model == 'transformer':
+        return TransformerClassifier(
+            in_channels=in_channels,
+            num_classes=config['num_classes'],
+            d_model=max(64, config['channels']),
+            nhead=max(1, config['channels'] // 32),
+            num_layers=config.get('n_blocks', 2),
+        )
+    if internal_model == 'inceptiontime':
+        return InceptionTimeClassifier(in_channels=in_channels, num_classes=config['num_classes'])
+    if internal_model == 'rocket':
+        return ROCKETClassifier(in_channels=in_channels, num_classes=config['num_classes'])
+    if internal_model == 'tinyhar':
+        return TinyHARClassifier(in_channels=in_channels, num_classes=config['num_classes'])
+    if internal_model == 'deeplstm':
+        return DeepLSTMClassifier(in_channels=in_channels, num_classes=config['num_classes'])
+    raise ValueError(f"Unknown model type: {internal_model}")
 
 def load_preloaded_splits(root: str, name: str, seed: int, channels_used: str):
     """

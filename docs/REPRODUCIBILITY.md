@@ -17,7 +17,8 @@ python -c "import torch; print(torch.__version__, torch.cuda.is_available())"
 ## Data
 - Place datasets under `data/` and pass `--data-root ./data`.
 - This public repository does not commit datasets, checkpoints, or generated outputs.
-- The current manuscript results are reported on SisFall under LOSO evaluation. Additional datasets may be explored with separate scripts, but they are not part of the main reviewer-facing claim.
+- The current manuscript results are reported on SisFall under LOSO evaluation.
+- Auxiliary transfer support for MobiFall, UniMiB, and KFall is exposed through separate preparation and evaluation scripts. These support surfaces broaden inspection of the revised manuscript, but they do not replace the main SisFall LOSO claim.
 
 ## Canonical Commands
 Smoke test:
@@ -61,6 +62,32 @@ Optional noise robustness check for the discussion section:
 python code/scripts/evaluate_noise_robustness.py --ckpt outputs/phycl_sisfall_loso/ckpt_best_seed42_loso_SA01.pth --data-root ./data --output-dir ./outputs/noise --figure-dir ./figures/noise
 ```
 
+Edge export bundle:
+
+```bash
+python code/scripts/export_model_for_edge.py --checkpoint outputs/phycl_full_sisfall_loso/ckpt_best_seed42_loso_SA01.pth --out-dir ./outputs/edge_bundle --model phycl_full --prepared-npz ./prepared/edge_windows.npz
+```
+
+Orange Pi CPU benchmark:
+
+```bash
+python code/scripts/benchmark_on_orangepi.py --model-path ./outputs/edge_bundle/phycl_full_edge.ts --out-json ./outputs/orangepi/orangepi_cpu.json --input-shape 1 3 512 --warmup 50 --repeats 200 --runtime-backend torchscript --execution-mode CPU --board-model "Orange Pi AI Pro 20T 24G" --npz-path ./outputs/edge_bundle/phycl_full_edge_samples.npz
+```
+
+Cross-dataset NPZ preparation:
+
+```bash
+python code/scripts/prepare_cross_dataset_npz.py --dataset mobiact --source ./raw/MobiFall --out-root ./prepared --target-len 200
+python code/scripts/prepare_cross_dataset_npz.py --dataset unimib --source ./raw/unimib.zip --out-root ./prepared --target-len 200
+python code/scripts/prepare_cross_dataset_npz.py --dataset kfall --source ./raw/kfall.zip --out-root ./prepared --target-len 200
+```
+
+Cross-dataset evaluation:
+
+```bash
+python code/scripts/run_cross_dataset_evaluation.py --checkpoint outputs/phycl_sisfall_loso/ckpt_best_seed42_loso_SA01.pth --data-root ./prepared --out-dir ./outputs/cross_dataset --base-dataset sisfall --targets mobiact unimib kfall --model phycl
+```
+
 ## Expected Artifacts
 - `summary_results.json`: aggregate metrics for the run
 - `loso_records_seed*.json`: fold-level LOSO metrics
@@ -69,9 +96,14 @@ python code/scripts/evaluate_noise_robustness.py --ckpt outputs/phycl_sisfall_lo
 - `outputs/lstm_checkpoint.pth` and `outputs/resnet_checkpoint.pth`: optional checkpoints emitted by `run_baseline_comparison.py`
 - `noise_robustness_results.json`: optional robustness sweep output when the noise script is used; its summary block reports `clean_accuracy` and `clean_f1` for the sigma=0 reference run
 - `noise_robustness_curve.png` and `noise_robustness_curve.pdf`: optional reviewer-facing plots emitted by the noise robustness script
+- `outputs/edge_bundle/phycl_full_edge.ts`, `outputs/edge_bundle/phycl_full_edge_manifest.json`, and `outputs/edge_bundle/phycl_full_edge_samples.npz`: optional export artifacts for embedded benchmarking
+- `outputs/orangepi/orangepi_cpu.json`: optional Orange Pi AI Pro 20T 24G CPU benchmark report with board metadata and p50/p95 latency
+- `prepared/mobiact/*.npz`, `prepared/unimib/*.npz`, and `prepared/kfall/*.npz`: optional two-class preparation outputs for auxiliary transfer checks
+- `outputs/cross_dataset/cross_dataset_summary.json`: optional auxiliary transfer summary across MobiFall, UniMiB, and KFall
 
 ## Notes on Scope
 - The repository documents algorithmic reproducibility under the reported desktop CPU/GPU protocol.
+- It also exposes the reviewer-facing support scripts used to prepare an edge export bundle, measure Orange Pi AI Pro 20T 24G CPU latency, and stage auxiliary transfer checks on MobiFall, UniMiB, and KFall.
 - It does not claim direct validation on commercial wearables or medical alarm systems.
 - Data availability should be read from the manuscript and any linked release statement, not inferred from this repository alone.
 - Auxiliary internal logs, manuscript build trees, and submission packing utilities are intentionally excluded from this reviewer-facing repository.
