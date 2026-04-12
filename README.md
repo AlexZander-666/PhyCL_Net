@@ -1,19 +1,22 @@
 ﻿# PhyCL-Net
 
-PhyCL-Net is the reviewer-facing code and protocol package for the revised manuscript. It is not a mirror of the full local workspace and it is not a second copy of the journal submission package.
+PhyCL-Net is the reviewer-facing code and protocol package for the revised manuscript. It is not a mirror of the full local workspace and it is not a second copy of the journal submission package. This repository keeps only the code, commands, and minimal documentation needed to inspect the reported protocol.
 
-This repository keeps only the code, commands, and minimal documentation needed to inspect the reported protocol. Datasets, checkpoints, generated outputs, and manuscript submission materials are intentionally not versioned here.
+For the revised manuscript, the reviewer-facing package also includes auxiliary cross-dataset transfer support for MobiFall, UniMiB, and KFall under a separate protocol, together with the Orange Pi AI Pro 20T 24G CPU benchmarking path. These materials are provided as reviewer-facing support surfaces rather than as replacements for the main SisFall LOSO claim.
+
+Datasets, checkpoints, generated outputs, and manuscript submission materials are intentionally not versioned here.
 
 ## What This Repository Contains
 - A single training/evaluation entrypoint: `code/phycl_net_experiments.py`
 - The manuscript-facing model and its matched spectral baseline
+- Auxiliary cross-dataset transfer support for MobiFall, UniMiB, and KFall under a separate reviewer-facing protocol
 - The reviewer-facing executable scripts:
   - `code/scripts/run_baseline_comparison.py`
   - `code/scripts/evaluate_noise_robustness.py`
-  - `code/scripts/export_model_for_edge.py`
-  - `code/scripts/benchmark_on_orangepi.py`
   - `code/scripts/prepare_cross_dataset_npz.py`
   - `code/scripts/run_cross_dataset_evaluation.py`
+  - `code/scripts/export_model_for_edge.py`
+  - `code/scripts/benchmark_on_orangepi.py`
   - `scripts/profile_phycl_complexity.py`
 - The canonical reviewer-facing documents:
   - `docs/REPRODUCIBILITY.md`
