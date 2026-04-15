@@ -1,0 +1,4 @@
+Cross-dataset public release is blocked from being used as exact manuscript-table backing evidence until a clean result pack matching the published table is identified or regenerated.
+
+Current status: supportive-only.
+Reason: the staged summary describes a separate "Multi-Dataset LOSO (SisFall 80% + MobiFall 20%)" run and does not match the published supplementary table rows for MobiFall, UniMiB, and KFall zero-shot and 5-shot transfer.

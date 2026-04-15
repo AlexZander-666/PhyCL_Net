@@ -1,0 +1,11 @@
+{
+  "data_root": "./data",
+  "out_dir": "./outputs/multi_dataset_loso_test",
+  "epochs": 2,
+  "batch_size": 32,
+  "lr": 0.001,
+  "patience": 15,
+  "seed": 42,
+  "num_workers": 0,
+  "amp": false
+}
