@@ -18,6 +18,19 @@
         "fixed-shape p50 622.78 ms",
         "prepared-window p50 619.19 ms"
       ]
+    },
+    {
+      "group": "noise-robustness-evidence",
+      "files": [
+        "artifacts/staging/noise/noise_robustness_results.csv",
+        "artifacts/staging/noise/noise_robustness_curve.pdf",
+        "artifacts/staging/noise/noise_robustness_curve.png"
+      ],
+      "manuscript_claims": [
+        "AWGN SNR sweep from 40 dB to 5 dB",
+        "40 dB accuracy 98.04%",
+        "30 dB accuracy 91.49%"
+      ]
     }
   ]
 }
