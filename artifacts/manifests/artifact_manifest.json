@@ -83,20 +83,6 @@
           "status": "ready"
         }
       ]
-    },
-    {
-      "group": "cross-dataset-results-pack",
-      "files": [
-        "artifacts/staging/cross_dataset/cross_dataset_summary.json",
-        "artifacts/staging/cross_dataset/per_fold_metrics.csv",
-        "artifacts/staging/cross_dataset/experiment_config.json",
-        "artifacts/staging/cross_dataset/CROSS_DATASET_STATUS.txt"
-      ],
-      "status": "supportive-only",
-      "manuscript_claims": [
-        "supplementary cross-dataset transfer evidence under a separate protocol"
-      ],
-      "blocking_note": "Cross-dataset public release is blocked from being used as exact manuscript-table backing evidence until a clean result pack matching the published table is identified or regenerated."
     }
   ]
 }

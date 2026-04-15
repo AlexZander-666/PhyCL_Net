@@ -10,10 +10,10 @@ This release accompanies the public `PhyCL_Net` reviewer-facing repository surfa
 - Orange Pi AI Pro 20T 24G CPU-only benchmark evidence.
 - Supplemental noise robustness evidence.
 - Normalized SisFall result bundles for `phycl_full`, `lstm`, `resnet`, `tcn`, `transformer`, and `inceptiontime`.
-- Normalized cross-dataset result bundle published as supportive-only supplemental evidence.
 
 ### Not Included
 - The blocked `phycl` SisFall summary bundle, because `summary_results.json` reports `n=1` while three `loso_results_seed*.json` files are visible in the source directory.
+- Cross-dataset audit traces and temporary result packs. They remain local-only until a clean result pack matching the published supplementary table is identified or regenerated.
 - Raw datasets.
 - Full raw training workspace outputs.
 - Bulk checkpoints and temporary logs.
@@ -26,4 +26,4 @@ This release accompanies the public `PhyCL_Net` reviewer-facing repository surfa
 ## Known Gaps
 - Some legacy `SCI666` result summaries still require normalization before publication.
 - The `phycl` SisFall summary requires regeneration or provenance cleanup before it can be released as final backing evidence for the manuscript's main SisFall claim.
-- Cross-dataset release evidence remains supportive-only until exact manuscript-table provenance is frozen.
+- Cross-dataset evidence remains excluded from the public release surface until exact manuscript-table provenance is frozen.
