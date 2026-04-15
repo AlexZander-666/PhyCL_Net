@@ -1,0 +1,23 @@
+{
+  "publication_rules": [
+    "No raw directory under SCI666/outputs is uploaded directly.",
+    "Every public artifact must first be copied into a normalized staging location under experiments/PhyCL_Net/artifacts/staging.",
+    "Every staged artifact must appear in artifact_manifest.json before release publication."
+  ],
+  "artifact_groups": [
+    {
+      "group": "orangepi-phase5-evidence",
+      "files": [
+        "artifacts/staging/orangepi/orangepi_cpu_fixed_benchmark.json",
+        "artifacts/staging/orangepi/orangepi_cpu_real_windows_benchmark.json",
+        "artifacts/staging/orangepi/orangepi_phase5_status.json",
+        "artifacts/staging/orangepi/orangepi_phase5_table.csv"
+      ],
+      "manuscript_claims": [
+        "Orange Pi AI Pro 20T 24G CPU-only benchmark",
+        "fixed-shape p50 622.78 ms",
+        "prepared-window p50 619.19 ms"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "device_entry": "UART via COM10",
+  "board_model": "Orange Pi AI Pro 20T 24G",
+  "os": "Linux-5.10.0+-aarch64-with-glibc2.35",
+  "python": "3.9.2",
+  "torch": "2.1.0",
+  "runtime_backend": "torchscript",
+  "execution_mode": "CPU",
+  "model_file_size_bytes": 6078508,
+  "fixed_benchmark_json": "outputs/orangepi_cpu_fixed_benchmark_phase5.json",
+  "real_windows_benchmark_json": "outputs/orangepi_cpu_real_windows_benchmark_phase5.json",
+  "npu_toolchain_status": {
+    "npu_smi_present": true,
+    "atc_present": true,
+    "msame_present": false,
+    "onnxruntime_present": false,
+    "phase5_closure": "CPU-only closure; no stable on-device NPU runtime path verified during revision window."
+  }
+}

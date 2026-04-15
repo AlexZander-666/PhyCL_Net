@@ -1,0 +1,40 @@
+{
+  "board": {
+    "model": "Orange Pi AI Pro 20T 24G",
+    "hostname": "orangepi-ecust"
+  },
+  "environment": {
+    "os": "Linux-5.10.0+-aarch64-with-glibc2.35",
+    "python": "3.9.2",
+    "torch": "2.1.0",
+    "cpu_count": 4,
+    "device": "cpu"
+  },
+  "runtime": {
+    "backend": "torchscript",
+    "device": "cpu"
+  },
+  "model_path": "/home/HwHiAiUser/phycl_phase5/phycl_edge_model.ts",
+  "model_file_size_bytes": 6078508,
+  "input_shape": [
+    1,
+    3,
+    512
+  ],
+  "input_source": "npz",
+  "sample_count": 32,
+  "warmup_count": 50,
+  "repeat_count": 200,
+  "batch_size": 1,
+  "execution_mode": "CPU",
+  "latency_ms": {
+    "p50": 619.1889325054944,
+    "p95": 670.9230391599704,
+    "mean": 623.735323694491,
+    "min": 553.3848890045192,
+    "max": 985.7059179921634
+  },
+  "memory": {
+    "peak_rss_mb": 255.953125
+  }
+}
