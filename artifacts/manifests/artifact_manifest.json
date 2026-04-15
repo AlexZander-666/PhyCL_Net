@@ -31,6 +31,58 @@
         "40 dB accuracy 98.04%",
         "30 dB accuracy 91.49%"
       ]
+    },
+    {
+      "group": "sisfall-main-results",
+      "models": [
+        {
+          "public_name": "phycl",
+          "source_dir": "SCI666/outputs/ablation_no_mspa",
+          "staged_dir": "artifacts/staging/sisfall/phycl_sisfall_loso",
+          "status": "blocked-until-summary-regenerated",
+          "audit": {
+            "summary_results_n": 1,
+            "visible_seed_files": 3,
+            "reason": "summary_results.json does not match the visible loso_results_seed*.json set"
+          }
+        },
+        {
+          "public_name": "phycl_full",
+          "source_dir": "SCI666/outputs/stage1_amsv2_final",
+          "staged_dir": "artifacts/staging/sisfall/phycl_full_sisfall_loso",
+          "status": "ready"
+        },
+        {
+          "public_name": "lstm",
+          "source_dir": "SCI666/outputs/stage1_lstm_final",
+          "staged_dir": "artifacts/staging/sisfall/lstm_sisfall_loso",
+          "status": "ready"
+        },
+        {
+          "public_name": "resnet",
+          "source_dir": "SCI666/outputs/stage1_resnet_final",
+          "staged_dir": "artifacts/staging/sisfall/resnet_sisfall_loso",
+          "status": "ready"
+        },
+        {
+          "public_name": "tcn",
+          "source_dir": "SCI666/outputs/stage1_tcn_final",
+          "staged_dir": "artifacts/staging/sisfall/tcn_sisfall_loso",
+          "status": "ready"
+        },
+        {
+          "public_name": "transformer",
+          "source_dir": "SCI666/outputs/stage1_transformer_final",
+          "staged_dir": "artifacts/staging/sisfall/transformer_sisfall_loso",
+          "status": "ready"
+        },
+        {
+          "public_name": "inceptiontime",
+          "source_dir": "SCI666/outputs/stage1_inceptiontime_final",
+          "staged_dir": "artifacts/staging/sisfall/inceptiontime_sisfall_loso",
+          "status": "ready"
+        }
+      ]
     }
   ]
 }

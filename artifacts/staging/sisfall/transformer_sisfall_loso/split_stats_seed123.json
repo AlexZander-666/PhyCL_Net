@@ -1,0 +1,494 @@
+{
+  "loso_SA01": {
+    "train": {
+      "total": 14446,
+      "label_counts": {
+        "0": 8446,
+        "1": 6000
+      },
+      "subject_counts": {
+        "SA05": 1808,
+        "SA06": 1808,
+        "SA10": 1808,
+        "SA11": 1808,
+        "SA17": 1790,
+        "SA18": 1808,
+        "SA19": 1808,
+        "SA21": 1808
+      }
+    },
+    "val": {
+      "total": 5424,
+      "label_counts": {
+        "0": 3174,
+        "1": 2250
+      },
+      "subject_counts": {
+        "SA02": 1808,
+        "SA04": 1808,
+        "SA09": 1808
+      }
+    },
+    "test": {
+      "total": 1808,
+      "label_counts": {
+        "0": 1058,
+        "1": 750
+      },
+      "subject_counts": {
+        "SA01": 1808
+      }
+    }
+  },
+  "loso_SA02": {
+    "train": {
+      "total": 14446,
+      "label_counts": {
+        "0": 8446,
+        "1": 6000
+      },
+      "subject_counts": {
+        "SA04": 1808,
+        "SA05": 1808,
+        "SA06": 1808,
+        "SA10": 1808,
+        "SA11": 1808,
+        "SA17": 1790,
+        "SA19": 1808,
+        "SA21": 1808
+      }
+    },
+    "val": {
+      "total": 5424,
+      "label_counts": {
+        "0": 3174,
+        "1": 2250
+      },
+      "subject_counts": {
+        "SA01": 1808,
+        "SA09": 1808,
+        "SA18": 1808
+      }
+    },
+    "test": {
+      "total": 1808,
+      "label_counts": {
+        "0": 1058,
+        "1": 750
+      },
+      "subject_counts": {
+        "SA02": 1808
+      }
+    }
+  },
+  "loso_SA04": {
+    "train": {
+      "total": 14446,
+      "label_counts": {
+        "0": 8446,
+        "1": 6000
+      },
+      "subject_counts": {
+        "SA01": 1808,
+        "SA02": 1808,
+        "SA05": 1808,
+        "SA10": 1808,
+        "SA11": 1808,
+        "SA17": 1790,
+        "SA18": 1808,
+        "SA19": 1808
+      }
+    },
+    "val": {
+      "total": 5424,
+      "label_counts": {
+        "0": 3174,
+        "1": 2250
+      },
+      "subject_counts": {
+        "SA06": 1808,
+        "SA09": 1808,
+        "SA21": 1808
+      }
+    },
+    "test": {
+      "total": 1808,
+      "label_counts": {
+        "0": 1058,
+        "1": 750
+      },
+      "subject_counts": {
+        "SA04": 1808
+      }
+    }
+  },
+  "loso_SA05": {
+    "train": {
+      "total": 14464,
+      "label_counts": {
+        "0": 8464,
+        "1": 6000
+      },
+      "subject_counts": {
+        "SA02": 1808,
+        "SA04": 1808,
+        "SA06": 1808,
+        "SA09": 1808,
+        "SA10": 1808,
+        "SA11": 1808,
+        "SA18": 1808,
+        "SA21": 1808
+      }
+    },
+    "val": {
+      "total": 5406,
+      "label_counts": {
+        "0": 3156,
+        "1": 2250
+      },
+      "subject_counts": {
+        "SA01": 1808,
+        "SA17": 1790,
+        "SA19": 1808
+      }
+    },
+    "test": {
+      "total": 1808,
+      "label_counts": {
+        "0": 1058,
+        "1": 750
+      },
+      "subject_counts": {
+        "SA05": 1808
+      }
+    }
+  },
+  "loso_SA06": {
+    "train": {
+      "total": 14446,
+      "label_counts": {
+        "0": 8446,
+        "1": 6000
+      },
+      "subject_counts": {
+        "SA04": 1808,
+        "SA05": 1808,
+        "SA09": 1808,
+        "SA10": 1808,
+        "SA11": 1808,
+        "SA17": 1790,
+        "SA18": 1808,
+        "SA21": 1808
+      }
+    },
+    "val": {
+      "total": 5424,
+      "label_counts": {
+        "0": 3174,
+        "1": 2250
+      },
+      "subject_counts": {
+        "SA01": 1808,
+        "SA02": 1808,
+        "SA19": 1808
+      }
+    },
+    "test": {
+      "total": 1808,
+      "label_counts": {
+        "0": 1058,
+        "1": 750
+      },
+      "subject_counts": {
+        "SA06": 1808
+      }
+    }
+  },
+  "loso_SA09": {
+    "train": {
+      "total": 14446,
+      "label_counts": {
+        "0": 8446,
+        "1": 6000
+      },
+      "subject_counts": {
+        "SA01": 1808,
+        "SA02": 1808,
+        "SA04": 1808,
+        "SA06": 1808,
+        "SA10": 1808,
+        "SA17": 1790,
+        "SA19": 1808,
+        "SA21": 1808
+      }
+    },
+    "val": {
+      "total": 5424,
+      "label_counts": {
+        "0": 3174,
+        "1": 2250
+      },
+      "subject_counts": {
+        "SA05": 1808,
+        "SA11": 1808,
+        "SA18": 1808
+      }
+    },
+    "test": {
+      "total": 1808,
+      "label_counts": {
+        "0": 1058,
+        "1": 750
+      },
+      "subject_counts": {
+        "SA09": 1808
+      }
+    }
+  },
+  "loso_SA10": {
+    "train": {
+      "total": 14446,
+      "label_counts": {
+        "0": 8446,
+        "1": 6000
+      },
+      "subject_counts": {
+        "SA01": 1808,
+        "SA02": 1808,
+        "SA04": 1808,
+        "SA05": 1808,
+        "SA09": 1808,
+        "SA11": 1808,
+        "SA17": 1790,
+        "SA21": 1808
+      }
+    },
+    "val": {
+      "total": 5424,
+      "label_counts": {
+        "0": 3174,
+        "1": 2250
+      },
+      "subject_counts": {
+        "SA06": 1808,
+        "SA18": 1808,
+        "SA19": 1808
+      }
+    },
+    "test": {
+      "total": 1808,
+      "label_counts": {
+        "0": 1058,
+        "1": 750
+      },
+      "subject_counts": {
+        "SA10": 1808
+      }
+    }
+  },
+  "loso_SA11": {
+    "train": {
+      "total": 14446,
+      "label_counts": {
+        "0": 8446,
+        "1": 6000
+      },
+      "subject_counts": {
+        "SA01": 1808,
+        "SA02": 1808,
+        "SA04": 1808,
+        "SA05": 1808,
+        "SA09": 1808,
+        "SA17": 1790,
+        "SA19": 1808,
+        "SA21": 1808
+      }
+    },
+    "val": {
+      "total": 5424,
+      "label_counts": {
+        "0": 3174,
+        "1": 2250
+      },
+      "subject_counts": {
+        "SA06": 1808,
+        "SA10": 1808,
+        "SA18": 1808
+      }
+    },
+    "test": {
+      "total": 1808,
+      "label_counts": {
+        "0": 1058,
+        "1": 750
+      },
+      "subject_counts": {
+        "SA11": 1808
+      }
+    }
+  },
+  "loso_SA17": {
+    "train": {
+      "total": 14464,
+      "label_counts": {
+        "0": 8464,
+        "1": 6000
+      },
+      "subject_counts": {
+        "SA01": 1808,
+        "SA02": 1808,
+        "SA04": 1808,
+        "SA05": 1808,
+        "SA06": 1808,
+        "SA10": 1808,
+        "SA11": 1808,
+        "SA19": 1808
+      }
+    },
+    "val": {
+      "total": 5424,
+      "label_counts": {
+        "0": 3174,
+        "1": 2250
+      },
+      "subject_counts": {
+        "SA09": 1808,
+        "SA18": 1808,
+        "SA21": 1808
+      }
+    },
+    "test": {
+      "total": 1790,
+      "label_counts": {
+        "0": 1040,
+        "1": 750
+      },
+      "subject_counts": {
+        "SA17": 1790
+      }
+    }
+  },
+  "loso_SA18": {
+    "train": {
+      "total": 14446,
+      "label_counts": {
+        "0": 8446,
+        "1": 6000
+      },
+      "subject_counts": {
+        "SA01": 1808,
+        "SA02": 1808,
+        "SA05": 1808,
+        "SA06": 1808,
+        "SA09": 1808,
+        "SA11": 1808,
+        "SA17": 1790,
+        "SA19": 1808
+      }
+    },
+    "val": {
+      "total": 5424,
+      "label_counts": {
+        "0": 3174,
+        "1": 2250
+      },
+      "subject_counts": {
+        "SA04": 1808,
+        "SA10": 1808,
+        "SA21": 1808
+      }
+    },
+    "test": {
+      "total": 1808,
+      "label_counts": {
+        "0": 1058,
+        "1": 750
+      },
+      "subject_counts": {
+        "SA18": 1808
+      }
+    }
+  },
+  "loso_SA19": {
+    "train": {
+      "total": 14446,
+      "label_counts": {
+        "0": 8446,
+        "1": 6000
+      },
+      "subject_counts": {
+        "SA01": 1808,
+        "SA02": 1808,
+        "SA04": 1808,
+        "SA05": 1808,
+        "SA06": 1808,
+        "SA10": 1808,
+        "SA17": 1790,
+        "SA18": 1808
+      }
+    },
+    "val": {
+      "total": 5424,
+      "label_counts": {
+        "0": 3174,
+        "1": 2250
+      },
+      "subject_counts": {
+        "SA09": 1808,
+        "SA11": 1808,
+        "SA21": 1808
+      }
+    },
+    "test": {
+      "total": 1808,
+      "label_counts": {
+        "0": 1058,
+        "1": 750
+      },
+      "subject_counts": {
+        "SA19": 1808
+      }
+    }
+  },
+  "loso_SA21": {
+    "train": {
+      "total": 14464,
+      "label_counts": {
+        "0": 8464,
+        "1": 6000
+      },
+      "subject_counts": {
+        "SA01": 1808,
+        "SA02": 1808,
+        "SA04": 1808,
+        "SA06": 1808,
+        "SA09": 1808,
+        "SA10": 1808,
+        "SA18": 1808,
+        "SA19": 1808
+      }
+    },
+    "val": {
+      "total": 5406,
+      "label_counts": {
+        "0": 3156,
+        "1": 2250
+      },
+      "subject_counts": {
+        "SA05": 1808,
+        "SA11": 1808,
+        "SA17": 1790
+      }
+    },
+    "test": {
+      "total": 1808,
+      "label_counts": {
+        "0": 1058,
+        "1": 750
+      },
+      "subject_counts": {
+        "SA21": 1808
+      }
+    }
+  }
+}
