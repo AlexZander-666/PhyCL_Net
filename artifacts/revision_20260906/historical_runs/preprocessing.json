@@ -1,0 +1,12 @@
+{
+  "version": "origin-main-9dbbd3b-raw200-v1",
+  "raw_sample_rate_hz": 200,
+  "downsampling": "none",
+  "lowpass_filter": "none",
+  "normalization": "per-record, per-channel z-score before segmentation",
+  "window_size": 512,
+  "stride": 256,
+  "channels": "accel3",
+  "short_recording_policy": "right zero-pad one normalized window",
+  "trailing_remainder_policy": "drop"
+}

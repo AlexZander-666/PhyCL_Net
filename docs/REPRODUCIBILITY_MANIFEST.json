@@ -1,102 +1,74 @@
-﻿{
-  "project": "PhyCL-Net",
-  "repository_purpose": "Reviewer-facing code and reproducibility package for edge-oriented wearable fall detection",
+{
+  "schema": "phycl-reviewer-protocol-v2",
+  "revision": "2026-09-06",
+  "source_paper": "paper/revised_20260906/main.tex",
+  "inherited_code_commit": "9dbbd3b9def673b1389db82dee42fb0aee6a16aa",
+  "verification_command": "python scripts/verify_reviewer_evidence.py",
   "canonical_models": {
-    "phycl": {
-      "internal_model": "phycl_core",
-      "ablation": "no_mspa",
-      "description": "Time-domain manuscript model without the MSPA spectral branch"
-    },
-    "phycl_full": {
-      "internal_model": "phycl_core",
-      "ablation": "full",
-      "description": "Matched spectral baseline used for the trade-off analysis"
-    }
+    "phycl": "MSPA disabled; FAA active",
+    "phycl_full": "MSPA enabled; spectral baseline, not no-FAA"
   },
-  "dataset": {
-    "name": "SisFall",
-    "input_channels": "3-axis accelerometer",
-    "window_size": 512,
+  "paper_specification_only": {
+    "main_subjects": [
+      "SA01",
+      "SA02",
+      "SA04",
+      "SA05",
+      "SA06",
+      "SA09",
+      "SA10",
+      "SA11",
+      "SA17",
+      "SA18",
+      "SA19",
+      "SA21"
+    ],
+    "seeds": [
+      42,
+      123,
+      456,
+      789,
+      1024
+    ],
+    "input_shape": [
+      1,
+      3,
+      512
+    ],
+    "raw_hz": 200,
+    "processed_hz": 50,
+    "lowpass_order": 4,
+    "lowpass_hz": 5,
     "stride": 256,
-    "evaluation": "12-fold LOSO"
+    "epochs": 50,
+    "batch_size": 256,
+    "learning_rate": 0.004,
+    "warmup_epochs": 10,
+    "weight_decay": 0.0001,
+    "contrastive_weight": 0.1,
+    "contrastive_temperature": 0.1
   },
-  "canonical_commands": {
-    "smoke_test": "python code/phycl_net_experiments.py --dataset dryrun --model phycl --epochs 2 --batch-size 4 --profile",
-    "phycl_loso": "python code/phycl_net_experiments.py --dataset sisfall --data-root ./data --model phycl --eval-mode loso --seeds 42 123 456 789 1024 --epochs 50 --batch-size 256 --lr 0.004 --warmup-epochs 10 --weighted-loss --amp --use-tfcl --out-dir ./outputs/phycl_sisfall_loso",
-    "phycl_full_loso": "python code/phycl_net_experiments.py --dataset sisfall --data-root ./data --model phycl_full --eval-mode loso --seeds 42 123 --epochs 50 --batch-size 256 --lr 0.004 --warmup-epochs 10 --weighted-loss --amp --use-tfcl --out-dir ./outputs/phycl_full_sisfall_loso",
-    "baselines": "python code/scripts/run_baseline_comparison.py --data-root ./data --epochs 50",
-    "complexity_cpu": "python scripts/profile_phycl_complexity.py --device cpu",
-    "complexity_cpu_with_mspa": "python scripts/profile_phycl_complexity.py --device cpu --ablation-mspa",
-    "noise_robustness": "python code/scripts/evaluate_noise_robustness.py --ckpt outputs/phycl_sisfall_loso/ckpt_best_seed42_loso_SA01.pth --data-root ./data --output-dir ./outputs/noise --figure-dir ./figures/noise",
-    "edge_export": "python code/scripts/export_model_for_edge.py --checkpoint outputs/phycl_full_sisfall_loso/ckpt_best_seed42_loso_SA01.pth --out-dir ./outputs/edge_bundle --model phycl_full --prepared-npz ./prepared/edge_windows.npz",
-    "orangepi_cpu_benchmark": "python code/scripts/benchmark_on_orangepi.py --model-path ./outputs/edge_bundle/phycl_full_edge.ts --out-json ./outputs/orangepi/orangepi_cpu.json --input-shape 1 3 512 --warmup 50 --repeats 200 --runtime-backend torchscript --execution-mode CPU --board-model \"Orange Pi AI Pro 20T 24G\" --npz-path ./outputs/edge_bundle/phycl_full_edge_samples.npz",
-    "prepare_mobiact_npz": "python code/scripts/prepare_cross_dataset_npz.py --dataset mobiact --source ./raw/MobiFall --out-root ./prepared --target-len 200",
-    "prepare_unimib_npz": "python code/scripts/prepare_cross_dataset_npz.py --dataset unimib --source ./raw/unimib.zip --out-root ./prepared --target-len 200",
-    "prepare_kfall_npz": "python code/scripts/prepare_cross_dataset_npz.py --dataset kfall --source ./raw/kfall.zip --out-root ./prepared --target-len 200",
-    "cross_dataset_eval": "python code/scripts/run_cross_dataset_evaluation.py --checkpoint outputs/phycl_sisfall_loso/ckpt_best_seed42_loso_SA01.pth --data-root ./prepared --out-dir ./outputs/cross_dataset --base-dataset sisfall --targets mobiact unimib kfall --model phycl"
+  "reported_not_independently_reproduced": {
+    "accuracy_mean_pct": 98.21,
+    "accuracy_sd_pct": 0.1,
+    "macro_f1_mean_pct": 98.16,
+    "macro_f1_sd_pct": 0.1,
+    "params_m": 1.049,
+    "flops_g": 0.150979,
+    "desktop_p50_ms": 125.99,
+    "desktop_p95_ms": 141.43
   },
-  "reported_manuscript_metrics": {
-    "phycl": {
-      "accuracy_mean": 98.21,
-      "accuracy_std": 0.10,
-      "macro_f1_mean": 98.16,
-      "macro_f1_std": 0.10,
-      "params_m": 1.049,
-      "flops_g": 0.150979,
-      "latency_p50_ms": 125.99,
-      "latency_p95_ms": 141.43,
-      "fpr_at_tpr_95": 0.72
-    }
-  },
-  "artifacts_expected_per_run": [
-    "summary_results.json",
-    "experiment.log",
-    "loso_records_seed*.json",
-    "efficiency_report_seed*.json",
-    "split_stats_seed*.json"
+  "boundaries": [
+    "historical loader is native 200Hz, not manuscript 50Hz filter pipeline",
+    "historical implementation has twelve per-block projection heads versus six per-stage heads in paper",
+    "FAA smoothing input order differs between retained code and manuscript schematic",
+    "historical objective contrasts streams from one forward pass rather than corresponding heads from two independently augmented views",
+    "main five-seed run/checkpoint lineage incomplete",
+    "supplementary FAA report uses SA01-SA12; not main cohort",
+    "Orange Pi export identity unconfirmed",
+    "Pi/Apollo report transcriptions are not raw device measurements",
+    "cross-dataset F1 definition and five-shot unit unresolved"
   ],
-  "artifact_examples": {
-    "baseline_comparison_checkpoints": [
-      "outputs/lstm_checkpoint.pth",
-      "outputs/resnet_checkpoint.pth"
-    ],
-    "noise_robustness_outputs": [
-      "outputs/noise/noise_robustness_results.json",
-      "figures/noise/noise_robustness_curve.png",
-      "figures/noise/noise_robustness_curve.pdf"
-    ],
-    "edge_export_outputs": [
-      "outputs/edge_bundle/phycl_full_edge.ts",
-      "outputs/edge_bundle/phycl_full_edge_manifest.json",
-      "outputs/edge_bundle/phycl_full_edge_samples.npz"
-    ],
-    "orangepi_outputs": [
-      "outputs/orangepi/orangepi_cpu.json"
-    ],
-    "cross_dataset_prepared_npz": [
-      "prepared/mobiact/train.npz",
-      "prepared/mobiact/val.npz",
-      "prepared/mobiact/test.npz",
-      "prepared/unimib/train.npz",
-      "prepared/unimib/val.npz",
-      "prepared/unimib/test.npz",
-      "prepared/kfall/train.npz",
-      "prepared/kfall/val.npz",
-      "prepared/kfall/test.npz"
-    ],
-    "cross_dataset_outputs": [
-      "outputs/cross_dataset/cross_dataset_summary.json"
-    ],
-    "noise_summary_keys": [
-      "clean_accuracy",
-      "clean_f1"
-    ]
-  },
-  "scope_notes": [
-    "This repository does not include datasets, checkpoints, or generated outputs.",
-    "Desktop CPU/GPU benchmarking is documented here; direct commercial wearable validation is outside the current repository scope.",
-    "Reviewer-facing support scripts are included for edge export, Orange Pi AI Pro 20T 24G CPU benchmarking, and auxiliary transfer checks on MobiFall, UniMiB, and KFall.",
-    "The submitted manuscript source package is intentionally not mirrored in this reviewer-facing repository."
-  ]
+  "details": "docs/EVIDENCE_BOUNDARIES.md",
+  "source_manifest": "artifacts/manifests/revision_source_manifest.json"
 }
-

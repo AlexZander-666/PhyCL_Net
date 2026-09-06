@@ -1,0 +1,15 @@
+﻿artifact,report_contains,missing_information,status
+最终训练 checkpoint / 权重,120 个 checkpoint 的完成描述,模型张量、优化器状态和训练轨迹未记录；旧权重不能替代被删的最终权重,not_recoverable_from_report_alone
+逐窗口预测、真值、概率,Macro-F1 及其他聚合指标,聚合值无法唯一确定样本顺序、标签、概率和错误位置,not_recoverable_from_report_alone
+逐折混淆矩阵,声称真实 2×2 矩阵已生成,未列出 TP/FP/TN/FN；不能从四舍五入的聚合指标反推真实计数,not_recoverable_from_report_alone
+Accuracy / Sensitivity / Specificity / AUC 完整格点,仅主表均值、SD,5.1–5.3 只给 Macro-F1，其他指标没有 12×5 原值,not_recoverable_from_report_alone
+阈值的种子级记录及验证概率,48 条折级阈值,每条未注明 seed 或种子聚合方式；0.01 网格与三位小数阈值不一致,not_recoverable_from_report_alone
+原始训练数据与预处理缓存的完成实验版本,SisFall 名称和 SA01–SA12,没有时序数值、窗口索引、标签、归一化参数或完整配置；现存旧数据另列索引,not_recoverable_from_report_alone
+P01–P08 加速度原始时序,8 人年龄、性别、窗数及 F1,629 个窗口的采样值和标签序列未写入文档,not_recoverable_from_report_alone
+独立队列低 FPR 与 ADL 逐项记录,效应量与区间,缺每受试者预测、阈值、高动态 ADL 定义及分母计数,not_recoverable_from_report_alone
+硬件逐窗延迟和内存轨迹,区间摘要与分位数,只有12段 Pi摘要、6段 Apollo摘要和9条板卡会话记录，不能展开成真实逐窗日志,not_recoverable_from_report_alone
+PPK2 原始功率/能量波形,平均功率、能量和 CV,100 kS/s 的波形、时间戳及积分基线未记录,not_recoverable_from_report_alone
+CPU 交错微基准调用记录,完成状态描述,无每次调用时长、顺序、配置和运行日志,not_recoverable_from_report_alone
+部署模型、固件与配置,平台配置说明,没有二进制模型、固件、导出参数和构建配置,not_recoverable_from_report_alone
+bootstrap 重采样与原始统计输出,"50,000 次和 CI/p 值",未记录重采样随机种子、完整其他指标格点及实现；仅恢复报告值,not_recoverable_from_report_alone
+知情同意原件和研究手续,4.1 的文字声明,声明可以转录，无法生成受试者真实签署文件,not_recoverable_from_report_alone

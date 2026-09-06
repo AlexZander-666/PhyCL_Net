@@ -1,0 +1,21 @@
+﻿platform,metric_reported,arm,value_text,numeric_value,unit,approximate,reported_increment_text,reported_limit_text,reported_pass_text,readme_time
+apollo4_blue_plus,端到端延迟 p95,faa,94.7 ms,94.7,ms,False,+8.5 ms,< 100 ms,✅,2026-09-02T05:12:00+08:00
+apollo4_blue_plus,端到端延迟 p95,no_faa,86.2 ms,86.2,ms,False,+8.5 ms,< 100 ms,✅,2026-09-02T05:12:00+08:00
+apollo4_blue_plus,端到端延迟 p99,faa,112.3 ms,112.3,ms,False,+7.7 ms,< 128 ms,✅,2026-09-02T05:12:00+08:00
+apollo4_blue_plus,端到端延迟 p99,no_faa,104.6 ms,104.6,ms,False,+7.7 ms,< 128 ms,✅,2026-09-02T05:12:00+08:00
+apollo4_blue_plus,端到端延迟 max（72 h）,faa,126.4 ms,126.4,ms,False,+6.6 ms,< 1.28 s,✅,2026-09-02T05:12:00+08:00
+apollo4_blue_plus,端到端延迟 max（72 h）,no_faa,119.8 ms,119.8,ms,False,+6.6 ms,< 1.28 s,✅,2026-09-02T05:12:00+08:00
+apollo4_blue_plus,整板平均功率,faa,28.4 mW,28.4,mW,False,+1.7 mW,—,—,2026-09-02T05:12:00+08:00
+apollo4_blue_plus,整板平均功率,no_faa,26.7 mW,26.7,mW,False,+1.7 mW,—,—,2026-09-02T05:12:00+08:00
+apollo4_blue_plus,每窗能量（增量）,faa,0.039 mJ,0.039,mJ,False,+0.004 mJ,—,—,2026-09-02T05:12:00+08:00
+apollo4_blue_plus,每窗能量（增量）,no_faa,0.035 mJ,0.035,mJ,False,+0.004 mJ,—,—,2026-09-02T05:12:00+08:00
+apollo4_blue_plus,Flash 占用,faa,"1,042 KB",1042.0,KB,False,+230 KB,≤ 80% of 2 MB,✅,2026-09-02T05:12:00+08:00
+apollo4_blue_plus,Flash 占用,no_faa,812 KB,812.0,KB,False,+230 KB,≤ 80% of 2 MB,✅,2026-09-02T05:12:00+08:00
+apollo4_blue_plus,SRAM 峰值（含 tensor arena）,faa,"1,865 KB",1865.0,KB,False,+61 KB,≤ 80% of 2.75 MB,✅,2026-09-02T05:12:00+08:00
+apollo4_blue_plus,SRAM 峰值（含 tensor arena）,no_faa,"1,804 KB",1804.0,KB,False,+61 KB,≤ 80% of 2.75 MB,✅,2026-09-02T05:12:00+08:00
+apollo4_blue_plus,"推算续航（300 mAh, 85% 效率）",faa,~52 h,52.0,h,True,−3 h,≥ 24 h,✅,2026-09-02T05:12:00+08:00
+apollo4_blue_plus,"推算续航（300 mAh, 85% 效率）",no_faa,~55 h,55.0,h,True,−3 h,≥ 24 h,✅,2026-09-02T05:12:00+08:00
+apollo4_blue_plus,跨板变异（3 块板，能量 CV）,faa,3.2%,3.2,%,False,—,< 10%,✅,2026-09-02T05:12:00+08:00
+apollo4_blue_plus,跨板变异（3 块板，能量 CV）,no_faa,2.8%,2.8,%,False,—,< 10%,✅,2026-09-02T05:12:00+08:00
+apollo4_blue_plus,72 h 连续运行,faa,✅ 零崩溃零违约,,,False,—,—,✅,2026-09-02T05:12:00+08:00
+apollo4_blue_plus,72 h 连续运行,no_faa,✅ 零崩溃零违约,,,False,—,—,✅,2026-09-02T05:12:00+08:00

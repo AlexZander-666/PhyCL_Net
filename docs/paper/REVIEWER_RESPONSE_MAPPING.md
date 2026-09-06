@@ -1,45 +1,16 @@
-# Reviewer-Facing Scope
+# Reviewer response and evidence mapping
 
-This repository is the reviewer-facing code and protocol package for the revised PhyCL-Net manuscript. It is not a mirror of the full local workspace and it is not a second copy of the journal submission package.
+Target: the supplied [6 September response](../../paper/revised_20260906/response_to_reviewers.pdf), preserved without rewriting author statements. Repository checks below describe support available for each comment, not acceptance or a claim of new experiments.
 
-## Kept Here
+| Reviewer / comment | Paper response | Inspectable evidence and scope |
+| --- | --- | --- |
+| Reviewer 1 — embedded platform coverage | Low-latency direction; Orange Pi constraints; complementary Pi/Apollo summaries | [Hardware guide](../REVIEWER_GUIDE.md#hardware), [Orange Pi records](../../artifacts/staging/orangepi/), [prototype report CSVs](../../artifacts/revision_20260906/report_transcriptions/hardware/). Model/firmware identity and integrated alert/battery tests remain open. |
+| Reviewer 1 — statistical analysis | Five-seed main description; paired FAA subject-level SD | [All 60 pairs](../../artifacts/revision_20260906/report_transcriptions/classification/paired_macro_f1.csv), [script](../../scripts/verify_reviewer_evidence.py), [recalculation](../../artifacts/revision_20260906/recalculated_summary.json). Descriptive reanalysis only; main CI/Wilcoxon provenance is incomplete. |
+| Reviewer 2 — positive assessment | Acknowledgement; retains prior improvements | Supplied response and current manuscript; no additional experiment inferred from the acknowledgement. |
+| Reviewer 3 #1 — frequency-branch inconsistency | MSPA removed from main backbone; Fourier routing retained; corrected Figure 1 | [Code map](../MANUSCRIPT_CODE_MAPPING.md) and [source figure](../../paper/revised_20260906/figures/fig01_architecture_and_block.pdf). Global MLP versus temporal-kernel distinction documented; remaining FAA/head differences explicit. |
+| Reviewer 3 #2 — hardware and wearable claims | Processing-level evidence; deployment claims narrowed | Both FAA arms and all selected hardware intervals/sessions; memory/power costs retained. Export support: `code/scripts/export_model_for_edge.py`; benchmark: `code/scripts/benchmark_on_orangepi.py`. |
+| Reviewer 3 #3 — threshold selection | Observed ROC points, pooled held-out scores per seed, tie handling, inequalities, no interpolation | Complete historical scores and [ROC implementation](../../scripts/verify_reviewer_evidence.py). Four baseline rows verified arithmetically; no independent deployment cutoff calibration claimed. Supplementary FAA stays at 0.5. |
+| Reviewer 3 #4 — 34-class confusion display | Replaced by binary mean conditional rates | Clean paper `tab:binary_confusion`: ADL 98.41/1.59, fall 2.07/97.93. These are row percentages, not reconstructed prediction counts. Old 34-class image omitted. |
+| Reviewer 3 #5 — FAA benefit | Preliminary main comparison inconclusive; modest paired supplementary gain with costs | Full paired grid, per-subject/per-seed means, source hardware costs; [historical ablation identities](../EVIDENCE_BOUNDARIES.md). No-MSPA is not relabeled as no-FAA; favorable cells are not selectively sampled. |
 
-- The canonical training and evaluation entrypoint: `code/phycl_net_experiments.py`
-- The manuscript model (`phycl`) and the matched spectral baseline (`phycl_full`)
-- The reviewer-facing executable scripts:
-  - `code/scripts/run_baseline_comparison.py`
-  - `code/scripts/evaluate_noise_robustness.py`
-  - `code/scripts/export_model_for_edge.py`
-  - `code/scripts/benchmark_on_orangepi.py`
-  - `code/scripts/prepare_cross_dataset_npz.py`
-  - `code/scripts/run_cross_dataset_evaluation.py`
-  - `scripts/profile_phycl_complexity.py`
-- The canonical reviewer-facing documents:
-  - `README.md`
-  - `docs/REPRODUCIBILITY.md`
-  - `docs/REPRODUCIBILITY_MANIFEST.json`
-
-## Not Kept Here
-
-- The LaTeX manuscript source tree
-- Journal-specific submission bundles
-- Internal logs, packing scripts, queue automation, and drafting materials
-- Datasets, checkpoints, generated figures, and other local run outputs
-
-## Why The Paper Files Are Not Here
-
-The manuscript materials were already submitted through the journal system. Duplicating them in this repository would create a second paper package and blur the boundary between submission materials and reproducibility materials. This repository is therefore limited to the code, commands, and artifact descriptions needed to inspect the reported protocol.
-
-## Revision Mapping
-
-- Main LOSO results: reproduce with `code/phycl_net_experiments.py` using the commands in `README.md` and `docs/REPRODUCIBILITY.md`
-- Matched spectral comparison: rerun the same entrypoint with `--model phycl_full`
-- General-purpose comparison models: inspect or rerun `code/scripts/run_baseline_comparison.py`
-- CPU complexity checks: inspect or rerun `scripts/profile_phycl_complexity.py`
-- Noise robustness discussion: inspect or rerun `code/scripts/evaluate_noise_robustness.py`
-- Edge export bundle and Orange Pi AI Pro 20T 24G CPU benchmark: inspect or rerun `code/scripts/export_model_for_edge.py` and `code/scripts/benchmark_on_orangepi.py`
-- Auxiliary transfer support on MobiFall, UniMiB, and KFall: inspect or rerun `code/scripts/prepare_cross_dataset_npz.py` and `code/scripts/run_cross_dataset_evaluation.py`
-
-## Scope Boundary
-
-This repository supports inspection of the code path behind the revised manuscript. It includes reviewer-facing support surfaces for the Orange Pi AI Pro 20T 24G CPU benchmark and the auxiliary MobiFall, UniMiB, and KFall transfer workflow, but it should not be read as a claim of separate manuscript hosting, commercial wearable validation, or external-dataset validation beyond the paper's stated scope.
+Cross-dataset support for MobiFall, UniMiB and KFall is retained in `code/scripts/prepare_cross_dataset_npz.py` and `code/scripts/run_cross_dataset_evaluation.py`, with [explicit metric/protocol limitations](../EVIDENCE_BOUNDARIES.md#transfer-and-noise). Scripts are support tools rather than evidence that missing experiments ran.

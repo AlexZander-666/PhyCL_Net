@@ -1,0 +1,10 @@
+﻿board,session,arm,arm_scope,mean_power_mw,p95_latency_ms,peak_sram_kb,deadline_violations_72h,readme_time
+Board #1,Session A,,not_specified_in_section_7_3,28.2,94.2,1858,0,2026-09-02T03:17:00+08:00
+Board #1,Session B,,not_specified_in_section_7_3,28.5,94.9,1862,0,2026-09-02T03:17:00+08:00
+Board #1,Session C,,not_specified_in_section_7_3,28.3,94.5,1860,0,2026-09-02T03:17:00+08:00
+Board #2,Session A,,not_specified_in_section_7_3,28.6,95.1,1868,0,2026-09-02T04:05:00+08:00
+Board #2,Session B,,not_specified_in_section_7_3,28.4,94.7,1865,0,2026-09-02T04:05:00+08:00
+Board #2,Session C,,not_specified_in_section_7_3,28.5,94.8,1866,0,2026-09-02T04:05:00+08:00
+Board #3,Session A,,not_specified_in_section_7_3,28.3,94.4,1861,0,2026-09-02T04:52:00+08:00
+Board #3,Session B,,not_specified_in_section_7_3,28.2,94.1,1857,0,2026-09-02T04:52:00+08:00
+Board #3,Session C,,not_specified_in_section_7_3,28.4,94.6,1863,0,2026-09-02T04:52:00+08:00

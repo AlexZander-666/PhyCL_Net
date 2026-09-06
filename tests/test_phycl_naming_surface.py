@@ -103,56 +103,31 @@ def test_reviewer_facing_docs_match_current_artifact_names():
     assert "clean_f1" in combined
 
 
-def test_readme_opening_matches_reviewer_scope_tone():
-    readme = (REPO_ROOT / "README.md").read_text(encoding="utf-8")
+def test_review_entrypoints_resolve_inside_repository():
+    import re
+    from urllib.parse import unquote
 
-    assert "reviewer-facing reproducibility repository" not in readme
-    assert "reviewer-facing code and protocol package" in readme
-    assert "not a mirror of the full local workspace" in readme
-    assert "not a second copy of the journal submission package" in readme
-
-
-def test_readme_sections_use_hard_boundary_wording():
-    readme = (REPO_ROOT / "README.md").read_text(encoding="utf-8")
-
-    assert "Minimal supporting scripts for baseline comparison, CPU complexity measurement, and noise robustness evaluation" not in readme
-    assert "Reproducibility notes and reviewer-facing documentation" not in readme
-    assert "The retained reviewer-facing support scripts:" not in readme
-    assert "The minimal reviewer-facing documentation:" not in readme
-    assert "The reviewer-facing executable scripts:" in readme
-    assert "The canonical reviewer-facing documents:" in readme
-    assert "The authoritative run protocol is documented in `docs/REPRODUCIBILITY.md`." not in readme
-    assert "If a manuscript statement and a legacy script comment disagree" not in readme
-    assert "The canonical run protocol is defined in `docs/REPRODUCIBILITY.md`." in readme
-    assert "If any README text, script comment, or local note conflicts with the manuscript-facing commands" in readme
+    documents = [REPO_ROOT / "README.md", *sorted((REPO_ROOT / "docs").rglob("*.md"))]
+    for document in documents:
+        for target in re.findall(r"\]\(([^)]+)\)", document.read_text(encoding="utf-8")):
+            if target.startswith(("https://", "http://", "#")):
+                continue
+            relative = unquote(target.split("#", 1)[0])
+            resolved = (document.parent / relative).resolve()
+            assert resolved.is_relative_to(REPO_ROOT)
+            assert resolved.exists(), (document.name, target)
 
 
-def test_project_layout_and_scope_notes_use_explicit_boundary_terms():
-    readme = (REPO_ROOT / "README.md").read_text(encoding="utf-8")
-    repro = (REPO_ROOT / "docs" / "REPRODUCIBILITY.md").read_text(encoding="utf-8")
+def test_revision_manifest_identifies_present_paper_and_evidence_checker():
+    import json
 
-    assert "retained reviewer-facing helper scripts" not in readme
-    assert "kept for paper-aligned checks" not in readme
-    assert "reviewer-facing explanatory materials" not in readme
-    assert "reviewer-facing comparison and evaluation scripts" in readme
-    assert "standalone reviewer-facing profiling utility" in readme
-    assert "canonical run protocol, artifact manifest, and repository boundary note" in readme
-    assert "Data availability and repository release statements should be read together with the current manuscript revision." not in repro
-    assert "Data availability should be read from the manuscript and any linked release statement, not inferred from this repository alone." in repro
-
-
-def test_reviewer_docs_use_consistent_script_and_document_labels():
-    readme = (REPO_ROOT / "README.md").read_text(encoding="utf-8")
-    repro = (REPO_ROOT / "docs" / "REPRODUCIBILITY.md").read_text(encoding="utf-8")
-    scope = (REPO_ROOT / "docs" / "paper" / "REVIEWER_RESPONSE_MAPPING.md").read_text(encoding="utf-8")
-    combined = "\n".join([readme, repro, scope])
-
-    assert "retained reviewer-facing support scripts" not in combined
-    assert "minimal reviewer-facing documentation" not in combined
-    assert "hidden compatibility aliases remain in the codebase only" not in combined
-    assert "reviewer-facing executable scripts" in combined
-    assert "canonical reviewer-facing documents" in combined
-    assert "Legacy local aliases, if any, are outside the reviewer-facing interface." in repro
+    manifest = json.loads((REPO_ROOT / "docs/REPRODUCIBILITY_MANIFEST.json").read_text(encoding="utf-8"))
+    assert (REPO_ROOT / manifest["source_paper"]).is_file()
+    assert (REPO_ROOT / manifest["source_manifest"]).is_file()
+    assert manifest["revision"] == "2026-09-06"
+    assert manifest["verification_command"] == "python scripts/verify_reviewer_evidence.py"
+    assert manifest["paper_specification_only"]["seeds"] == [42, 123, 456, 789, 1024]
+    assert "reported_not_independently_reproduced" in manifest
 
 
 def test_reviewer_docs_cover_edge_and_cross_dataset_support_surfaces():

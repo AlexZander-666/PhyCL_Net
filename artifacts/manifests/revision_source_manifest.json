@@ -1,0 +1,590 @@
+{
+  "schema": "phycl-reviewer-source-manifest-v1",
+  "source_revision": "2026-09-06 author-supplied main.tex",
+  "entries": [
+    {
+      "path": "paper/revised_20260906/main.tex",
+      "source": "supplied-revision-20260906/main.tex",
+      "source_sha256": "c09b2fa1bc892c06b5dfdd4ab5ff45fddc2e4abf28d0493184e5840a58f30124",
+      "sha256": "c09b2fa1bc892c06b5dfdd4ab5ff45fddc2e4abf28d0493184e5840a58f30124",
+      "transformation": "byte-identical copy",
+      "evidence_role": "author-supplied manuscript; reported claims, not independent execution proof"
+    },
+    {
+      "path": "paper/revised_20260906/main.pdf",
+      "source": "supplied-revision-20260906/main.pdf",
+      "source_sha256": "8feb34c35ec7d30d4e81cd3f598a6278ace3813dda89e06fcb43bea6199523e0",
+      "sha256": "8feb34c35ec7d30d4e81cd3f598a6278ace3813dda89e06fcb43bea6199523e0",
+      "transformation": "byte-identical copy",
+      "evidence_role": "author-supplied manuscript; reported claims, not independent execution proof"
+    },
+    {
+      "path": "paper/revised_20260906/main_diff.pdf",
+      "source": "supplied-revision-20260906/main_diff.pdf",
+      "source_sha256": "8be90d92da0a4b0a50853f92283fa10f9cf68ce21c137c1ced3b7facc29c5215",
+      "sha256": "8be90d92da0a4b0a50853f92283fa10f9cf68ce21c137c1ced3b7facc29c5215",
+      "transformation": "byte-identical copy",
+      "evidence_role": "author-supplied manuscript; reported claims, not independent execution proof"
+    },
+    {
+      "path": "paper/revised_20260906/main.bib",
+      "source": "supplied-revision-20260906/main.bib",
+      "source_sha256": "9990e2d1f72ad03b92a9c6b9464274e1ac8a000650e88d0decc2e3d35cf54f93",
+      "sha256": "9990e2d1f72ad03b92a9c6b9464274e1ac8a000650e88d0decc2e3d35cf54f93",
+      "transformation": "byte-identical copy",
+      "evidence_role": "author-supplied manuscript; reported claims, not independent execution proof"
+    },
+    {
+      "path": "paper/revised_20260906/response_to_reviewers.tex",
+      "source": "supplied-revision-20260906/response_to_reviewers.tex",
+      "source_sha256": "698e7472f8049af5c50cc1eec684c3222817627eab24707ed51e093558be1935",
+      "sha256": "698e7472f8049af5c50cc1eec684c3222817627eab24707ed51e093558be1935",
+      "transformation": "byte-identical copy",
+      "evidence_role": "author-supplied manuscript; reported claims, not independent execution proof"
+    },
+    {
+      "path": "paper/revised_20260906/response_to_reviewers.pdf",
+      "source": "supplied-revision-20260906/response_to_reviewers.pdf",
+      "source_sha256": "30e752079c63dbcf17fdbbbb1a8e2b71727373f6f6d4456cba206aa83a2b4ec5",
+      "sha256": "30e752079c63dbcf17fdbbbb1a8e2b71727373f6f6d4456cba206aa83a2b4ec5",
+      "transformation": "byte-identical copy",
+      "evidence_role": "author-supplied manuscript; reported claims, not independent execution proof"
+    },
+    {
+      "path": "paper/revised_20260906/acnsart.cls",
+      "source": "supplied-revision-20260906/acnsart.cls",
+      "source_sha256": "53a67b60519d7425c8f93194b2282fce528057665eb72778cf1e807fba6e9711",
+      "sha256": "53a67b60519d7425c8f93194b2282fce528057665eb72778cf1e807fba6e9711",
+      "transformation": "byte-identical copy",
+      "evidence_role": "author-supplied manuscript; reported claims, not independent execution proof"
+    },
+    {
+      "path": "paper/revised_20260906/bath.bst",
+      "source": "supplied-revision-20260906/bath.bst",
+      "source_sha256": "50041bf256ba5aa07963aa2ebe7f2c1cc10934cef3627118e4e15aef27ad15e1",
+      "sha256": "50041bf256ba5aa07963aa2ebe7f2c1cc10934cef3627118e4e15aef27ad15e1",
+      "transformation": "byte-identical copy",
+      "evidence_role": "author-supplied manuscript; reported claims, not independent execution proof"
+    },
+    {
+      "path": "paper/revised_20260906/jec-logo.jpg",
+      "source": "supplied-revision-20260906/jec-logo.jpg",
+      "source_sha256": "752629cf8dfce9cc94b6fc51fc279f87f473767e8c690319b63f5b970157fc6b",
+      "sha256": "752629cf8dfce9cc94b6fc51fc279f87f473767e8c690319b63f5b970157fc6b",
+      "transformation": "byte-identical copy",
+      "evidence_role": "author-supplied manuscript; reported claims, not independent execution proof"
+    },
+    {
+      "path": "paper/revised_20260906/main.xmpdata",
+      "source": "supplied-revision-20260906/main.xmpdata",
+      "source_sha256": "503de87f90fc72d8cfe9c9d706dcd815dc4254bf7152927d54dc85109e3aae1a",
+      "sha256": "503de87f90fc72d8cfe9c9d706dcd815dc4254bf7152927d54dc85109e3aae1a",
+      "transformation": "byte-identical copy",
+      "evidence_role": "author-supplied manuscript; reported claims, not independent execution proof"
+    },
+    {
+      "path": "paper/revised_20260906/pdfa.xmpi",
+      "source": "supplied-revision-20260906/pdfa.xmpi",
+      "source_sha256": "f2813fd267fa5268e7959f5c289ec20a70d9b72675bea9253d4d25fd230a9f35",
+      "sha256": "f2813fd267fa5268e7959f5c289ec20a70d9b72675bea9253d4d25fd230a9f35",
+      "transformation": "byte-identical copy",
+      "evidence_role": "author-supplied manuscript; reported claims, not independent execution proof"
+    },
+    {
+      "path": "paper/revised_20260906/figures/fig01_architecture_and_block.pdf",
+      "source": "supplied-revision-20260906/figures/fig01_architecture_and_block.pdf",
+      "source_sha256": "45a7818464fb77deb99f85d09b4296c636646d6ec12a33fa93670b60aebca30d",
+      "sha256": "45a7818464fb77deb99f85d09b4296c636646d6ec12a33fa93670b60aebca30d",
+      "transformation": "byte-identical copy",
+      "evidence_role": "author-supplied manuscript; reported claims, not independent execution proof"
+    },
+    {
+      "path": "paper/revised_20260906/figures/fig02_pdk_module.pdf",
+      "source": "supplied-revision-20260906/figures/fig02_pdk_module.pdf",
+      "source_sha256": "c81c8458b854fb33c905658d02ff65c129960949fde395959d187ca3cf0584f4",
+      "sha256": "c81c8458b854fb33c905658d02ff65c129960949fde395959d187ca3cf0584f4",
+      "transformation": "byte-identical copy",
+      "evidence_role": "author-supplied manuscript; reported claims, not independent execution proof"
+    },
+    {
+      "path": "paper/revised_20260906/figures/fig04_pareto_tradeoff.pdf",
+      "source": "supplied-revision-20260906/figures/fig04_pareto_tradeoff.pdf",
+      "source_sha256": "3ec472af41a50ab8676126a6e8db5c43d8dd59bbcbe3039ab63592fd16ed435b",
+      "sha256": "3ec472af41a50ab8676126a6e8db5c43d8dd59bbcbe3039ab63592fd16ed435b",
+      "transformation": "byte-identical copy",
+      "evidence_role": "author-supplied manuscript; reported claims, not independent execution proof"
+    },
+    {
+      "path": "paper/revised_20260906/figures/fig05_fold_stability.pdf",
+      "source": "supplied-revision-20260906/figures/fig05_fold_stability.pdf",
+      "source_sha256": "c3ba65b091951d20b11e5d27f12e4f34d1ec9c9ee4437fc0428d9ba4a9ce93d8",
+      "sha256": "c3ba65b091951d20b11e5d27f12e4f34d1ec9c9ee4437fc0428d9ba4a9ce93d8",
+      "transformation": "byte-identical copy",
+      "evidence_role": "author-supplied manuscript; reported claims, not independent execution proof"
+    },
+    {
+      "path": "paper/revised_20260906/figures/fig06_radar.pdf",
+      "source": "supplied-revision-20260906/figures/fig06_radar.pdf",
+      "source_sha256": "3bae908d7c88c4b25338872af401cf7cf7144e5d6a6edc2e636c338adda77323",
+      "sha256": "3bae908d7c88c4b25338872af401cf7cf7144e5d6a6edc2e636c338adda77323",
+      "transformation": "byte-identical copy",
+      "evidence_role": "author-supplied manuscript; reported claims, not independent execution proof"
+    },
+    {
+      "path": "paper/revised_20260906/figures/fig07_tsne.pdf",
+      "source": "supplied-revision-20260906/figures/fig07_tsne.pdf",
+      "source_sha256": "3434a6e84f84e1215967fba41409d78e1849cbe57aa596ebd0a4ad7fdc92fd4b",
+      "sha256": "3434a6e84f84e1215967fba41409d78e1849cbe57aa596ebd0a4ad7fdc92fd4b",
+      "transformation": "byte-identical copy",
+      "evidence_role": "author-supplied manuscript; reported claims, not independent execution proof"
+    },
+    {
+      "path": "paper/revised_20260906/figures/fig08_attention.pdf",
+      "source": "supplied-revision-20260906/figures/fig08_attention.pdf",
+      "source_sha256": "2ca8bd51576e7e2dca4bef064f7f1723cafc9362e7a21d9e4cbb898a35f2771e",
+      "sha256": "2ca8bd51576e7e2dca4bef064f7f1723cafc9362e7a21d9e4cbb898a35f2771e",
+      "transformation": "byte-identical copy",
+      "evidence_role": "author-supplied manuscript; reported claims, not independent execution proof"
+    },
+    {
+      "path": "artifacts/revision_20260906/report_transcriptions/classification/all_subject_seed_metrics.csv",
+      "source": "supplied-revision-20260906/source_supplement/experiment_files/classification/all_subject_seed_metrics.csv",
+      "source_sha256": "d3e5873a7c95d0098a63252db151292aa6c81837c6c49affcfb5c2f99c6bbe15",
+      "sha256": "d3e5873a7c95d0098a63252db151292aa6c81837c6c49affcfb5c2f99c6bbe15",
+      "transformation": "byte-identical copy",
+      "evidence_role": "report transcription; assigned readme times are not experiment timestamps"
+    },
+    {
+      "path": "artifacts/revision_20260906/report_transcriptions/classification/paired_macro_f1.csv",
+      "source": "supplied-revision-20260906/source_supplement/experiment_files/classification/paired_macro_f1.csv",
+      "source_sha256": "b179b7dac655e03cd98a2994fa36d2f618740bae17a3e7157914e3554b4cd445",
+      "sha256": "b179b7dac655e03cd98a2994fa36d2f618740bae17a3e7157914e3554b4cd445",
+      "transformation": "byte-identical copy",
+      "evidence_role": "report transcription; assigned readme times are not experiment timestamps"
+    },
+    {
+      "path": "artifacts/revision_20260906/report_transcriptions/hardware/apollo4_blue_plus/board_2_runtime_intervals.csv",
+      "source": "supplied-revision-20260906/source_supplement/experiment_files/hardware/apollo4_blue_plus/board_2_runtime_intervals.csv",
+      "source_sha256": "a167934b0a9c51b7ad80576bd3ec485626246e82a2d751eeac0c53fadea819d7",
+      "sha256": "a167934b0a9c51b7ad80576bd3ec485626246e82a2d751eeac0c53fadea819d7",
+      "transformation": "byte-identical copy",
+      "evidence_role": "report transcription; assigned readme times are not experiment timestamps"
+    },
+    {
+      "path": "artifacts/revision_20260906/report_transcriptions/hardware/apollo4_blue_plus/board_sessions.csv",
+      "source": "supplied-revision-20260906/source_supplement/experiment_files/hardware/apollo4_blue_plus/board_sessions.csv",
+      "source_sha256": "aa9874f731d61c710f48c7365224c52fc38593c8e4dd6aa925e7f02f12f158f1",
+      "sha256": "aa9874f731d61c710f48c7365224c52fc38593c8e4dd6aa925e7f02f12f158f1",
+      "transformation": "byte-identical copy",
+      "evidence_role": "report transcription; assigned readme times are not experiment timestamps"
+    },
+    {
+      "path": "artifacts/revision_20260906/report_transcriptions/hardware/apollo4_blue_plus/reported_metrics.csv",
+      "source": "supplied-revision-20260906/source_supplement/experiment_files/hardware/apollo4_blue_plus/reported_metrics.csv",
+      "source_sha256": "ae817c2b8835f2c90c372305a1827f3a1c1995435089c5584ec584558c3d9f6f",
+      "sha256": "ae817c2b8835f2c90c372305a1827f3a1c1995435089c5584ec584558c3d9f6f",
+      "transformation": "byte-identical copy",
+      "evidence_role": "report transcription; assigned readme times are not experiment timestamps"
+    },
+    {
+      "path": "artifacts/revision_20260906/report_transcriptions/hardware/raspberry_pi_zero_2_w/reported_metrics.csv",
+      "source": "supplied-revision-20260906/source_supplement/experiment_files/hardware/raspberry_pi_zero_2_w/reported_metrics.csv",
+      "source_sha256": "b9b8ce4b7d20b07a324181240efbf64fea0a15482376abc628b2b96392e0ec19",
+      "sha256": "b9b8ce4b7d20b07a324181240efbf64fea0a15482376abc628b2b96392e0ec19",
+      "transformation": "byte-identical copy",
+      "evidence_role": "report transcription; assigned readme times are not experiment timestamps"
+    },
+    {
+      "path": "artifacts/revision_20260906/report_transcriptions/hardware/raspberry_pi_zero_2_w/runtime_intervals.csv",
+      "source": "supplied-revision-20260906/source_supplement/experiment_files/hardware/raspberry_pi_zero_2_w/runtime_intervals.csv",
+      "source_sha256": "13988250651b24b3b09fbe5d539a6859c580a3c980cf2ba2adc0a467e94c0324",
+      "sha256": "13988250651b24b3b09fbe5d539a6859c580a3c980cf2ba2adc0a467e94c0324",
+      "transformation": "byte-identical copy",
+      "evidence_role": "report transcription; assigned readme times are not experiment timestamps"
+    },
+    {
+      "path": "artifacts/revision_20260906/report_transcriptions/notes/not_recoverable_from_report.csv",
+      "source": "supplied-revision-20260906/source_supplement/experiment_files/notes/not_recoverable_from_report.csv",
+      "source_sha256": "d4799c852f0b1da5146072201dbfc157f2ab51b68a9aefef6a175efcaf18e7ea",
+      "sha256": "d4799c852f0b1da5146072201dbfc157f2ab51b68a9aefef6a175efcaf18e7ea",
+      "transformation": "byte-identical copy",
+      "evidence_role": "report transcription; assigned readme times are not experiment timestamps"
+    },
+    {
+      "path": "artifacts/revision_20260906/report_transcriptions/notes/consistency_notes.md",
+      "source": "supplied-revision-20260906/source_supplement/experiment_files/notes/consistency_notes.md",
+      "source_sha256": "74d2cdd4fc2a5c3118623c4b8ef603f078371231be2bc544b010891db97d6285",
+      "sha256": "74d2cdd4fc2a5c3118623c4b8ef603f078371231be2bc544b010891db97d6285",
+      "transformation": "byte-identical copy",
+      "evidence_role": "source report interpretation notes"
+    },
+    {
+      "path": "artifacts/revision_20260906/historical_runs/preprocessing.json",
+      "source": "workspace/Reviewer_Revision_20260902/audit/origin_raw200_preprocessing_contract.json",
+      "source_sha256": "add972beec8a1b9f29ae5f5540d581da487d10db6e98595f441d01d38400f1b9",
+      "sha256": "add972beec8a1b9f29ae5f5540d581da487d10db6e98595f441d01d38400f1b9",
+      "transformation": "byte-identical copy",
+      "evidence_role": "historical raw-200Hz protocol; differs from manuscript 50Hz description"
+    },
+    {
+      "path": "artifacts/revision_20260906/historical_runs/phycl_full/recorded_args.json",
+      "source": "workspace/PhyCL/outputs/stage1_amsv2_final/experiment_config.yaml",
+      "source_sha256": "4649bff5dcf443027ddd9fa341931496a57cc5d881b8cdd4be7c6655d868606d",
+      "sha256": "c6eed71af24ac07b868b8d80441d4216516eb933594c6f5bbfc7ca7bd76a5c4c",
+      "transformation": "extract args mapping; omit unrelated dependency inventory",
+      "evidence_role": "historical configuration"
+    },
+    {
+      "path": "artifacts/revision_20260906/historical_runs/phycl_full/predictions_seed42.csv",
+      "source": "workspace/PhyCL/outputs/stage1_amsv2_final/loso_results_seed42.json",
+      "source_sha256": "acc400b0ab2cd7acc4797aecad01fa774e70b1268d70da10f705f3cf8df4c74c",
+      "sha256": "b91dcf683340747590324ec03688afb6e8e9a502bcd8edba98d049f43bd3ebf4",
+      "transformation": "extract all prediction rows in source order; no row filtering; source_row is zero-based",
+      "evidence_role": "historical held-out labels and scores; not new inference"
+    },
+    {
+      "path": "artifacts/revision_20260906/historical_runs/phycl_full/folds_seed42.json",
+      "source": "workspace/PhyCL/outputs/stage1_amsv2_final/loso_results_seed42.json",
+      "source_sha256": "acc400b0ab2cd7acc4797aecad01fa774e70b1268d70da10f705f3cf8df4c74c",
+      "sha256": "8a592ba82754f5ee0476fb20497afdf2b0b93f397f4f4ebcf23b6482785ab888",
+      "transformation": "extract seed and complete folds; preserve finite metric values; nonfinite NaN becomes JSON null",
+      "evidence_role": "historical fold metrics; zero latency fields are not measured device latency"
+    },
+    {
+      "path": "artifacts/revision_20260906/historical_runs/phycl_full/predictions_seed123.csv",
+      "source": "workspace/PhyCL/outputs/stage1_amsv2_final/loso_results_seed123.json",
+      "source_sha256": "f6647e94fac38b97a053c76276bbef6970500188a0e65a61218eb88c8a41e624",
+      "sha256": "728e241c38b79dc93812886ee5b97763548063a46de7c0d27a87a5694b967159",
+      "transformation": "extract all prediction rows in source order; no row filtering; source_row is zero-based",
+      "evidence_role": "historical held-out labels and scores; not new inference"
+    },
+    {
+      "path": "artifacts/revision_20260906/historical_runs/phycl_full/folds_seed123.json",
+      "source": "workspace/PhyCL/outputs/stage1_amsv2_final/loso_results_seed123.json",
+      "source_sha256": "f6647e94fac38b97a053c76276bbef6970500188a0e65a61218eb88c8a41e624",
+      "sha256": "576704378b706e245a0af60bf5d7a8c883273f87219314fcefb74dad2ab43280",
+      "transformation": "extract seed and complete folds; preserve finite metric values; nonfinite NaN becomes JSON null",
+      "evidence_role": "historical fold metrics; zero latency fields are not measured device latency"
+    },
+    {
+      "path": "artifacts/revision_20260906/historical_runs/inceptiontime/recorded_args.json",
+      "source": "workspace/PhyCL/outputs/stage1_inceptiontime_final/experiment_config.yaml",
+      "source_sha256": "f925dfed70a076d49ce15ab8b38c4e792564b6dcacd4d5fc5d30ba46c984dcb5",
+      "sha256": "b997a9a760400c642f8265f0a493dae108e8056e5b58dc9a11cb1739900e957a",
+      "transformation": "extract args mapping; omit unrelated dependency inventory",
+      "evidence_role": "historical configuration"
+    },
+    {
+      "path": "artifacts/revision_20260906/historical_runs/inceptiontime/predictions_seed42.csv",
+      "source": "workspace/PhyCL/outputs/stage1_inceptiontime_final/loso_results_seed42.json",
+      "source_sha256": "a90996868dba5810f5280cb13d754e45fb31d92bb22c3ddbf06c774d17683725",
+      "sha256": "896d735f10472083a59e38140245079700ad80bbb260b20937f1666326f46a1c",
+      "transformation": "extract all prediction rows in source order; no row filtering; source_row is zero-based",
+      "evidence_role": "historical held-out labels and scores; not new inference"
+    },
+    {
+      "path": "artifacts/revision_20260906/historical_runs/inceptiontime/folds_seed42.json",
+      "source": "workspace/PhyCL/outputs/stage1_inceptiontime_final/loso_results_seed42.json",
+      "source_sha256": "a90996868dba5810f5280cb13d754e45fb31d92bb22c3ddbf06c774d17683725",
+      "sha256": "2096ba736b3d2ac87964fd94b29dfe4a4912375d81cac02447f5226457d80820",
+      "transformation": "extract seed and complete folds; preserve finite metric values; nonfinite NaN becomes JSON null",
+      "evidence_role": "historical fold metrics; zero latency fields are not measured device latency"
+    },
+    {
+      "path": "artifacts/revision_20260906/historical_runs/inceptiontime/predictions_seed123.csv",
+      "source": "workspace/PhyCL/outputs/stage1_inceptiontime_final/loso_results_seed123.json",
+      "source_sha256": "871add39c5cacecc339f51f3ea1fe8aa3c0b9c3b01c7cb30388c6eb9cc98ae6c",
+      "sha256": "f7eac29cf740d9c53426fc7881ce1433a035857a283c4dfb8a81b8132c269866",
+      "transformation": "extract all prediction rows in source order; no row filtering; source_row is zero-based",
+      "evidence_role": "historical held-out labels and scores; not new inference"
+    },
+    {
+      "path": "artifacts/revision_20260906/historical_runs/inceptiontime/folds_seed123.json",
+      "source": "workspace/PhyCL/outputs/stage1_inceptiontime_final/loso_results_seed123.json",
+      "source_sha256": "871add39c5cacecc339f51f3ea1fe8aa3c0b9c3b01c7cb30388c6eb9cc98ae6c",
+      "sha256": "a188414fb0e66a012ab8986959900bf1bf5ac72df377fda1c418415b749d94e2",
+      "transformation": "extract seed and complete folds; preserve finite metric values; nonfinite NaN becomes JSON null",
+      "evidence_role": "historical fold metrics; zero latency fields are not measured device latency"
+    },
+    {
+      "path": "artifacts/revision_20260906/historical_runs/tcn/recorded_args.json",
+      "source": "workspace/PhyCL/outputs/stage1_tcn_final/experiment_config.yaml",
+      "source_sha256": "73098be34c6fdfdb9ad6ebc575589eba8c7c55d14f6d2538a9b7a5456c30de56",
+      "sha256": "f95b77a313bb64700a54245877c08c8f23694e65d8e738234ed9b8d6b3d56a70",
+      "transformation": "extract args mapping; omit unrelated dependency inventory",
+      "evidence_role": "historical configuration"
+    },
+    {
+      "path": "artifacts/revision_20260906/historical_runs/tcn/predictions_seed42.csv",
+      "source": "workspace/PhyCL/outputs/stage1_tcn_final/loso_results_seed42.json",
+      "source_sha256": "c658e124325830f5afeb935222766b416df3bee8a898535f262e34b6574ec958",
+      "sha256": "9881ae37b2a7974a96dbab292e6fc9582cb238f79f25c4fc0f89a37c4369d0de",
+      "transformation": "extract all prediction rows in source order; no row filtering; source_row is zero-based",
+      "evidence_role": "historical held-out labels and scores; not new inference"
+    },
+    {
+      "path": "artifacts/revision_20260906/historical_runs/tcn/folds_seed42.json",
+      "source": "workspace/PhyCL/outputs/stage1_tcn_final/loso_results_seed42.json",
+      "source_sha256": "c658e124325830f5afeb935222766b416df3bee8a898535f262e34b6574ec958",
+      "sha256": "cfc1213b37aed6f3f63a3935adb403b603b5dcef791ab56624cb549521b78024",
+      "transformation": "extract seed and complete folds; preserve finite metric values; nonfinite NaN becomes JSON null",
+      "evidence_role": "historical fold metrics; zero latency fields are not measured device latency"
+    },
+    {
+      "path": "artifacts/revision_20260906/historical_runs/tcn/predictions_seed123.csv",
+      "source": "workspace/PhyCL/outputs/stage1_tcn_final/loso_results_seed123.json",
+      "source_sha256": "f72393768f79e6720e2ec2cd8414d18346f5c79227657a061f29174030a4353f",
+      "sha256": "9af5d6f3dcda1d5e2baed3d9d2a2a76ec56e97f911001f375c5751a131d6f638",
+      "transformation": "extract all prediction rows in source order; no row filtering; source_row is zero-based",
+      "evidence_role": "historical held-out labels and scores; not new inference"
+    },
+    {
+      "path": "artifacts/revision_20260906/historical_runs/tcn/folds_seed123.json",
+      "source": "workspace/PhyCL/outputs/stage1_tcn_final/loso_results_seed123.json",
+      "source_sha256": "f72393768f79e6720e2ec2cd8414d18346f5c79227657a061f29174030a4353f",
+      "sha256": "4630bb46cd30473fe32171ae5fefff55bb6de1bcaaced5c127d5368df9370499",
+      "transformation": "extract seed and complete folds; preserve finite metric values; nonfinite NaN becomes JSON null",
+      "evidence_role": "historical fold metrics; zero latency fields are not measured device latency"
+    },
+    {
+      "path": "artifacts/revision_20260906/historical_runs/transformer/recorded_args.json",
+      "source": "workspace/PhyCL/outputs/stage1_transformer_final/experiment_config.yaml",
+      "source_sha256": "673aa954763126d09e88c5fc3aebe613f13b4aa7bdab29abe97a2e50119ff8b5",
+      "sha256": "e604c03e379edb81eda22f0ddb4cc3cc95bad92d08130ea8548d40d869721c66",
+      "transformation": "extract args mapping; omit unrelated dependency inventory",
+      "evidence_role": "historical configuration"
+    },
+    {
+      "path": "artifacts/revision_20260906/historical_runs/transformer/predictions_seed42.csv",
+      "source": "workspace/PhyCL/outputs/stage1_transformer_final/loso_results_seed42.json",
+      "source_sha256": "eaeef076bd8dd4e8fb48fa4d8e1fac9c4a6493503cba50bfeac1fca37536ab99",
+      "sha256": "bc061a955ff424b6e6c84db786a9d1b19abecb0c7a6432b9c426cd4a7b8028bb",
+      "transformation": "extract all prediction rows in source order; no row filtering; source_row is zero-based",
+      "evidence_role": "historical held-out labels and scores; not new inference"
+    },
+    {
+      "path": "artifacts/revision_20260906/historical_runs/transformer/folds_seed42.json",
+      "source": "workspace/PhyCL/outputs/stage1_transformer_final/loso_results_seed42.json",
+      "source_sha256": "eaeef076bd8dd4e8fb48fa4d8e1fac9c4a6493503cba50bfeac1fca37536ab99",
+      "sha256": "bbd1da8eb168737b88a49fe88a06e27ebd37949420c22ef26e0dc973391956ef",
+      "transformation": "extract seed and complete folds; preserve finite metric values; nonfinite NaN becomes JSON null",
+      "evidence_role": "historical fold metrics; zero latency fields are not measured device latency"
+    },
+    {
+      "path": "artifacts/revision_20260906/historical_runs/transformer/predictions_seed123.csv",
+      "source": "workspace/PhyCL/outputs/stage1_transformer_final/loso_results_seed123.json",
+      "source_sha256": "c889450821aa99580cdbd025bc7e628caf4009f41f3e1ed9a7fbfe3d7672bf3b",
+      "sha256": "ea0e23e95118039f9961cae4ba8acda56d7f1e6ed2584c9cf0bacfe5ab0fec1f",
+      "transformation": "extract all prediction rows in source order; no row filtering; source_row is zero-based",
+      "evidence_role": "historical held-out labels and scores; not new inference"
+    },
+    {
+      "path": "artifacts/revision_20260906/historical_runs/transformer/folds_seed123.json",
+      "source": "workspace/PhyCL/outputs/stage1_transformer_final/loso_results_seed123.json",
+      "source_sha256": "c889450821aa99580cdbd025bc7e628caf4009f41f3e1ed9a7fbfe3d7672bf3b",
+      "sha256": "649af68110343bec9b2c057c5657a5ab9c947d168b7d0ef63661d8fea212582e",
+      "transformation": "extract seed and complete folds; preserve finite metric values; nonfinite NaN becomes JSON null",
+      "evidence_role": "historical fold metrics; zero latency fields are not measured device latency"
+    },
+    {
+      "path": "artifacts/revision_20260906/historical_runs/resnet/recorded_args.json",
+      "source": "workspace/PhyCL/outputs/stage1_resnet_final/experiment_config.yaml",
+      "source_sha256": "c68e6d108e30d40409ef2d8649281c25df8ceeb1465f3a1627705fdba49ec5c2",
+      "sha256": "077bc3219b46127f786804fd2b54ecd269d34ade75bd0222eeb0b5469d5c0241",
+      "transformation": "extract args mapping; omit unrelated dependency inventory",
+      "evidence_role": "historical configuration"
+    },
+    {
+      "path": "artifacts/revision_20260906/historical_runs/resnet/predictions_seed42.csv",
+      "source": "workspace/PhyCL/outputs/stage1_resnet_final/loso_results_seed42.json",
+      "source_sha256": "e17a622f5c15e343ac111efadd795245bf14a3ee6e9cd3a55894b65b74b07baf",
+      "sha256": "39801c4fd0983cb2596bd4790b282527c24b856fccb9c3f0e88fd87b8f6be15b",
+      "transformation": "extract all prediction rows in source order; no row filtering; source_row is zero-based",
+      "evidence_role": "historical held-out labels and scores; not new inference"
+    },
+    {
+      "path": "artifacts/revision_20260906/historical_runs/resnet/folds_seed42.json",
+      "source": "workspace/PhyCL/outputs/stage1_resnet_final/loso_results_seed42.json",
+      "source_sha256": "e17a622f5c15e343ac111efadd795245bf14a3ee6e9cd3a55894b65b74b07baf",
+      "sha256": "2e05161bff8a811be65b699c313f9a654b444554ead61833bf285cc534743b76",
+      "transformation": "extract seed and complete folds; preserve finite metric values; nonfinite NaN becomes JSON null",
+      "evidence_role": "historical fold metrics; zero latency fields are not measured device latency"
+    },
+    {
+      "path": "artifacts/revision_20260906/historical_runs/resnet/predictions_seed123.csv",
+      "source": "workspace/PhyCL/outputs/stage1_resnet_final/loso_results_seed123.json",
+      "source_sha256": "c2798b2940ba7627cd8a9799297ce4b3bd0ff1f0941bbd800454be0885103858",
+      "sha256": "93588099dad76987d2ecc8b3cd9cbf3bed68a356f4a809a21dce5a7f2b42e53f",
+      "transformation": "extract all prediction rows in source order; no row filtering; source_row is zero-based",
+      "evidence_role": "historical held-out labels and scores; not new inference"
+    },
+    {
+      "path": "artifacts/revision_20260906/historical_runs/resnet/folds_seed123.json",
+      "source": "workspace/PhyCL/outputs/stage1_resnet_final/loso_results_seed123.json",
+      "source_sha256": "c2798b2940ba7627cd8a9799297ce4b3bd0ff1f0941bbd800454be0885103858",
+      "sha256": "50ff4f21a9995b81efdb16c4106029aea3021682033fca1dc6995bd5eae2de5f",
+      "transformation": "extract seed and complete folds; preserve finite metric values; nonfinite NaN becomes JSON null",
+      "evidence_role": "historical fold metrics; zero latency fields are not measured device latency"
+    },
+    {
+      "path": "artifacts/revision_20260906/historical_runs/lstm/recorded_args.json",
+      "source": "workspace/PhyCL/outputs/stage1_lstm_final/experiment_config.yaml",
+      "source_sha256": "208243ff7149d520aef281834cf72f68d56b9b6a92b1229856794a0925b07d47",
+      "sha256": "21f0ac6513d08ba336589c8722a0a7ed489467cea7de1a943ffb5ed67e3d9d22",
+      "transformation": "extract args mapping; omit unrelated dependency inventory",
+      "evidence_role": "historical configuration"
+    },
+    {
+      "path": "artifacts/revision_20260906/historical_runs/lstm/predictions_seed42.csv",
+      "source": "workspace/PhyCL/outputs/stage1_lstm_final/loso_results_seed42.json",
+      "source_sha256": "47f966f09819c0a0e84865f36dadfb2771ff70fd93947cf01c59172ce5562992",
+      "sha256": "8831834f12bf902a2a64024479b3c3e9f4c21d48e80abcb9d12cfd0273cf9dc3",
+      "transformation": "extract all prediction rows in source order; no row filtering; source_row is zero-based",
+      "evidence_role": "historical held-out labels and scores; not new inference"
+    },
+    {
+      "path": "artifacts/revision_20260906/historical_runs/lstm/folds_seed42.json",
+      "source": "workspace/PhyCL/outputs/stage1_lstm_final/loso_results_seed42.json",
+      "source_sha256": "47f966f09819c0a0e84865f36dadfb2771ff70fd93947cf01c59172ce5562992",
+      "sha256": "cc120e7906fe28918640f47563e0a6a2051ffd061bd6ba978300a30601299ab8",
+      "transformation": "extract seed and complete folds; preserve finite metric values; nonfinite NaN becomes JSON null",
+      "evidence_role": "historical fold metrics; zero latency fields are not measured device latency"
+    },
+    {
+      "path": "artifacts/revision_20260906/historical_runs/lstm/predictions_seed123.csv",
+      "source": "workspace/PhyCL/outputs/stage1_lstm_final/loso_results_seed123.json",
+      "source_sha256": "a68b33ac3ff2ff990704c52b939743a81027a4117e9fd1255dfff0b5400adf21",
+      "sha256": "ade146300395f2aa6407f4f57f12ced700ac268e6be854da8a3d6dccbad4cf8f",
+      "transformation": "extract all prediction rows in source order; no row filtering; source_row is zero-based",
+      "evidence_role": "historical held-out labels and scores; not new inference"
+    },
+    {
+      "path": "artifacts/revision_20260906/historical_runs/lstm/folds_seed123.json",
+      "source": "workspace/PhyCL/outputs/stage1_lstm_final/loso_results_seed123.json",
+      "source_sha256": "a68b33ac3ff2ff990704c52b939743a81027a4117e9fd1255dfff0b5400adf21",
+      "sha256": "3538df3027a892d050dd1cc6cf1a8c2f3a49396bbfb4b24fd1c30aa4f6805611",
+      "transformation": "extract seed and complete folds; preserve finite metric values; nonfinite NaN becomes JSON null",
+      "evidence_role": "historical fold metrics; zero latency fields are not measured device latency"
+    },
+    {
+      "path": "artifacts/revision_20260906/historical_runs/historical_no_mspa/recorded_args.json",
+      "source": "workspace/PhyCL/outputs/ablation_no_mspa_old_bs32/experiment_config.yaml",
+      "source_sha256": "d922d1871eb0d90e1618d088b607c1a8052081be5d324d15cce1a4227cb74a37",
+      "sha256": "2aff09e335e931cb1f0ab6a630624672500f274486617fa6a8dfeae558b80b39",
+      "transformation": "extract args mapping; omit unrelated dependency inventory",
+      "evidence_role": "historical configuration"
+    },
+    {
+      "path": "artifacts/revision_20260906/historical_runs/historical_no_mspa/predictions_seed42.csv",
+      "source": "workspace/PhyCL/outputs/ablation_no_mspa_old_bs32/loso_results_seed42.json",
+      "source_sha256": "3d70fda726a99de6786c9916280dea7d67c17cb71c1bcc6c16ecd75053dbb91b",
+      "sha256": "e9bc6378914fc1cb2567114d29058ebf381f3e0ebd497a42591088bb472e605e",
+      "transformation": "extract all prediction rows in source order; no row filtering; source_row is zero-based",
+      "evidence_role": "historical held-out labels and scores; not new inference"
+    },
+    {
+      "path": "artifacts/revision_20260906/historical_runs/historical_no_mspa/folds_seed42.json",
+      "source": "workspace/PhyCL/outputs/ablation_no_mspa_old_bs32/loso_results_seed42.json",
+      "source_sha256": "3d70fda726a99de6786c9916280dea7d67c17cb71c1bcc6c16ecd75053dbb91b",
+      "sha256": "e7e0338b3fc92a76c750e355c33737e66add9ccb4a86e695cba21ab012198945",
+      "transformation": "extract seed and complete folds; preserve finite metric values; nonfinite NaN becomes JSON null",
+      "evidence_role": "historical fold metrics; zero latency fields are not measured device latency"
+    },
+    {
+      "path": "artifacts/revision_20260906/historical_runs/historical_no_mspa/predictions_seed123.csv",
+      "source": "workspace/PhyCL/outputs/ablation_no_mspa_old_bs32/loso_results_seed123.json",
+      "source_sha256": "8991df0baa97e84baaf890b45632269f5f888bb92ef1b6593097d8184aab92f3",
+      "sha256": "03a9caf318fd4aa69417b02be97389ba9bc160749ba684c1a0b2a7f3141d70d1",
+      "transformation": "extract all prediction rows in source order; no row filtering; source_row is zero-based",
+      "evidence_role": "historical held-out labels and scores; not new inference"
+    },
+    {
+      "path": "artifacts/revision_20260906/historical_runs/historical_no_mspa/folds_seed123.json",
+      "source": "workspace/PhyCL/outputs/ablation_no_mspa_old_bs32/loso_results_seed123.json",
+      "source_sha256": "8991df0baa97e84baaf890b45632269f5f888bb92ef1b6593097d8184aab92f3",
+      "sha256": "f5c7685422d9abe2bd5855f23e8d600cb59a44357803fd6208a6f849392877b1",
+      "transformation": "extract seed and complete folds; preserve finite metric values; nonfinite NaN becomes JSON null",
+      "evidence_role": "historical fold metrics; zero latency fields are not measured device latency"
+    },
+    {
+      "path": "artifacts/revision_20260906/historical_runs/historical_no_dks/recorded_args.json",
+      "source": "workspace/PhyCL/outputs/ablation_no_dks/experiment_config.yaml",
+      "source_sha256": "15522dea2e42e7675926fcec3fbfb48702878568562dad1092452b34e6cbb675",
+      "sha256": "fd8354541fd6bf9494beb68db4a360322e8cded0640a4f12c1d7bd4f1a71cbae",
+      "transformation": "extract args mapping; omit unrelated dependency inventory",
+      "evidence_role": "historical configuration"
+    },
+    {
+      "path": "artifacts/revision_20260906/historical_runs/historical_no_dks/predictions_seed42.csv",
+      "source": "workspace/PhyCL/outputs/ablation_no_dks/loso_results_seed42.json",
+      "source_sha256": "ccf5776c9171ace69b9215a93848b691ab065d661e5c51ae25cc49f740ee69af",
+      "sha256": "9c90c6317442b229319f9d3f759636baebf6959dfdff4a4f42469fb4c7e07556",
+      "transformation": "extract all prediction rows in source order; no row filtering; source_row is zero-based",
+      "evidence_role": "historical held-out labels and scores; not new inference"
+    },
+    {
+      "path": "artifacts/revision_20260906/historical_runs/historical_no_dks/folds_seed42.json",
+      "source": "workspace/PhyCL/outputs/ablation_no_dks/loso_results_seed42.json",
+      "source_sha256": "ccf5776c9171ace69b9215a93848b691ab065d661e5c51ae25cc49f740ee69af",
+      "sha256": "0fb2b3a6b5f1d29930c2e3aba55056a5b5755c6c963dc76b46e33f4185736ce8",
+      "transformation": "extract seed and complete folds; preserve finite metric values; nonfinite NaN becomes JSON null",
+      "evidence_role": "historical fold metrics; zero latency fields are not measured device latency"
+    },
+    {
+      "path": "artifacts/revision_20260906/historical_runs/historical_no_dks/predictions_seed123.csv",
+      "source": "workspace/PhyCL/outputs/ablation_no_dks/loso_results_seed123.json",
+      "source_sha256": "f6cb52be6f44ae52c34a7ea6e4f204c0bd9f309b109018e1d476778da47d60e9",
+      "sha256": "03923e50129cfd5dbc7d152ede9fe4ac701456f70ac9a319f01b0fc9e8f15d5e",
+      "transformation": "extract all prediction rows in source order; no row filtering; source_row is zero-based",
+      "evidence_role": "historical held-out labels and scores; not new inference"
+    },
+    {
+      "path": "artifacts/revision_20260906/historical_runs/historical_no_dks/folds_seed123.json",
+      "source": "workspace/PhyCL/outputs/ablation_no_dks/loso_results_seed123.json",
+      "source_sha256": "f6cb52be6f44ae52c34a7ea6e4f204c0bd9f309b109018e1d476778da47d60e9",
+      "sha256": "12d557e5f2c702c62e14d5c68bca7cd71d2ebc83c1c99e67ff55b7a0cb3bf5af",
+      "transformation": "extract seed and complete folds; preserve finite metric values; nonfinite NaN becomes JSON null",
+      "evidence_role": "historical fold metrics; zero latency fields are not measured device latency"
+    },
+    {
+      "path": "artifacts/revision_20260906/historical_runs/historical_no_tfcl/recorded_args.json",
+      "source": "workspace/PhyCL/outputs/ablation_no_tfcl/experiment_config.yaml",
+      "source_sha256": "b731469a64d6858df7abecc34bf4362b2433a983c6e70f73af2b188382ba2cf9",
+      "sha256": "c50f1b3bad6f17fc3731b42b52e1bc52e828e97e5047800f03716ea70a9c5337",
+      "transformation": "extract args mapping; omit unrelated dependency inventory",
+      "evidence_role": "historical configuration"
+    },
+    {
+      "path": "artifacts/revision_20260906/historical_runs/historical_no_tfcl/predictions_seed42.csv",
+      "source": "workspace/PhyCL/outputs/ablation_no_tfcl/loso_results_seed42.json",
+      "source_sha256": "b4272b8b511eb619ff9d29fe3ccf22e57c84cf98748d054431ea3e235f9d3d3e",
+      "sha256": "c5c6c0bf7de0c138735a87a7e9ed088ecdb9c3183412395d7a420981331166ac",
+      "transformation": "extract all prediction rows in source order; no row filtering; source_row is zero-based",
+      "evidence_role": "historical held-out labels and scores; not new inference"
+    },
+    {
+      "path": "artifacts/revision_20260906/historical_runs/historical_no_tfcl/folds_seed42.json",
+      "source": "workspace/PhyCL/outputs/ablation_no_tfcl/loso_results_seed42.json",
+      "source_sha256": "b4272b8b511eb619ff9d29fe3ccf22e57c84cf98748d054431ea3e235f9d3d3e",
+      "sha256": "f3d3c0dc03d75acae29b672dfe9e25c5039598fad9e4006ecc6c798812ea356c",
+      "transformation": "extract seed and complete folds; preserve finite metric values; nonfinite NaN becomes JSON null",
+      "evidence_role": "historical fold metrics; zero latency fields are not measured device latency"
+    },
+    {
+      "path": "artifacts/revision_20260906/historical_runs/historical_no_tfcl/predictions_seed123.csv",
+      "source": "workspace/PhyCL/outputs/ablation_no_tfcl/loso_results_seed123.json",
+      "source_sha256": "4969dd901473cb54adeda59985051a6ba35f0590b84b0d12fe9b89fb5f4c89f3",
+      "sha256": "dcafa72e47d5412b902701593ef80ed1cc02f848719ea8949b74c4ca0315cc1c",
+      "transformation": "extract all prediction rows in source order; no row filtering; source_row is zero-based",
+      "evidence_role": "historical held-out labels and scores; not new inference"
+    },
+    {
+      "path": "artifacts/revision_20260906/historical_runs/historical_no_tfcl/folds_seed123.json",
+      "source": "workspace/PhyCL/outputs/ablation_no_tfcl/loso_results_seed123.json",
+      "source_sha256": "4969dd901473cb54adeda59985051a6ba35f0590b84b0d12fe9b89fb5f4c89f3",
+      "sha256": "d11eb1aeb1f60a54454e67bb1bf1c1f20c01829b36482047280ad6344fede62d",
+      "transformation": "extract seed and complete folds; preserve finite metric values; nonfinite NaN becomes JSON null",
+      "evidence_role": "historical fold metrics; zero latency fields are not measured device latency"
+    }
+  ]
+}

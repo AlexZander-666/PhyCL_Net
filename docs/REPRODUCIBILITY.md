@@ -1,110 +1,68 @@
-﻿# Reproducibility Guide
+# Reproducibility guide
 
-This repository is organized around a single canonical entrypoint, `code/phycl_net_experiments.py`. Reviewer-facing commands below use the manuscript model names `phycl` and `phycl_full`. Legacy local aliases, if any, are outside the reviewer-facing interface. The manuscript source tree itself is not duplicated here because it is part of the separate journal submission package.
+## Evidence verification (no dependencies)
 
-Additional reviewer-facing baseline keys exposed by the CLI are `dual_branch_baseline` and `compact_comparison_baseline`.
-
-## Environment
-Create any Python environment that satisfies `requirements.txt`. The repository does not require a private environment name such as `SCI666`.
+Use Python 3.10+ from the repository root:
 
 ```bash
+python scripts/verify_reviewer_evidence.py
+```
+
+This is the verified entry point for the published evidence package. It needs no trained model or dataset. See [the reviewer guide](REVIEWER_GUIDE.md) for estimators, units and interpretation.
+
+## Model execution environment
+
+The retained historical implementation uses PyTorch, NumPy, SciPy, scikit-learn and the packages in [requirements.txt](../requirements.txt). A private environment name is not required. For example on Windows:
+
+```powershell
 python -m venv .venv
-.venv\\Scripts\\activate
-pip install -r requirements.txt
+.\.venv\Scripts\Activate.ps1
+python -m pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
 python -c "import torch; print(torch.__version__, torch.cuda.is_available())"
+python code/phycl_net_experiments.py --help
 ```
 
-## Data
-- Place datasets under `data/` and pass `--data-root ./data`.
-- This public repository does not commit datasets, checkpoints, or generated outputs.
-- The current manuscript results are reported on SisFall under LOSO evaluation.
-- Auxiliary transfer support for MobiFall, UniMiB, and KFall is exposed through separate preparation and evaluation scripts. These support surfaces broaden inspection of the revised manuscript, but they do not replace the main SisFall LOSO claim.
+Training should use an appropriate CUDA-enabled PyTorch environment. Creating the environment or a synthetic smoke run does not reproduce manuscript metrics. This publication update performs no accuracy inference or hardware benchmark.
 
-## Canonical Commands
-Smoke test:
+## Data and model inputs
+
+SisFall is the cited public dataset: Sucerquia et al., *SisFall: A Fall and Movement Dataset*, [Sensors 17, 198 (2017)](https://doi.org/10.3390/s17010198). Acquire it from the dataset authors under their terms, keep original files locally under `data/SisFall`, and pass `--data-root ./data`. Review `SisFallDataset` for accepted discovery paths. Public raw files and all trained `.pth`/`.ckpt` files are excluded from Git.
+
+The main manuscript specifies subjects SA01, SA02, SA04, SA05, SA06, SA09, SA10, SA11, SA17, SA18, SA19 and SA21; 200→50Hz, a fourth-order 5Hz low-pass filter, 512-sample windows and 256 stride, three accelerometer channels. It reports 21,678 windows (12,678 ADL; 9,000 fall). Historical score files have these counts but bind to a native-200Hz loader, not the stated filtered pipeline. Do not assert the filtered loader reproduces the historical counts. The paired FAA report has a different subject set, SA01–SA12.
+
+## Existing implementation and controls
+
+The public entrypoint is `code/phycl_net_experiments.py`. `--model phycl` selects no MSPA; `--model phycl_full` selects MSPA. `--seeds` is plural. Inspect `--help` before running auxiliary tools; their checkpoint/input flags differ.
+
+The paper specifies 50 epochs, batch size 256, learning rate .004, 10 warmup epochs, AdamW weight decay 1e-4, cosine minimum LR 1e-6, AMP, gradient clip 1, inverse-frequency CE and contrastive weight .1 with temperature .1. These are **paper specifications**, not a claim that the inherited executable and historical args are fully aligned. [Code correspondence](MANUSCRIPT_CODE_MAPPING.md) documents known differences. No manuscript-exact rerun command is asserted until those differences and the source-run lineage are resolved.
+
+For an interface-only synthetic smoke run in a configured environment, with a new output directory:
 
 ```bash
-python code/phycl_net_experiments.py --dataset dryrun --model phycl --epochs 2 --batch-size 4 --profile
+python code/phycl_net_experiments.py --dataset dryrun --model phycl --epochs 1 --batch-size 4 --out-dir outputs/interface_smoke
 ```
 
-PhyCL-Net on SisFall LOSO:
+Do not use its outputs as evidence for the manuscript's accuracy or preprocessing.
 
-```bash
-python code/phycl_net_experiments.py --dataset sisfall --data-root ./data --model phycl --eval-mode loso --seeds 42 123 456 789 1024 --epochs 50 --batch-size 256 --lr 0.004 --warmup-epochs 10 --weighted-loss --amp --use-tfcl --out-dir ./outputs/phycl_sisfall_loso
-```
+## Reviewer-facing executable scripts
 
-Matched spectral baseline:
+| Script | Input / purpose | Limitation |
+| --- | --- | --- |
+| `scripts/verify_reviewer_evidence.py` | Published CSV/JSON; standard-library recalculation | Saved evidence only |
+| `code/scripts/run_baseline_comparison.py` | Local SisFall dataset | New runs require controlled settings and provenance |
+| `scripts/profile_phycl_complexity.py` | CPU model profiling, `--device cpu` | Hardware/runtime/graph must match before comparing numbers |
+| `code/scripts/evaluate_noise_robustness.py` | Real checkpoint and held-out input; see `--help` | A demo is not robustness evidence |
+| `code/scripts/prepare_cross_dataset_npz.py` | Locally obtained MobiFall, UniMiB, KFall data | Preparation helper does not define the paper's unresolved five-shot protocol |
+| `code/scripts/run_cross_dataset_evaluation.py` | Matching checkpoint, prepared data and input shape | Not proof of the paper's separate six-channel transfer table |
+| `code/scripts/export_model_for_edge.py` | Matching checkpoint, architecture and optional windows | Save and verify export manifest before board attribution |
+| `code/scripts/benchmark_on_orangepi.py` | Exported model, board/runtime configuration | Preserve model hash, threads, warmup, repeats and timing boundary |
 
-```bash
-python code/phycl_net_experiments.py --dataset sisfall --data-root ./data --model phycl_full --eval-mode loso --seeds 42 123 --epochs 50 --batch-size 256 --lr 0.004 --warmup-epochs 10 --weighted-loss --amp --use-tfcl --out-dir ./outputs/phycl_full_sisfall_loso
-```
+Original helper output names include `lstm_checkpoint.pth`, `resnet_checkpoint.pth`, `noise_robustness_curve.png`, and noise-summary keys `clean_accuracy` and `clean_f1`. Locally generated runs may contain `summary_results.json`, `loso_results_seed*.json`, `split_stats_seed*.json`, checkpoint files and logs. File existence alone is not proof of run completion or correspondence to the manuscript.
 
-Baselines:
+## Hardware rerun requirements
 
-```bash
-python code/scripts/run_baseline_comparison.py --data-root ./data --epochs 50
-```
+The paper's desktop measurement is single-thread CPU, shape 1×3×512, p50/p95; reported software is Python 3.10.11/PyTorch 2.5.1/Windows 10. A rerun must record the actual CPU, thread count, inference graph and measurement scope. Parameter/FLOP measurements use forced CPU and must identify whether projection heads are counted.
 
-Expected checkpoints from this helper script:
-- `outputs/lstm_checkpoint.pth`
-- `outputs/resnet_checkpoint.pth`
+Orange Pi AI Pro 20T 24G evidence uses TorchScript CPU, shape 1×3×512, 50 warmup iterations, 200 measurements, fixed inputs and 32 prepared windows. Original records report Python 3.9.2/PyTorch 2.1.0 on aarch64, four CPU cores. The original model, prepared bundle and matching export manifest are not included; the JSON files alone cannot perform a full rerun. Pi/Apollo source firmware/models and raw instrumentation records are likewise not included.
 
-CPU complexity check:
-
-```bash
-python scripts/profile_phycl_complexity.py --device cpu
-python scripts/profile_phycl_complexity.py --device cpu --ablation-mspa
-```
-
-Optional noise robustness check for the discussion section:
-
-```bash
-python code/scripts/evaluate_noise_robustness.py --ckpt outputs/phycl_sisfall_loso/ckpt_best_seed42_loso_SA01.pth --data-root ./data --output-dir ./outputs/noise --figure-dir ./figures/noise
-```
-
-Edge export bundle:
-
-```bash
-python code/scripts/export_model_for_edge.py --checkpoint outputs/phycl_full_sisfall_loso/ckpt_best_seed42_loso_SA01.pth --out-dir ./outputs/edge_bundle --model phycl_full --prepared-npz ./prepared/edge_windows.npz
-```
-
-Orange Pi CPU benchmark:
-
-```bash
-python code/scripts/benchmark_on_orangepi.py --model-path ./outputs/edge_bundle/phycl_full_edge.ts --out-json ./outputs/orangepi/orangepi_cpu.json --input-shape 1 3 512 --warmup 50 --repeats 200 --runtime-backend torchscript --execution-mode CPU --board-model "Orange Pi AI Pro 20T 24G" --npz-path ./outputs/edge_bundle/phycl_full_edge_samples.npz
-```
-
-Cross-dataset NPZ preparation:
-
-```bash
-python code/scripts/prepare_cross_dataset_npz.py --dataset mobiact --source ./raw/MobiFall --out-root ./prepared --target-len 200
-python code/scripts/prepare_cross_dataset_npz.py --dataset unimib --source ./raw/unimib.zip --out-root ./prepared --target-len 200
-python code/scripts/prepare_cross_dataset_npz.py --dataset kfall --source ./raw/kfall.zip --out-root ./prepared --target-len 200
-```
-
-Cross-dataset evaluation:
-
-```bash
-python code/scripts/run_cross_dataset_evaluation.py --checkpoint outputs/phycl_sisfall_loso/ckpt_best_seed42_loso_SA01.pth --data-root ./prepared --out-dir ./outputs/cross_dataset --base-dataset sisfall --targets mobiact unimib kfall --model phycl
-```
-
-## Expected Artifacts
-- `summary_results.json`: aggregate metrics for the run
-- `loso_records_seed*.json`: fold-level LOSO metrics
-- `efficiency_report_seed*.json`: parameter, FLOP, and latency profiling
-- `experiment.log`: training and evaluation log
-- `outputs/lstm_checkpoint.pth` and `outputs/resnet_checkpoint.pth`: optional checkpoints emitted by `run_baseline_comparison.py`
-- `noise_robustness_results.json`: optional robustness sweep output when the noise script is used; its summary block reports `clean_accuracy` and `clean_f1` for the sigma=0 reference run
-- `noise_robustness_curve.png` and `noise_robustness_curve.pdf`: optional reviewer-facing plots emitted by the noise robustness script
-- `outputs/edge_bundle/phycl_full_edge.ts`, `outputs/edge_bundle/phycl_full_edge_manifest.json`, and `outputs/edge_bundle/phycl_full_edge_samples.npz`: optional export artifacts for embedded benchmarking
-- `outputs/orangepi/orangepi_cpu.json`: optional Orange Pi AI Pro 20T 24G CPU benchmark report with board metadata and p50/p95 latency
-- `prepared/mobiact/*.npz`, `prepared/unimib/*.npz`, and `prepared/kfall/*.npz`: optional two-class preparation outputs for auxiliary transfer checks
-- `outputs/cross_dataset/cross_dataset_summary.json`: optional auxiliary transfer summary across MobiFall, UniMiB, and KFall
-
-## Notes on Scope
-- The repository documents algorithmic reproducibility under the reported desktop CPU/GPU protocol.
-- It also exposes the reviewer-facing support scripts used to prepare an edge export bundle, measure Orange Pi AI Pro 20T 24G CPU latency, and stage auxiliary transfer checks on MobiFall, UniMiB, and KFall.
-- It does not claim direct validation on commercial wearables or medical alarm systems.
-- Data availability should be read from the manuscript and any linked release statement, not inferred from this repository alone.
-- Auxiliary internal logs, manuscript build trees, and submission packing utilities are intentionally excluded from this reviewer-facing repository.
-
+See [public artifacts](PUBLIC_ARTIFACTS.md), [reviewer mapping](paper/REVIEWER_RESPONSE_MAPPING.md), and [evidence boundaries](EVIDENCE_BOUNDARIES.md).

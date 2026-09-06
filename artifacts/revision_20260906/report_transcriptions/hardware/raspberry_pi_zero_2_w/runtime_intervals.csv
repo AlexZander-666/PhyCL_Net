@@ -1,0 +1,13 @@
+﻿interval_reported,arm,arm_scope,cumulative_windows,deadline_violations,mean_latency_ms,p95_latency_ms,peak_rss_mb,board_temperature_c,readme_time
+0–2 h,,not_specified_in_section_7_1,5625,0,41.2,76.8,158.3,44.2,2026-09-01T23:12:00+08:00
+2–4 h,,not_specified_in_section_7_1,11250,0,41.8,77.4,160.1,46.8,2026-09-01T23:12:00+08:00
+4–6 h,,not_specified_in_section_7_1,16875,0,42.1,78.1,161.2,47.5,2026-09-01T23:12:00+08:00
+6–8 h,,not_specified_in_section_7_1,22500,0,42.5,78.8,162.4,48.1,2026-09-01T23:47:00+08:00
+8–10 h,,not_specified_in_section_7_1,28125,0,42.3,78.5,163.0,48.3,2026-09-01T23:47:00+08:00
+10–12 h,,not_specified_in_section_7_1,33750,0,42.7,79.2,163.5,48.6,2026-09-01T23:47:00+08:00
+12–14 h,,not_specified_in_section_7_1,39375,0,42.4,78.7,163.8,48.4,2026-09-02T00:23:00+08:00
+14–16 h,,not_specified_in_section_7_1,45000,0,42.6,79.0,163.6,48.7,2026-09-02T00:23:00+08:00
+16–18 h,,not_specified_in_section_7_1,50625,0,42.8,79.3,163.7,48.9,2026-09-02T00:23:00+08:00
+18–20 h,,not_specified_in_section_7_1,56250,0,42.5,78.9,163.4,48.5,2026-09-02T01:06:00+08:00
+20–22 h,,not_specified_in_section_7_1,61875,0,42.9,79.1,163.8,48.8,2026-09-02T01:06:00+08:00
+22–24 h,,not_specified_in_section_7_1,67500,0,42.7,78.6,163.8,48.7,2026-09-02T01:06:00+08:00

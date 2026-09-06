@@ -1,0 +1,19 @@
+﻿platform,metric_reported,arm,value_text,numeric_value,unit,approximate,reported_increment_text,reported_limit_text,reported_pass_text,readme_time
+raspberry_pi_zero_2_w,软件路径延迟 p50,faa,42.3 ms,42.3,ms,False,+5.2 ms,,,2026-09-02T01:24:00+08:00
+raspberry_pi_zero_2_w,软件路径延迟 p50,no_faa,37.1 ms,37.1,ms,False,+5.2 ms,,,2026-09-02T01:24:00+08:00
+raspberry_pi_zero_2_w,软件路径延迟 p95,faa,78.6 ms,78.6,ms,False,+7.4 ms,,,2026-09-02T01:24:00+08:00
+raspberry_pi_zero_2_w,软件路径延迟 p95,no_faa,71.2 ms,71.2,ms,False,+7.4 ms,,,2026-09-02T01:24:00+08:00
+raspberry_pi_zero_2_w,软件路径延迟 p99,faa,96.4 ms,96.4,ms,False,+7.1 ms,,,2026-09-02T01:24:00+08:00
+raspberry_pi_zero_2_w,软件路径延迟 p99,no_faa,89.3 ms,89.3,ms,False,+7.1 ms,,,2026-09-02T01:24:00+08:00
+raspberry_pi_zero_2_w,软件路径延迟 max（24 h）,faa,118.2 ms,118.2,ms,False,+7.7 ms,,,2026-09-02T01:24:00+08:00
+raspberry_pi_zero_2_w,软件路径延迟 max（24 h）,no_faa,110.5 ms,110.5,ms,False,+7.7 ms,,,2026-09-02T01:24:00+08:00
+raspberry_pi_zero_2_w,峰值 RSS,faa,163.8 MB,163.8,MB,False,+12.5 MB,,,2026-09-02T01:24:00+08:00
+raspberry_pi_zero_2_w,峰值 RSS,no_faa,151.3 MB,151.3,MB,False,+12.5 MB,,,2026-09-02T01:24:00+08:00
+raspberry_pi_zero_2_w,稳态 RSS,faa,148.2 MB,148.2,MB,False,+10.8 MB,,,2026-09-02T01:24:00+08:00
+raspberry_pi_zero_2_w,稳态 RSS,no_faa,137.4 MB,137.4,MB,False,+10.8 MB,,,2026-09-02T01:24:00+08:00
+raspberry_pi_zero_2_w,整板平均功率,faa,412 mW,412.0,mW,False,+26 mW,,,2026-09-02T01:24:00+08:00
+raspberry_pi_zero_2_w,整板平均功率,no_faa,386 mW,386.0,mW,False,+26 mW,,,2026-09-02T01:24:00+08:00
+raspberry_pi_zero_2_w,每窗能量,faa,0.531 mJ,0.531,mJ,False,+0.034 mJ,,,2026-09-02T01:24:00+08:00
+raspberry_pi_zero_2_w,每窗能量,no_faa,0.497 mJ,0.497,mJ,False,+0.034 mJ,,,2026-09-02T01:24:00+08:00
+raspberry_pi_zero_2_w,24 h 连续运行,faa,✅ 零截止违约,,,False,—,,,2026-09-02T01:24:00+08:00
+raspberry_pi_zero_2_w,24 h 连续运行,no_faa,✅ 零截止违约,,,False,—,,,2026-09-02T01:24:00+08:00

@@ -1,0 +1,86 @@
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=25mm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{mathptmx}
+\usepackage{amsmath}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,urlcolor=blue,linkcolor=blue}
+\setlength{\parskip}{0.45em}
+\setlength{\parindent}{0pt}
+\newcommand{\ReviewerComment}[1]{\textit{#1}\par}
+\newcommand{\AuthorResponse}[1]{\textbf{Response.} #1\par}
+\newcommand{\ManuscriptChange}[1]{{\small\textbf{Location:} #1}\par}
+\newcommand{\commentheading}[1]{\par\medskip\textbf{#1}\par\nopagebreak[4]}
+
+\begin{document}
+\begin{center}
+{\Large\bfseries Response to the Reviewers}\par
+\smallskip
+Physics-Guided Contrastive Learning for Wearable Fall Detection: Toward Low-Latency On-Device Inference
+\end{center}
+
+Dear Editor and Reviewers,
+
+Thank you for your careful assessment and constructive comments. We have made targeted corrections to the manuscript and clarified the scope of the results, while retaining its structure and primary experiments. Our point-by-point responses follow.
+
+\section*{Reviewer 1}
+
+Thank you for recognizing the improvements to the manuscript. We have addressed the two remaining suggestions as follows.
+
+\commentheading{Comment 1. Embedded-platform coverage}
+\ReviewerComment{The experimental validation was carried out on a single embedded platform (Orange Pi), which is not a typical example of resource-constrained wearable devices.}
+\AuthorResponse{We retained low-latency on-device inference as the central engineering objective and refined the title to ``Physics-Guided Contrastive Learning for Wearable Fall Detection: Toward Low-Latency On-Device Inference.'' The Orange Pi benchmark demonstrates embedded CPU execution, with its approximately 619--623\,ms median latency and 255\,MB peak RSS identifying a platform-specific optimization need. Complementary Pi Zero 2 W and Apollo4 report summaries give p95 processing times of 78.6 and 94.7\,ms, respectively. Together with the 31.6\% desktop CPU median-latency reduction, these results support further development of low-latency inference. We distinguish the reported processing boundaries from the subsequent system-level evaluation of acquisition-to-alert delay and battery lifetime.}
+\ManuscriptChange{Title; ``Supplementary Board-Level CPU Benchmark''; ``Limitations and Future Directions''; Conclusion.}
+
+\commentheading{Comment 2. Statistical analysis}
+\ReviewerComment{It would also be advisable to supplement the work with a statistical analysis of the results obtained.}
+\AuthorResponse{We clarified the distinction between the main five-seed descriptive results and the separate SA01--SA12 FAA comparison. For the latter, we recalculated all 60 subject--seed pairs, first averaging five seeds within each subject and then reporting the mean and sample SD across the 12 subject means. Macro-F1 is $97.73\pm0.49\%$ with FAA and $97.10\pm0.59\%$ without FAA, with a paired mean difference of $0.63\pm0.12$ percentage points. The 60 cells are not treated as 60 independent subjects. This is a descriptive reanalysis of the supplied report, not a new experiment or a new significance claim. We also avoid interpreting a nonsignificant comparison as proof of equivalence.}
+\ManuscriptChange{``Evaluation Protocol and Metrics''; main-results table caption; ``Ablation Study''; ``Accuracy Impact of Removing the Spectral Branch''.}
+
+\section*{Reviewer 2}
+
+Thank you for your positive assessment of the revised notation, figures, sensor-placement discussion, and supplementary evaluation. We appreciate your recommendation. We have retained these elements and made the focused methodological, reporting, and reference corrections described in this revision.
+
+\clearpage
+\section*{Reviewer 3}
+
+\commentheading{Comment 1. Figure 1 and spectral processing}
+\ReviewerComment{Figure 1 still includes a ``Freq Branch,'' which conflicts with the central claim that the proposed model removes spectral processing.}
+\AuthorResponse{The manually corrected Figure 1 is retained and the methodological description is aligned with it. The marked manuscript now also displays the supplied original Figure 1 as a red-marked deletion and identifies the replacement in blue, making the image replacement explicit. The proposed block has PDK and FAA paths; MSPA is active only in the spectral baseline. PDK routing acts on the block feature tensor and uses ten temporal descriptors and two rFFT-derived descriptors. FAA uses length-5 Gaussian smoothing, first and second temporal feature differences, and axis attention. Fusion uses three global gate MLPs in each direction and a length-7 spatial convolution. We therefore describe the change as removal of the explicit MSPA spectral feature branch. Fourier processing remains in the routing descriptors, so we do not claim that all spectral computation is eliminated.}
+The former separate fusion diagram labeled the global MLP gates as temporal convolutions. We removed that redundant, conflicting display; Figure 1 and the revised equations retain the complete gating and residual structure.
+\ManuscriptChange{Figure 1 caption; ``Overview of PhyCL-Net''; ``Physics-Guided Dynamic Kernel (PDK)''; ``Jerk-aware Fall-Aware Attention (FAA)''; ``Symmetric Cross-Gated Fusion''.}
+
+\commentheading{Comment 2. Hardware evidence and wearable claims}
+\ReviewerComment{The board-level Orange Pi latency of about 619-623 ms and peak RSS around 255 MB weaken the claim of practical wearable deployment. The authors should further moderate the edge/wearable claims or add stronger hardware and energy evidence.}
+\AuthorResponse{We have refined the deployment claim to ``Toward Low-Latency On-Device Inference,'' preserving the research objective while defining the measured scope. The desktop CPU p50 decreases from 184.31 to 125.99\,ms (31.6\%), and the supplementary prototype report gives p95 processing times of 78.6\,ms on Pi Zero 2 W and 94.7\,ms on Apollo4. These results provide a positive basis for continued low-latency implementation work. We retain the Orange Pi's approximately 619--623\,ms median latency and 255\,MB peak RSS as properties of that CPU path. The prototype table also reports p99 and memory, with 24/72-hour workload summaries and nine Apollo4 board/session summaries. We identify those entries as report-transcribed summaries, distinguish mean power from per-window energy, and avoid treating different execution paths as a matched speedup comparison. Integrated sensing-to-alert latency and battery lifetime are the next evaluation targets.}
+\ManuscriptChange{Title; ``Edge-Oriented Efficiency Benchmarks''; ``Supplementary Board-Level CPU Benchmark''; ``Limitations and Future Directions''; Conclusion.}
+
+\commentheading{Comment 3. Threshold selection}
+\ReviewerComment{The threshold-selection procedure for FPR/TPR operating-point metrics should be clearly specified to avoid optimistic reporting.}
+\AuthorResponse{We now define a constraint-based ROC criterion, following \href{https://doi.org/10.1016/j.patrec.2005.10.010}{Fawcett (2006)}. The same FPR limits (1\% and 5\%) and sensitivity target (95\%) apply to every model. For each of two seeds, we pool scores and labels from 12 held-out LOSO folds. We report the maximum observed TPR satisfying the FPR limit and the minimum observed FPR satisfying the sensitivity target. Tied scores share a threshold; no interpolation is used, and the two seed summaries are averaged. These values describe the empirical ROC of the evaluated held-out predictions, rather than performance at an independently calibrated deployment cutoff. The separate FAA comparison uses a fixed threshold of 0.5.}
+\ManuscriptChange{``Evaluation Protocol and Metrics''; ``Constraint-Based ROC Operating-Point Analysis'' and related interpretations.}
+
+\clearpage
+\commentheading{Comment 4. Binary confusion display}
+\ReviewerComment{The 34-class confusion matrix is inconsistent with the binary fall/non-fall formulation and should be replaced or fully explained.}
+\AuthorResponse{We replaced the 34-class display with a binary table: rows are true ADL/fall labels and columns are predicted ADL/fall labels. To remain consistent with the main experiment, the table uses its mean specificity (98.41\%) and sensitivity (97.93\%), with complementary error rates of 1.59\% and 2.07\%. The caption identifies these as mean conditional rates, not pooled prediction counts.}
+\ManuscriptChange{``Main Results (LOSO on SisFall)'', binary row-normalized table replacing the former Figure 9.}
+
+\commentheading{Comment 5. FAA contribution}
+\ReviewerComment{The component-wise results do not fully substantiate the claimed importance of FAA, since the model variant without FAA achieves comparable or slightly higher accuracy while also showing lower latency.}
+\AuthorResponse{We agree that the preliminary comparison with two seeds for the ablation and five for the complete model does not establish an FAA benefit. The separate SA01--SA12 report uses five seeds per arm at threshold 0.5. Recalculation of its 60 pairs gives Macro-F1 of $97.73\pm0.49\%$ with FAA and $97.10\pm0.59\%$ without FAA, with SD across 12 subject means after averaging seeds. The mean gain is 0.63 percentage points. All 12 subject-averaged gains and all five seed-averaged gains are positive, spanning 0.42--0.87 and 0.56--0.73 points, respectively; these summarize the same grid. We limit the interpretation to a modest descriptive benefit in this supplementary cohort. FAA also increases the reported Apollo4 p95 by 8.5\,ms, mean board power by 1.7\,mW, and peak SRAM by 61\,KB. It is therefore not presented as indispensable or as improving latency.}
+\ManuscriptChange{``Ablation Study'', supplementary paired FAA table, and corresponding Discussion text.}
+
+\section*{Additional reference and consistency corrections}
+
+We checked the bibliography against the cited publications and their manuscript contexts, corrected mismatched citations and bibliographic metadata, and narrowed descriptions where a source supported only a more limited statement. We also corrected the CPU reduction to 31.6\%, clarified statistical reporting units, added the ROC methodological reference, and removed wording that treated a nonsignificant difference as evidence of equivalence. These are targeted reference and reporting corrections; they do not represent new training runs or experiments.
+
+\ManuscriptChange{Introduction; Related Work; relevant citation contexts and References; ``Evaluation Protocol and Metrics''; efficiency and Discussion text.}
+
+Thank you again for helping us improve the manuscript.
+
+Sincerely,\\
+The Authors
+\end{document}

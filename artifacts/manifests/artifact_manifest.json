@@ -1,88 +1,38 @@
 {
-  "publication_rules": [
-    "No raw directory under SCI666/outputs is uploaded directly.",
-    "Every public artifact must first be copied into a normalized staging location under experiments/PhyCL_Net/artifacts/staging.",
-    "Every staged artifact must appear in artifact_manifest.json before release publication."
-  ],
-  "artifact_groups": [
+  "schema": "phycl-public-artifacts-v2",
+  "revision": "2026-09-06",
+  "scope": "tracked repository evidence; no separate GitHub Release asserted",
+  "groups": [
     {
-      "group": "orangepi-phase5-evidence",
-      "files": [
-        "artifacts/staging/orangepi/orangepi_cpu_fixed_benchmark.json",
-        "artifacts/staging/orangepi/orangepi_cpu_real_windows_benchmark.json",
-        "artifacts/staging/orangepi/orangepi_phase5_status.json",
-        "artifacts/staging/orangepi/orangepi_phase5_table.csv"
-      ],
-      "manuscript_claims": [
-        "Orange Pi AI Pro 20T 24G CPU-only benchmark",
-        "fixed-shape p50 622.78 ms",
-        "prepared-window p50 619.19 ms"
-      ]
+      "directory": "paper/revised_20260906",
+      "status": "supplied manuscript copies"
     },
     {
-      "group": "noise-robustness-evidence",
-      "files": [
-        "artifacts/staging/noise/noise_robustness_results.csv",
-        "artifacts/staging/noise/noise_robustness_curve.pdf",
-        "artifacts/staging/noise/noise_robustness_curve.png"
-      ],
-      "manuscript_claims": [
-        "AWGN SNR sweep from 40 dB to 5 dB",
-        "40 dB accuracy 98.04%",
-        "30 dB accuracy 91.49%"
-      ]
+      "directory": "artifacts/revision_20260906/report_transcriptions",
+      "status": "report-level evidence"
     },
     {
-      "group": "sisfall-main-results",
-      "models": [
-        {
-          "public_name": "phycl",
-          "source_dir": "SCI666/outputs/ablation_no_mspa",
-          "staged_dir": "artifacts/staging/sisfall/phycl_sisfall_loso",
-          "status": "blocked-until-summary-regenerated",
-          "audit": {
-            "summary_results_n": 1,
-            "visible_seed_files": 3,
-            "reason": "summary_results.json does not match the visible loso_results_seed*.json set"
-          }
-        },
-        {
-          "public_name": "phycl_full",
-          "source_dir": "SCI666/outputs/stage1_amsv2_final",
-          "staged_dir": "artifacts/staging/sisfall/phycl_full_sisfall_loso",
-          "status": "ready"
-        },
-        {
-          "public_name": "lstm",
-          "source_dir": "SCI666/outputs/stage1_lstm_final",
-          "staged_dir": "artifacts/staging/sisfall/lstm_sisfall_loso",
-          "status": "ready"
-        },
-        {
-          "public_name": "resnet",
-          "source_dir": "SCI666/outputs/stage1_resnet_final",
-          "staged_dir": "artifacts/staging/sisfall/resnet_sisfall_loso",
-          "status": "ready"
-        },
-        {
-          "public_name": "tcn",
-          "source_dir": "SCI666/outputs/stage1_tcn_final",
-          "staged_dir": "artifacts/staging/sisfall/tcn_sisfall_loso",
-          "status": "ready"
-        },
-        {
-          "public_name": "transformer",
-          "source_dir": "SCI666/outputs/stage1_transformer_final",
-          "staged_dir": "artifacts/staging/sisfall/transformer_sisfall_loso",
-          "status": "ready"
-        },
-        {
-          "public_name": "inceptiontime",
-          "source_dir": "SCI666/outputs/stage1_inceptiontime_final",
-          "staged_dir": "artifacts/staging/sisfall/inceptiontime_sisfall_loso",
-          "status": "ready"
-        }
-      ]
+      "directory": "artifacts/revision_20260906/historical_runs",
+      "status": "historical predictions and recorded arguments"
+    },
+    {
+      "directory": "artifacts/staging/sisfall",
+      "status": "historical baseline summaries"
+    },
+    {
+      "directory": "artifacts/staging/orangepi",
+      "status": "saved execution records; model attribution unresolved"
+    },
+    {
+      "directory": "artifacts/staging/noise",
+      "status": "historical evidence; final model attribution unresolved"
+    },
+    {
+      "directory": "artifacts/staging/cross_dataset",
+      "status": "different mixed-data experiment; not manuscript table"
     }
-  ]
+  ],
+  "source_manifest": "artifacts/manifests/revision_source_manifest.json",
+  "complete_checksums": "artifacts/manifests/reviewer_package.sha256",
+  "boundaries": "docs/EVIDENCE_BOUNDARIES.md"
 }

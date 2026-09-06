@@ -1,24 +1,18 @@
-# Public Artifacts
+# Public artifacts
 
-## Repository Content
-- Reviewer-facing code and protocol docs live in this repository.
-- `experiments/PhyCL_Net/` is the only public repository boundary for this release package.
-- Raw directories under `SCI666/outputs/` are never published directly; every public artifact is first normalized under `artifacts/staging/`.
+The public surface is the repository root. Actual tracked files, not proposed release names, define availability.
 
-## Release Assets
-- `orangepi-phase5-evidence`
-- `noise-robustness-evidence`
-- `sisfall-results-pack`
+| Directory | Content | Status |
+| --- | --- | --- |
+| `paper/revised_20260906/` | Supplied clean manuscript, marked PDF, response, clean source and active assets | Byte-identical reference copies |
+| `artifacts/revision_20260906/report_transcriptions/` | Complete selected FAA grid and Pi/Apollo CSV records | Report-transcribed; not raw training/device logs |
+| `artifacts/revision_20260906/historical_runs/` | Nine historical configurations × two seeds, all predictions and folds | Complete selected prediction exports; old protocol retained |
+| `artifacts/revision_20260906/recalculated_summary.json` | Descriptive and historical-prediction arithmetic | Reproducible with the standard-library checker |
+| `artifacts/staging/sisfall/` | Previously published normalized six-baseline records | Historical summaries; retained unchanged |
+| `artifacts/staging/orangepi/` | Previously published benchmark records | Record arithmetic agrees; model identity unresolved |
+| `artifacts/staging/noise/` | Previously published AWGN CSV and plots | Historical support; final model identity unresolved |
+| `artifacts/staging/cross_dataset/` | Previously published mixed-data experiment | Different protocol; not the six-row manuscript transfer table |
 
-## Publication Status
-- `orangepi-phase5-evidence` is release-ready reviewer evidence for the CPU-only Orange Pi Phase 5 benchmark.
-- `noise-robustness-evidence` is release-ready supplemental robustness evidence.
-- `sisfall-results-pack` contains normalized bundles for `phycl_full`, `lstm`, `resnet`, `tcn`, `transformer`, and `inceptiontime`.
-- The `phycl` SisFall bundle is currently blocked because `summary_results.json` reports `n=1` while three `loso_results_seed*.json` files are visible in the source directory.
-- Cross-dataset audit traces are kept locally for provenance review but are excluded from the public release surface until a clean result pack matching the published supplementary table is identified or regenerated.
+The [source manifest](../artifacts/manifests/revision_source_manifest.json) records copy/extraction transformations and source hashes. [Package SHA-256](../artifacts/manifests/reviewer_package.sha256) covers the current tracked surface except itself. [Artifact checksums](../artifacts/manifests/artifact_checksums.sha256) cover staged and revised evidence. Hashes establish file identity and transfer integrity, not experiment authenticity.
 
-## Non-Public Content
-- raw datasets
-- raw training workspace outputs
-- manuscript build trees
-- protected files and source-authoritative reference trees
+Raw acquisition datasets, checkpoints, device firmware, private paths/credentials, author correspondence unrelated to the supplied review response, internal audit drafts and duplicate editing histories are excluded. Existing public historical numerical files are preserved, including nonmatching transfer evidence with an explicit notice. No new GitHub Release or dataset mirror is implied.

@@ -1,29 +1,7 @@
-# Artifact Release Notes
+# Reviewer evidence update — 2026-09-06
 
-## Release Name
-- `reviewer-artifacts-v1`
+This repository update aligns the inspection surface with the supplied revised paper. It adds the clean manuscript/source and marked PDF, all selected FAA/hardware CSVs, complete prediction exports from nine historical two-seed configurations, recorded arguments, a paper/code correspondence map, full reviewer-comment mapping, and a reproducible numerical checker.
 
-## Reviewer-Facing Public Artifacts
-This release accompanies the public `PhyCL_Net` reviewer-facing repository surface.
+The original public model/training code and historical staged numerical evidence are retained. Old descriptions of absent manuscript files, a local-only cross-dataset folder, and unverified release-ready status are replaced by an inventory of actual tracked files. This is a Git commit to `main`, not a separately created GitHub Release.
 
-### Included
-- Orange Pi AI Pro 20T 24G CPU-only benchmark evidence.
-- Supplemental noise robustness evidence.
-- Normalized SisFall result bundles for `phycl_full`, `lstm`, `resnet`, `tcn`, `transformer`, and `inceptiontime`.
-
-### Not Included
-- The blocked `phycl` SisFall summary bundle, because `summary_results.json` reports `n=1` while three `loso_results_seed*.json` files are visible in the source directory.
-- Cross-dataset audit traces and temporary result packs. They remain local-only until a clean result pack matching the published supplementary table is identified or regenerated.
-- Raw datasets.
-- Full raw training workspace outputs.
-- Bulk checkpoints and temporary logs.
-- Protected files and source-authoritative trees such as `paper/important.md` and everything under `paper2/`.
-
-### Integrity
-- SHA256 checksums are provided in `artifacts/manifests/artifact_checksums.sha256`.
-- Every published artifact is staged under `artifacts/staging/` before packaging.
-
-## Known Gaps
-- Some legacy `SCI666` result summaries still require normalization before publication.
-- The `phycl` SisFall summary requires regeneration or provenance cleanup before it can be released as final backing evidence for the manuscript's main SisFall claim.
-- Cross-dataset evidence remains excluded from the public release surface until exact manuscript-table provenance is frozen.
+Validation covers file integrity, lossless selected prediction extraction, numerical recalculation, manuscript byte identity, PDF readability and internal navigation. It does not constitute retraining, hardware execution, deployment calibration or closure of the [documented scientific evidence boundaries](EVIDENCE_BOUNDARIES.md).
