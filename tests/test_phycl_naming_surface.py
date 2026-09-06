@@ -118,11 +118,13 @@ def test_review_entrypoints_resolve_inside_repository():
             assert resolved.exists(), (document.name, target)
 
 
-def test_revision_manifest_identifies_present_paper_and_evidence_checker():
+def test_revision_manifest_keeps_manuscript_external_and_checker_available():
     import json
 
     manifest = json.loads((REPO_ROOT / "docs/REPRODUCIBILITY_MANIFEST.json").read_text(encoding="utf-8"))
-    assert (REPO_ROOT / manifest["source_paper"]).is_file()
+    assert "source_paper" not in manifest
+    assert manifest["manuscript_reference"]["revision"] == "2026-09-06"
+    assert "not distributed" in manifest["manuscript_reference"]["availability"]
     assert (REPO_ROOT / manifest["source_manifest"]).is_file()
     assert manifest["revision"] == "2026-09-06"
     assert manifest["verification_command"] == "python scripts/verify_reviewer_evidence.py"

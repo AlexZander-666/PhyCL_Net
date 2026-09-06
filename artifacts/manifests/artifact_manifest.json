@@ -4,10 +4,6 @@
   "scope": "tracked repository evidence; no separate GitHub Release asserted",
   "groups": [
     {
-      "directory": "paper/revised_20260906",
-      "status": "supplied manuscript copies"
-    },
-    {
       "directory": "artifacts/revision_20260906/report_transcriptions",
       "status": "report-level evidence"
     },

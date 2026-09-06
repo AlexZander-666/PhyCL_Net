@@ -1,7 +1,9 @@
 # Reviewer evidence update — 2026-09-06
 
-This repository update aligns the inspection surface with the supplied revised paper. It adds the clean manuscript/source and marked PDF, all selected FAA/hardware CSVs, complete prediction exports from nine historical two-seed configurations, recorded arguments, a paper/code correspondence map, full reviewer-comment mapping, and a reproducible numerical checker.
+The current repository exposes selected FAA/hardware CSVs, complete prediction exports from nine historical two-seed configurations, recorded arguments, a paper/code correspondence map, reviewer-comment mapping and a reproducible numerical checker.
 
-The original public model/training code and historical staged numerical evidence are retained. Old descriptions of absent manuscript files, a local-only cross-dataset folder, and unverified release-ready status are replaced by an inventory of actual tracked files. This is a Git commit to `main`, not a separately created GitHub Release.
+The complete manuscript directory was withdrawn from the current `main` tree at the author's request. The paper, source, figures and full response letter remain in the separate journal submission package. Links and manifests no longer advertise those files as public repository content. Local originals are preserved.
 
-Validation covers file integrity, lossless selected prediction extraction, numerical recalculation, manuscript byte identity, PDF readability and internal navigation. It does not constitute retraining, hardware execution, deployment calibration or closure of the [documented scientific evidence boundaries](EVIDENCE_BOUNDARIES.md).
+This withdrawal is a normal follow-up commit. Earlier Git commits still contain the previously uploaded directory; deleting it from the current tree does not erase Git history or external copies.
+
+The model/training code and experimental evidence remain available. Validation covers experimental-file integrity, complete prediction extraction, numerical recalculation and internal navigation. It does not constitute retraining, hardware execution or closure of the [scientific evidence boundaries](EVIDENCE_BOUNDARIES.md).

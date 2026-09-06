@@ -6,7 +6,7 @@
 - `outputs/`, `figures/`: checkpoints, metrics, plots from runs; preserve existing results and use a new output directory.
 - `docs/`: reviewer-facing reproducibility notes, manifest, and manuscript-response mapping.
 - `scripts/`: standalone reviewer-facing utilities such as CPU complexity measurement.
-- `paper/revised_20260906/`: byte-identical supplied manuscript copies; do not edit these scientific source files without an explicit manuscript-edit request.
+- Complete manuscripts, manuscript source, response letters and submission assets remain local and must not be uploaded to this repository. Keep only code, selected experimental evidence and accompanying inspection documentation public.
 - `artifacts/revision_20260906/`: source-traced report transcriptions and complete historical prediction exports. Do not relabel historical configurations or alter reported values.
 - `docs/REVIEWER_GUIDE.md`, `docs/MANUSCRIPT_CODE_MAPPING.md`, and `docs/EVIDENCE_BOUNDARIES.md` distinguish paper specifications, historical execution and available verification.
 
@@ -28,7 +28,7 @@
 ## Testing Guidelines
 - Tests: `python -m pytest -q tests`. For model changes, additionally run a dryrun and one LOSO fold before long sweeps, using new output directories.
 - For loss/metric edits, rerun `evaluate_noise_robustness.py` on a single checkpoint to confirm curves.
-- The reviewer-facing repo includes selected manuscript reference copies but omits build trees, queue automation, and internal submission-packaging utilities. Refresh checksum manifests after an authorized package change; hashes attest bytes, not scientific validity.
+- The reviewer-facing repo excludes full manuscripts, submission assets, build trees, queue automation, and internal submission-packaging utilities. Refresh checksum manifests after an authorized package change; hashes attest bytes, not scientific validity.
 
 ## Commit & Pull Request Guidelines
 - Commits: imperative subject, <=72 chars, optional scope (`fix: guard empty SisFall split`); never commit datasets or checkpoints.

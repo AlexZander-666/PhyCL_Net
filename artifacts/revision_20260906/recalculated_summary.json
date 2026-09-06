@@ -1,6 +1,6 @@
 {
   "verification_scope": "file integrity and saved-number recalculation; no new experiments",
-  "source_files_checked": 73,
+  "source_files_checked": 55,
   "paired_faa": {
     "status": "DESCRIPTIVE_RECALCULATION",
     "subjects": 12,

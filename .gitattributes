@@ -3,7 +3,6 @@
 *.png binary
 *.jpg binary
 *.jpeg binary
-# Preserve the exact supplied manuscript and source-transcribed evidence bytes.
-paper/revised_20260906/** -text -whitespace
+# Preserve the exact source-transcribed evidence bytes.
 artifacts/revision_20260906/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
 artifacts/revision_20260906/report_transcriptions/** -whitespace

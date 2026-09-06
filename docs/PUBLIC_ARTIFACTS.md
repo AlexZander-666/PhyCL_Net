@@ -4,7 +4,6 @@ The public surface is the repository root. Actual tracked files, not proposed re
 
 | Directory | Content | Status |
 | --- | --- | --- |
-| `paper/revised_20260906/` | Supplied clean manuscript, marked PDF, response, clean source and active assets | Byte-identical reference copies |
 | `artifacts/revision_20260906/report_transcriptions/` | Complete selected FAA grid and Pi/Apollo CSV records | Report-transcribed; not raw training/device logs |
 | `artifacts/revision_20260906/historical_runs/` | Nine historical configurations × two seeds, all predictions and folds | Complete selected prediction exports; old protocol retained |
 | `artifacts/revision_20260906/recalculated_summary.json` | Descriptive and historical-prediction arithmetic | Reproducible with the standard-library checker |
@@ -15,4 +14,4 @@ The public surface is the repository root. Actual tracked files, not proposed re
 
 The [source manifest](../artifacts/manifests/revision_source_manifest.json) records copy/extraction transformations and source hashes. [Package SHA-256](../artifacts/manifests/reviewer_package.sha256) covers the current tracked surface except itself. [Artifact checksums](../artifacts/manifests/artifact_checksums.sha256) cover staged and revised evidence. Hashes establish file identity and transfer integrity, not experiment authenticity.
 
-Raw acquisition datasets, checkpoints, device firmware, private paths/credentials, author correspondence unrelated to the supplied review response, internal audit drafts and duplicate editing histories are excluded. Existing public historical numerical files are preserved, including nonmatching transfer evidence with an explicit notice. No new GitHub Release or dataset mirror is implied.
+Complete manuscripts and journal submission assets, raw acquisition datasets, checkpoints, device firmware, private paths/credentials, author correspondence unrelated to the supplied review response, internal audit drafts and duplicate editing histories are excluded. Existing public historical numerical files are preserved, including nonmatching transfer evidence with an explicit notice. No new GitHub Release or dataset mirror is implied.

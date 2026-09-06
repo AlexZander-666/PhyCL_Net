@@ -1,7 +1,6 @@
 {
   "schema": "phycl-reviewer-protocol-v2",
   "revision": "2026-09-06",
-  "source_paper": "paper/revised_20260906/main.tex",
   "inherited_code_commit": "9dbbd3b9def673b1389db82dee42fb0aee6a16aa",
   "verification_command": "python scripts/verify_reviewer_evidence.py",
   "canonical_models": {
@@ -70,5 +69,9 @@
     "cross-dataset F1 definition and five-shot unit unresolved"
   ],
   "details": "docs/EVIDENCE_BOUNDARIES.md",
-  "source_manifest": "artifacts/manifests/revision_source_manifest.json"
+  "source_manifest": "artifacts/manifests/revision_source_manifest.json",
+  "manuscript_reference": {
+    "revision": "2026-09-06",
+    "availability": "journal submission package; not distributed in this repository"
+  }
 }

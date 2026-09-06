@@ -88,6 +88,9 @@ paper/journal_submission/*.abs
 paper/journal_submission/texput.log
 paper/journal_submission/main.pdf
 
+# Full manuscript and journal submission files stay local.
+/paper/revised_20260906/
+
 # LaTeX build artifacts
 paper/arXiv/*.aux
 paper/arXiv/*.log

@@ -2,18 +2,17 @@
 
 **Physics-Guided Contrastive Learning for Wearable Fall Detection: Toward Low-Latency On-Device Inference**
 
-Code and selected evidence accompanying the author-supplied **6 September 2026 revision**. Start with the [reviewer evidence guide](docs/REVIEWER_GUIDE.md), [revised paper](paper/revised_20260906/main.pdf), and [point-by-point response](paper/revised_20260906/response_to_reviewers.pdf). The supplied manuscript files are preserved byte for byte.
+Code and selected evidence accompanying the author-supplied **6 September 2026 revision**. Start with the [reviewer evidence guide](docs/REVIEWER_GUIDE.md). The full manuscript, source files, figures and response letter are distributed through the journal submission process and are not included in the current repository tree.
 
 | Inspect | Entry | Evidence available |
 | --- | --- | --- |
-| Revised manuscript and changes | [Paper files](paper/revised_20260906/README.md) | Clean PDF, marked PDF, clean TeX/BibTeX, active figures and response |
 | Architecture and protocol | [Implementation correspondence](docs/MANUSCRIPT_CODE_MAPPING.md) | PDK, FAA, fusion, MSPA switch, training and preprocessing comparison |
 | Main-table comparison baselines | [Saved prediction analysis](artifacts/revision_20260906/recalculated_summary.json) | Six baselines, two seeds each; all 12 folds and scores |
 | FAA supplementary analysis | [Complete paired grid](artifacts/revision_20260906/report_transcriptions/classification/paired_macro_f1.csv) | All 60 pairs; subject- and seed-level descriptive recalculation |
 | Hardware | [Evidence guide](docs/REVIEWER_GUIDE.md#hardware) | Orange Pi JSON records; Pi/Apollo transcribed metrics, intervals and sessions |
 | Reviewer comments | [Response mapping](docs/paper/REVIEWER_RESPONSE_MAPPING.md) | Reviewer 1, Reviewer 2 and all five Reviewer 3 comments |
 | Provenance and integrity | [Source manifest](artifacts/manifests/revision_source_manifest.json) | Source hashes, exact transformations and complete prediction exports |
-| Validation performed | [Validation record](docs/PACKAGE_VALIDATION.md) | Saved-number checks, 23 tests, source identity and PDF readability |
+| Validation performed | [Validation record](docs/PACKAGE_VALIDATION.md) | Saved-number checks, interface tests and source identity |
 
 ## Check the evidence without training
 
